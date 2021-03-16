@@ -1,0 +1,45 @@
+.pretty-code-wrapper{
+    font-family: monospace;
+    margin-bottom: 15px;
+}
+.pretty-code-wrapper textarea{
+    display: none;
+}
+.pretty-code-header{
+    background: rgb(112 137 107);
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: white;
+    font-size: 16px;
+}
+.pretty-user-code{
+    background: rgb(39 39 39);
+    padding: 5px 10px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 13px;
+    color: white;
+    display: none;
+}
+.pretty-user-code pre{
+    overflow-x: auto;
+}
+
+
+
+/* cursotm scroll */
+::-webkit-scrollbar {
+    width: 3px;
+    height: 5px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(100, 93, 93, 0.3); 
+    border-radius: 0px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
