@@ -5,6 +5,10 @@ let code_wrapper = document.querySelectorAll('[code-wrapper]')
 
 let modules = [
     {
+        lang : 'html',
+        import : false
+    },
+    {
         lang : 'javascript',
         import : false
     },

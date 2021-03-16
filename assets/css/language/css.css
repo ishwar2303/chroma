@@ -1,6 +1,15 @@
 .comment{
     color: rgb(153, 153, 153);
 }
+.property-name{
+    color :rgb(77 105 244);
+}
+.period{
+    color : yellow;
+}
+.property-value{
+    color: #afbb6b;
+}
 .universal-selector{
     color: #e9ff86;
 }
@@ -23,7 +32,7 @@
     color: rgb(67, 189, 67);
 }
 .numeric-constant{
-    color: rgb(93, 239, 250);
+    color: rgb(176 140 39);
 }
 .rgba, .rgb{
     color: #c774c9;;

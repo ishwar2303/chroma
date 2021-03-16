@@ -1,28 +1,24 @@
 let kit_css = [
     
-    {
-        class : 'tag-name',
-        pattern : /<(\w+)\s+\w+/g
-    },
-    {
-        class : 'constant-numeric',
-        pattern : /(\d+)(px|em|cm|s|%|ms)/g
-    },
+    // {
+    //     class : 'tag-name',
+    //     pattern : /(&nbsp;)*[a-zA-Z]+(&nbsp;)*(?!-)(?=\{)/g
+    // },
     {
         class : 'string',
         pattern : /(&apos;|&quot;).*(&apos;|&quot;)/g
     },
-    // {
-    //     class : 'vendor-prefix',
-    //     pattern : /(-o-|-moz-|-webkit-|-ms-)?[\w-]+(?=\s?:)(?!.*\{)/g
-    // },
     {
         class : 'direct-descendent',
         pattern : /&gt;/g
     },
     {
         class : 'class',
-        pattern : /\.(?!\d)[\w\-_]+/g
+        pattern : /\.[a-zA-Z\_]+[a-zA-Z0-9\-\_]*(?=\s*(\,|\:|\{|\<|~))/g
+    },
+    {
+        class : 'constant-numeric',
+        pattern : /\d+(px|em|cm|s|%|ms)/g
     },
     {
         class : 'hex-color',
@@ -34,12 +30,12 @@ let kit_css = [
     },
     {
         class : 'numeric-constant',
-        pattern : /(\d+)(px|em|cm|s|%)?/g
+        pattern : /(\d+)/g
     },
-    {
-        class : 'rgb',
-        pattern : /(rgba)(?=\s*\()/g
-    },
+    // {
+    //     class : 'rgb',
+    //     pattern : /(rgba)(?=\s*\()/g
+    // },
     {
         class : 'rgb',
         pattern : /(rgb)(?=\s*\()/g
@@ -55,12 +51,17 @@ let kit_css = [
     {
         class : 'universal-selector',
         pattern : /\*(?=\s*\n*\{)/g
+    },
+    {
+        class : 'property-name',
+        pattern : /[a-zA-Z]+[a-zA-Z\-]*(&nbsp;)*\:/g
     }
     
 ]
 
 code_wrapper = document.querySelectorAll('[code-wrapper]')
 pretty_code = document.getElementsByClassName('pretty-code')
+textarea = document.getElementsByClassName('code-wrap-textarea')
 console.log(code_wrapper)
 console.log(pretty_code)
 
@@ -70,8 +71,9 @@ function htmlEntities(content){
     content = content.replaceAll(/"/g, '&quot;')
     content = content.replaceAll(/'/g, '&apos;')
     content = content.replaceAll(/\{(?!\n+)/g, '{\n')
-    content = content.replaceAll(/(?<!\n+)\}/g, '\n}')
-    content = content.replaceAll(/\}(?!\n)/g, '}\n')
+    content = content.replaceAll(/\n/g, '<br/>')
+    content = content.replaceAll(/\s/g, '&nbsp;')
+
 
     return content
 }
@@ -80,13 +82,14 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }
   
-  // usage example:
-  
 
-function convert_to_pretty_code(pretty_code_change){
+function convert_to_pretty_code(pretty_code_change, textarea){
     let userCode = pretty_code_change.innerHTML
     userCode = userCode.trim()
+    console.log(userCode)
+    userCode = textarea.value
     userCode = htmlEntities(userCode)
+    console.log(userCode)
     let pre = document.createElement('pre')
     let code = document.createElement('code')
     pre.appendChild(code)
@@ -97,6 +100,11 @@ function convert_to_pretty_code(pretty_code_change){
         console.log(result)
         if(result){
             result = result.filter(onlyUnique);
+            result.sort(function(a, b){
+              // ASC  -> a.length - b.length
+              // DESC -> b.length - a.length
+              return b.length - a.length;
+            });
             for(j=0; j<result.length; j++){
                 if(result[j] != ''){
                     console.log('converting : ' + result[j] + 'to  ' + '<span class="' + kit_css[i].class + '">' + result[j] + '</span>')
@@ -110,14 +118,16 @@ function convert_to_pretty_code(pretty_code_change){
     code.innerHTML = userCode
     pretty_code_change.innerHTML = 'Loading...'
     pretty_code_change.style.display = 'block'
-    pretty_code_change.innerHTML = ''
-    pretty_code_change.appendChild(pre)
+    setTimeout(() => {
+        pretty_code_change.innerHTML = ''
+        pretty_code_change.appendChild(pre)
+    }, 2000)
 }
 
 for(k=0; k<code_wrapper.length; k++){
     if(code_wrapper[k].attributes.datalang.nodeValue == 'css'){
 
-        console.log('run' + ' ' + k+1)
-        convert_to_pretty_code(pretty_code[k])
+        convert_to_pretty_code(pretty_code[k], textarea[0])
+        textarea[0].remove()
     }
 }
