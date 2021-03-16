@@ -1,2 +1,48 @@
+.comment{
+    color: rgb(153, 153, 153);
+}
+.universal-selector{
+    color: #e9ff86;
+}
+.media{
+    color: rgb(252, 255, 89);
+}
+.constant-numeric{
+    color: yellow;
+}
+.hex-color{
     color : rgb(188 146 255);
+}
+.class, .tag-name{
     color: rgb(255, 103, 103);
+}
+.id{
+    color: rgb(158, 255, 174);
+}
+.string{
+    color: rgb(67, 189, 67);
+}
+.numeric-constant{
+    color: rgb(93, 239, 250);
+}
+.rgba, .rgb{
+    color: #c774c9;;
+}
+.class .rgb, .class .rgba, .id .rgb, .id .rgba{
+    color: rgb(255, 103, 103);
+}
+.class .numeric-constant, .class .constant-numeric, .class .tag-name{
+    color: rgb(255, 103, 103);
+}
+.id .numeric-constant, .id .constant-numeric, .id .tag-name{
+    color: rgb(158, 255, 174);
+}
+.string .rgba, .string .numeric-constant, .string .class, .string .id, .string .constant-numeric, .string .tag-name{
+    color: rgb(67, 189, 67);
+}
+.comment .rgba, .comment .numeric-constant, .comment .string, .comment .id, .comment .class, .comment .tag-name, .comment .constant-numeric, .comment .media, .comment .universal-selector{
+    color: rgb(153, 153, 153);
+}
+.hex-color .numeric-constant, .hex-color .id, .hex-color .constant-numeric{
+    color : rgb(188 146 255);
+}
