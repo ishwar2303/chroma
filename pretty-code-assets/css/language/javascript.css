@@ -16,3 +16,6 @@
 .root-obj{
     color: rgb(71, 172, 255);
 }
+.comment *{
+    color :rgb(155, 155, 155)
+}

@@ -1,57 +1,85 @@
-.comment{
+.comment {
     color: rgb(153, 153, 153);
 }
-.property-name{
-    color :rgb(77 105 244);
+
+.property-name {
+    color: rgb(157 171 242);
 }
-.period{
-    color : yellow;
-}
-.property-value{
-    color: #afbb6b;
-}
-.universal-selector{
-    color: #e9ff86;
-}
-.media{
-    color: rgb(252, 255, 89);
-}
-.constant-numeric{
+
+.period {
     color: yellow;
 }
-.hex-color{
-    color : rgb(188 146 255);
+
+.property-value {
+    color: #afbb6b;
 }
-.class, .tag-name{
+
+.universal-selector {
+    color: #e9ff86;
+}
+
+.media {
+    color: rgb(252, 255, 89);
+}
+
+.constant-numeric {
+    color: yellow;
+}
+
+.webkit {
+    color: chartreuse;
+}
+
+.hex-color {
+    color: rgb(188 146 255);
+}
+
+.class,
+.tag-name {
     color: rgb(255, 103, 103);
 }
-.id{
+
+.id {
     color: rgb(158, 255, 174);
 }
-.string{
+
+.string {
     color: rgb(67, 189, 67);
 }
-.numeric-constant{
-    color: rgb(176 140 39);
+
+.numeric-constant {
+    color: rgb(144 250 255);
 }
-.rgba, .rgb{
-    color: #c774c9;;
+
+.rgba,
+.rgb {
+    color: #eea0f0;
 }
-.class .rgb, .class .rgba, .id .rgb, .id .rgba{
+
+.class span {
     color: rgb(255, 103, 103);
 }
-.class .numeric-constant, .class .constant-numeric, .class .tag-name{
+
+.class span {
     color: rgb(255, 103, 103);
 }
-.id .numeric-constant, .id .constant-numeric, .id .tag-name{
+
+.id span {
     color: rgb(158, 255, 174);
 }
-.string .rgba, .string .numeric-constant, .string .class, .string .id, .string .constant-numeric, .string .tag-name{
+
+.tag-name span {
+    color: rgb(255, 103, 103);
+}
+
+.string span {
     color: rgb(67, 189, 67);
 }
-.comment .rgba, .comment .numeric-constant, .comment .string, .comment .id, .comment .class, .comment .tag-name, .comment .constant-numeric, .comment .media, .comment .universal-selector{
+
+.comment span {
     color: rgb(153, 153, 153);
 }
-.hex-color .numeric-constant, .hex-color .id, .hex-color .constant-numeric{
-    color : rgb(188 146 255);
+
+.hex-color span {
+    color: rgb(188 146 255);
 }
