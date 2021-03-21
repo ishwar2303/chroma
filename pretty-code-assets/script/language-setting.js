@@ -10,5 +10,9 @@ export default language = [{
     {
         lang: 'javascript',
         imported: false
+    },
+    {
+        lang: 'cpp',
+        imported: false
     }
 ]

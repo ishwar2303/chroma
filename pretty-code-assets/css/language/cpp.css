@@ -18,6 +18,14 @@
     color: rgb(67, 189, 67);
 }
 
+.preprocessor {
+    color: rgb(255, 110, 58);
+}
+
+.preprocessor-name {
+    color: rgb(230 71 71);
+}
+
 .comment span {
     color: rgb(155, 155, 155)
 }

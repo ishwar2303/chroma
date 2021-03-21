@@ -3,7 +3,18 @@ export default kit = [{
         lang: 'html',
         conversion: [{
                 class: 'attribute-name',
-                pattern: /(?<=(&nbsp;)*)[a-zA-Z\-]+(?=(&nbsp;)*=(&quot;))/g
+                pattern: /(?<=(\s)*)[a-zA-Z\-]+(?=(\s)*=(&quot;))/g
+            }, {
+                class: 'comment',
+                pattern: /&lt;!--(.*\n.*)*--&gt;/g
+            },
+            {
+                class: 'string',
+                pattern: /&apos;[^&]*[^a]*[^p]*[^o]*[^s]*[^;]*&apos;/g
+            },
+            {
+                class: 'string',
+                pattern: /&quot;[^&]*[^q]*[^u]*[^o]*[^t]*[^;]*&quot;/g
             },
             {
                 class: 'doc-type',
@@ -14,28 +25,12 @@ export default kit = [{
                 pattern: /((?<=(&nbsp;)*))html(?=&gt;)/g
             },
             {
-                class: 'string',
-                pattern: /(&apos;).*(&apos;)/g
-            },
-            {
-                class: 'string',
-                pattern: /(&quot;).*(&quot;)/g
-            },
-            {
-                class: 'comment',
-                pattern: /(&lt;!--)(\n|\r)*.*(\n|\r)*(--&gt;)/g
-            },
-            {
-                class: 'comment',
-                pattern: /\/\/.*/g
-            },
-            {
                 class: 'start-tag-name',
                 pattern: /(?<=&lt;(&nbsp;)*)[a-zA-Z0-9]+/g
             },
             {
                 class: 'close-tag-name',
-                pattern: /(?<=\/(&nbsp;)*)[a-zA-Z]+(?=(&nbsp;)*&gt;)/g
+                pattern: /(?<=\&sol;(&nbsp;)*)[a-zA-Z]+(?=(&nbsp;)*&gt;)/g
             },
             {
                 class: 'start-tag',
@@ -55,11 +50,11 @@ export default kit = [{
             },
             {
                 class: 'string',
-                pattern: /(&apos;|&quot;).*(&apos;|&quot;)/g
+                pattern: /&apos;[^&]*[^a]*[^p]*[^o]*[^s]*[^;]*&apos;/g
             },
             {
                 class: 'string',
-                pattern: /(&apos;)[a-zA-Z0-9-_\/:=,\.&apos;]+(&apos;)/g
+                pattern: /&quot;[^&]*[^q]*[^u]*[^o]*[^t]*[^;]*&quot;/g
             },
             {
                 class: 'direct-descendent',
@@ -126,45 +121,143 @@ export default kit = [{
     {
         lang: 'javascript',
         conversion: [{
-                class: 'keyword-type1',
-                pattern: /(?<=(<br\/>|\s)*)(import|from)\s/g
+                class: 'comment',
+                pattern: /&sol;\*[\s\S]*?\*&sol;/gm
             },
             {
-                class: 'keyword-type2',
-                pattern: /(?<=(<br\/>|\s)*)(function)\s+(?=\w*)/g
+                class: 'comment',
+                pattern: /&sol;&sol;.*(?=\n)/g
             },
+            // {
+            //     class: 'regular-expression',
+            //     pattern: /&sol;(?!\n+).+&sol;(?=g|m|i|s|u|y|,)/g
+            // },
             {
-                class: 'keyword-type2',
-                pattern: /(?<=(<br\/>|\s)*)(return)\s*(?=;?)/g
-            },
-            {
-                class: 'keyword-type3',
-                pattern: /(?<=(<br\/>|\s)*)(let|var|const)(?=\s+)/g
-            },
-            {
-                class: 'keyword-type4',
-                pattern: /(?<=(<br\/>|\s)*)(console)(?=\.)/g
+                class: 'string',
+                pattern: /&apos;[^&]*[^a]*[^p]*[^o]*[^s]*[^;]*&apos;/g
             },
             {
                 class: 'string',
-                pattern: /(&quot;)[a-zA-Z0-9-_\/:=,\.&nbsp;]+(&quot;)/g
+                pattern: /&quot;[^&]*[^q]*[^u]*[^o]*[^t]*[^;]*&quot;/g
+            },
+            {
+                class: 'declaration',
+                pattern: /(?<=(\s|\n)+)(let|var|const)(?=\s)/g
+            },
+            {
+                class: 'keyword-set-1',
+                pattern: /(?<=(\s|\n)+)(import|from|export|throw|finally|default|delete|await|extends|yield)(?=\s)/g
+            },
+            {
+                class: 'keyword-set-1',
+                pattern: /(?<=(\s|\n)+)(break|continue)(?=\s*;)/g
+            }, {
+                class: 'keyword-set-1',
+                pattern: /(?<=(\s|\n)+)(return)(?=\s+)/g
+            },
+            {
+                class: 'keyword-set-2',
+                pattern: /(?<=(\s|\n)+)(console)(?=\.)/g
+            },
+            {
+                class: 'keyword-set-3',
+                pattern: /(?<=(\s|\n)+)if(?=\s*\()/g
+            },
+            {
+                class: 'keyword-set-3',
+                pattern: /(?<=(\s*\()|(\s|\n)*)\s*function(?=\s+)/g
+            },
+            {
+                class: 'function-name',
+                pattern: /(?<=\s+|.)[a-zA-Z_]+[$a-zA-Z_0-9]+(?=\s*\()/g
+            },
+            {
+                class: 'property',
+                pattern: /(?<=\.)[a-zA-Z_]+[$a-zA-Z_0-9]+(?!\s*\()(?=(.|\s*=|\s*))/g
+            },
+            {
+                class: 'keyword-set-3',
+                pattern: /(?<=\s+|.)(else|else)(?=\s+|\s*\{)/g
+            },
+            {
+                class: 'document-window',
+                pattern: /(?<=(\s|\n)+|\(\s*)(document|window)(?=(\.|\s*\)|\s+))/g
+            },
+        ]
+    },
+    {
+        lang: 'cpp',
+        conversion: [{
+                class: 'comment',
+                pattern: /&sol;\*[\s\S]*?\*&sol;/gm
+            },
+            {
+                class: 'comment',
+                pattern: /&sol;&sol;.*(?=\n)/g
+            },
+            // {
+            //     class: 'regular-expression',
+            //     pattern: /&sol;(?!\n+).+&sol;(?=g|m|i|s|u|y|,)/g
+            // },
+            {
+                class: 'string',
+                pattern: /&apos;[^&]*[^a]*[^p]*[^o]*[^s]*[^;]*&apos;/g
+            },
+            {
+                class: 'preprocessor',
+                pattern: /#[a-zA-Z]+(?=\s*<?)/g
+            },
+            {
+                class: 'preprocessor-name',
+                pattern: /&lt;.+&gt;/g
             },
             {
                 class: 'string',
-                pattern: /(&apos;)[a-zA-Z0-9-_\/:=,\.&apos;]+(&apos;)/g
+                pattern: /&quot;[^&]*[^q]*[^u]*[^o]*[^t]*[^;]*&quot;/g
             },
             {
-                class: 'property-name',
-                pattern: /(?<=\.)\w+(?=(\.|\s*|=|\())/g
+                class: 'declaration',
+                pattern: /(?<=(\s|\n|\(|\<)+)(int|float|char|string|double|long|short|class|bool)(?=\s|,)/g
             },
             {
-                class: 'root-obj',
-                pattern: /(?<=(<br\/>|\s)*)\w+(?=\[[a-zA-Z0-9_]+\]\.|\.)/g
+                class: 'keyword-set-1',
+                pattern: /(?<=(\s|\n)+)(import|from|export|throw|finally|default|delete|await|extends|yield)(?=\s)/g
             },
             {
-                class: 'keyword-type5',
-                pattern: /(?<=(<br\/>|\s)*)(\w+|else)\s*(?=(\{|\())/g
-            }
+                class: 'keyword-set-1',
+                pattern: /(?<=(\s|\n)+)(break|continue)(?=\s*;)/g
+            }, {
+                class: 'keyword-set-1',
+                pattern: /(?<=(\s|\n)+)(return)(?=\s+)/g
+            },
+            {
+                class: 'keyword-set-2',
+                pattern: /(?<=(\s|\n))(cout|cin|template|typename)(?=\s*)/g
+            },
+            {
+                class: 'keyword-set-3',
+                pattern: /(?<=(\s|\n)+)if(?=\s*\()/g
+            },
+            {
+                class: 'keyword-set-3',
+                pattern: /(?<=(\s*\()|(\s|\n)*)\s*function(?=\s+)/g
+            },
+            {
+                class: 'function-name',
+                pattern: /(?<=\s+|.)[a-zA-Z_]+[$a-zA-Z_0-9]+(?=\s*\()/g
+            },
+            {
+                class: 'property',
+                pattern: /(?<=\.)[a-zA-Z_]+[$a-zA-Z_0-9]+(?!\s*\()(?=(.|\s*=|\s*))/g
+            },
+            {
+                class: 'keyword-set-3',
+                pattern: /(?<=\s+|.)(else|else)(?=\s+|\s*\{)/g
+            },
+            {
+                class: 'document-window',
+                pattern: /(?<=(\s|\n)+|\(\s*)(document|window)(?=(\.|\s*\)|\s+))/g
+            },
         ]
     }
 ]

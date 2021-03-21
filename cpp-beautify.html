@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="pretty-code-assets/css/main.css">
+    <title>CPP</title>
+    <style>
+        .wrapper {
+            padding: 25px 70px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+        <div pretty-code="true" data-lang="cpp" class="pretty-code-wrapper">
+            <div class="pretty-code-header">
+                <div>
+                    <h3>CPP</h3>
+                    <h3>This is how your CPP code will look</h3>
+                </div>
+                <div>
+                    <button class="pretty-code-copy-btn">Copy</button>
+                </div>
+            </div>
+            <div class="pretty-user-code">
+            </div>
+            <textarea class="pretty-user-code-placement">
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+
+class word_puzzle{
+
+	private :
+	char **ptr;
+	int row;
+	int col;
+	string word;
+	int count;
+	
+	public : 
+	word_puzzle(int row, int col, char **ptr, string word){
+		this->row = row;
+		this->col = col;
+		this->ptr = ptr;
+		this->word = word;
+		count = 0;
+	}
+	
+	public :
+	void print(){
+		int i,j;
+		cout << "Word to be searched : " << word << endl;
+		cout << "row : " << row << ", " << "col : " << col << endl;
+		cout << "Puzzle " << endl;
+		for(i=0; i<row; i++){
+			for(j=0; j<col; j++){
+				cout << ptr[i][j] << " ";
+			}
+			cout << endl;
+		}
+	}
+	
+	private :
+	bool word_can_fit(int x, int y, char move){
+	    int available_blocks;
+	    //cout << "Word length : " << word.size() << endl; 
+	    if(move == 'r'){
+            available_blocks = col- y;
+            //cout << "Available blocks : " << available_blocks << endl;
+            if(available_blocks < word.size())
+                return false;
+       
+	    }
+	    else if(move == 'd'){
+	        available_blocks = row - x;
+            //cout << "Available blocks : " << available_blocks << endl;
+            if(available_blocks < word.size())
+                return false;
+	    }
+	    return true;
+	}
+	
+	bool search_word_at_index(int x, int y, char move){
+	    int size = word.size();
+	    int i, k=0;
+	    if(move == 'r'){
+	        for(i=y; i<y+size; i++){
+	            if(word[k++] != ptr[x][i])
+	                return false;
+	        }
+	    }
+	    else if(move == 'd'){
+	        for(i=x; i<x+size; i++){
+	            if(word[k++] != ptr[i][y])
+	                return false;
+	        }
+	    }
+	    
+	    return true;
+	    
+	}
+	
+	public : 
+	int search_word(){
+	    
+	    int i, j, result;
+	    for(i=0; i<row; i++){
+	        for(j=0; j<col; j++){
+	            if(word_can_fit(i, j, 'r')){
+    	            result = search_word_at_index(i, j, 'r');
+    	            if(result)
+    	                count++;
+	            }
+	            if(word_can_fit(i, j, 'd')){
+    	            result = search_word_at_index(i, j, 'd');
+    	            if(result)
+    	                count++;
+	            }
+	        }
+	    }
+	    
+	    return count;
+	    
+	}
+
+};
+
+int main(){
+    int row, col;
+	int i,j;
+	string word;
+	
+	cout << "Enter number of rows : ";
+	cin >> row;
+	cout << "Enter number of cols : ";
+	cin >> col;
+	char **ptr = new char*[row];
+	for(i=0; i<row; i++)
+		ptr[i] = new char[col];
+		
+	cout << "Feed " << row << "x" << col << " characters : " << endl;
+	for(i=0; i<row; i++){
+		for(j=0; j<col; j++)
+			cin >> ptr[i][j];
+	}
+	
+	cout << "Enter word to search : ";
+	cin >> word;
+	
+    word_puzzle puzzle(row, col, ptr, word);
+    puzzle.print();
+    cout << "Total Matches : " << puzzle.search_word();
+    
+	return 0;
+}
+            </textarea>
+        </div>
+
+    </div>
+    <script src="pretty-code-assets/script/main.js" type="module"></script>
+</body>
+
+</html>

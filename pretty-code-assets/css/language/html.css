@@ -1,21 +1,34 @@
-.doc-type{
-    color :rgb(166 10 10);
+.doc-type {
+    color: rgb(166 10 10);
 }
-.start-tag, .close-tag{
-    color : rgb(228, 148, 1);
+
+.start-tag,
+.close-tag {
+    color: rgb(228, 148, 1);
 }
-.start-tag-name, .close-tag-name{
+
+.start-tag-name,
+.close-tag-name {
     color: rgb(141, 141, 219);
 }
-.attribute-name{
-    color : rgb(228, 85, 85);
+
+.attribute-name {
+    color: rgb(228, 85, 85);
 }
-.string{
-    color : rgb(52, 165, 52);
+
+.string {
+    color: rgb(105 194 105);
 }
-.comment{
-    color :rgb(190, 190, 190);
+
+.comment {
+    color: rgb(190, 190, 190);
 }
-.comment .start-tag, .comment .close-tag, .comment .attribute-name, .comment .string, .comment .start-tag-name, .comment .close-tag-name{
-    color :rgb(190, 190, 190);
+
+.comment .start-tag,
+.comment .close-tag,
+.comment .attribute-name,
+.comment .string,
+.comment .start-tag-name,
+.comment .close-tag-name {
+    color: rgb(190, 190, 190);
 }
