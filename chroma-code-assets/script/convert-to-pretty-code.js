@@ -4,14 +4,15 @@ import kit from './conversion.js'
 function codeCopiedMessageBlock() {
     let msgContainer = document.createElement('div')
     msgContainer.innerHTML = 'Code Copied To Clipboard'
-    msgContainer.className = 'code-copy-msg'
+    msgContainer.className = 'code-copy-msg code-copy-msg-animate'
     document.body.appendChild(msgContainer)
+    return msgContainer
 }
-codeCopiedMessageBlock()
+
 
 function htmlEntities(content) {
-    content = content.replaceAll(/</g, '&lt;');
-    content = content.replaceAll(/>/g, '&gt;');
+    content = content.replaceAll(/</g, '&lt;')
+    content = content.replaceAll(/>/g, '&gt;')
     content = content.replaceAll(/"/g, '&quot;')
     content = content.replaceAll(/'/g, '&apos;')
     content = content.replaceAll(/\//g, '&sol;')
@@ -24,7 +25,7 @@ let index
 function copyToClipboard(index) {
     let codeTextarea = document.getElementsByClassName('pretty-code-wrapper')[index].getElementsByTagName('textarea')[0]
     console.log(index)
-    let copyCode = codeTextarea.value
+    let copyCode = codeTextarea.value.trim()
     console.log('Copy Code')
     console.log(copyCode)
     let textarea = document.createElement('textarea')
@@ -34,18 +35,18 @@ function copyToClipboard(index) {
     textarea.select()
     document.execCommand('copy')
     document.body.removeChild(textarea)
-    let msgBlock = document.getElementsByClassName('code-copy-msg')[0]
+    let msgBlock = codeCopiedMessageBlock()
     msgBlock.style.display = 'block'
     setTimeout(() => {
-            msgBlock.style.display = 'none'
-        }, 2000)
+            msgBlock.remove()
+        }, 1500)
         //alert('code copied successfully!');
 }
 
 
 export default function convertToPrettyCode(prettyCodeContainer, contentContainer, dataLanguage, content, index) {
 
-    contentContainer.innerHTML = 'Loading&nbsp;<i class="fas fa-sync fa-spin"></i>'
+    contentContainer.innerHTML = 'Loading...'
     contentContainer.style.display = 'block'
 
     let i, j, languageKit
@@ -107,7 +108,7 @@ export default function convertToPrettyCode(prettyCodeContainer, contentContaine
         document.getElementsByClassName('pretty-code-copy-btn')[index].addEventListener('click', () => {
             copyToClipboard(index)
         })
-    }, 4000)
+    }, 1000)
 
 
 }

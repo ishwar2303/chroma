@@ -30,7 +30,7 @@ export default kit = [{
             },
             {
                 class: 'close-tag-name',
-                pattern: /(?<=\&sol;(&nbsp;)*)[a-zA-Z]+(?=(&nbsp;)*&gt;)/g
+                pattern: /(?<=&sol;(&nbsp;)*)[a-zA-Z0-9]+(?=(&nbsp;)*&gt;)/g
             },
             {
                 class: 'start-tag',
