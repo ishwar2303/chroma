@@ -1,0 +1,93 @@
+.chroma{
+    background: rgb(226 226 226 / 44%);
+    border-radius: 3px;
+    color: rgb(22, 22, 22);
+    margin : 10px;
+    font-size: 16px;
+}
+.chroma-flex-row{
+    display: flex;
+    flex-direction: row;
+}
+.chroma-flex-col{
+    display: flex;
+    flex-direction: column;
+}
+.chroma-head{
+    padding-bottom: 10px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.4);
+    background: rgb(85 85 85);
+    color: white;
+    padding-top: 10px;
+    padding: 10px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    align-items: center;
+}
+.chroma-copy{
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+    background: white;
+    color: black;
+}
+.chroma-beautify{
+    overflow: auto;
+    max-height: 500px;
+    padding: 10px;
+    border: 0.5px solid rgba(0,0,0,0.4);
+    border-top: none;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.chroma-copy-msg{
+    position: absolute;
+    padding: 15px 25px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    border-radius: 5px;
+    z-index: 100000;
+    color: white;
+    background: rgba(0,0,0,0.8);
+}
+.chroma-sb{
+    display: flex;
+    justify-content: space-between;
+}
+
+.chroma-line-no{
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+.chroma-line-no span{
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+/* Beauify */
+
+.comment{
+    color: rgb(150 150 226);
+    font-weight: 100;
+    font-style: italic;
+}
+.string{
+    color: rgb(0 150 0);
+    font-style: oblique;
+}
+.keyword{
+    color: rgb(9 9 236);
+}
+.preprocessor{
+    color: rgb(181 72 0);
+}
+.constant{
+    color: rgb(12, 117, 124);
+}
+.function {
+    color: rgb(234 45 45);
+}
