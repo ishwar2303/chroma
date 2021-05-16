@@ -1,0 +1,13 @@
+Chroma Options
+
+HTML attributes
+
+required
+chroma="true"
+langugae="", supported languages = [c, css, html, sql]
+
+optional
+copy="true", add a copy button
+heading="true" Specify heading in code header, default language name
+preloader="trye" 1.5 seconds animation for code loading
+

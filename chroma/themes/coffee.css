@@ -1,7 +1,7 @@
 .chroma{
-    background: rgb(226 226 226 / 44%);
+    background: #2f1300;
     border-radius: 3px;
-    color: rgb(22, 22, 22);
+    color: white;
     margin : 10px;
     font-size: 16px;
 }
@@ -16,7 +16,7 @@
 .chroma-head{
     padding-bottom: 10px;
     border-bottom: 0.5px solid rgba(255,255,255,0.4);
-    background: rgb(85 85 85);
+    background: #5c2a08;
     color: white;
     padding-top: 10px;
     padding: 10px;
@@ -28,17 +28,11 @@
     padding: 5px 10px;
     border-radius: 3px;
     border: none;
-    background: white;
-    color: black;
 }
 .chroma-beautify{
     overflow: auto;
     max-height: 500px;
     padding: 10px;
-    border: 0.5px solid rgba(0,0,0,0.4);
-    border-top: none;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
 }
 .chroma-copy-msg{
     position: absolute;
@@ -48,7 +42,7 @@
     transform: translate(-50%, -50%);
     position: fixed;
     border-radius: 5px;
-    z-index: 100000;
+    z-index: 1000;
     color: white;
     background: rgba(0,0,0,0.8);
 }
@@ -66,34 +60,44 @@
     display: flex;
     justify-content: flex-end;
 }
+.chroma-line-no span{
+    color: #b55818;
+}
 
-
-/* Beauify */
-
-.comment{
-    color: rgb(150 150 226);
-    font-weight: 100;
+/* Beautify */
+.chroma-alpha{
+    color : #bb662d;
+}
+/* string */
+.chroma-bravo{
+    color: #3c9a3c;
     font-style: italic;
 }
-.string{
-    color: rgb(0 150 0);
-    font-style: oblique;
+/* comment */
+.chroma-charlie{
+    color : #6d6d6d;
 }
-.keyword{
-    color: rgb(9 9 236);
+.chroma-delta{
+    color : #7b7bad;
 }
-.preprocessor{
-    color: rgb(181 72 0);
+.chroma-echo{
+    color : #3c7d82; 
 }
-.constant{
-    color: rgb(12, 117, 124);
+.chroma-lima{
+    color :#c15454;
 }
-.function {
-    color: rgb(234 45 45);
+.chroma-oscar{
+    color : #8d4096;
 }
-.control{
-    color : rgb(203 60 220);
+.chroma-romeo{
+    color : #bb2525;
 }
-.conditional{
-    color : #ed6464;
+.chroma-tango{
+    color : ;
+}
+.chroma-victor{
+    color : #bdae4d;
+}
+.chroma-zeus{
+    color : gray;
 }

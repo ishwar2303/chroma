@@ -76,11 +76,14 @@
 /* unused harmony export beautify */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__language_c__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__language_c___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__language_c__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_html__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_html__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__language_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__language_sql__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_css__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__language_css__);
 /* Import all supported languages */
+
 
 
 
@@ -91,6 +94,7 @@ var supportedLangugaes = () => {
     set.push(__WEBPACK_IMPORTED_MODULE_0__language_c___default.a)
     set.push(__WEBPACK_IMPORTED_MODULE_1__language_html___default.a)
     set.push(__WEBPACK_IMPORTED_MODULE_2__language_sql___default.a)
+    set.push(__WEBPACK_IMPORTED_MODULE_3__language_css___default.a)
     return set
 }
 
@@ -160,10 +164,20 @@ const prepareCodeLines = (len) => {
 * @param int
 * @param int
 * */
-const nestedMatch = (start, end) => {
-    return start >= end ? true : false;
+const overlapMatch = (start, end) => {
+    return start >= end ? true : false
 }
-/* unused harmony export nestedMatch */
+/* unused harmony export overlapMatch */
+
+
+/*
+* @param int
+* @param int
+* */
+const nullMatch = (start, end) => {
+    return start != end ? true : false
+}
+/* unused harmony export nullMatch */
 
 
 /*
@@ -174,10 +188,14 @@ const replaceMatch = (code) => {
 
     matches.forEach((m) => {
         // console.log(m.start, m.end)
-        if(nestedMatch(m.start, endPos)){
-            beautify += '<span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '</span>'
+        if(overlapMatch(m.start, endPos)){
+
+            if(nullMatch(endPos, m.start))
+                beautify += '<span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '</span>'
+
             beautify += '<span class="' + m.class.replace(/\./g, ' ') + '">' + m.value + '</span>'
             endPos = m.end
+
         }
     })
     beautify += code.substr(endPos, code.length)
@@ -244,7 +262,7 @@ const processCodeWithPatterns = (code, kit) => {
     }
 
     matches.sort((a, b) => {return a.start - b.start})
-    console.log(matches)
+    // console.log(matches)
 }
 /* unused harmony export processCodeWithPatterns */
 
@@ -283,6 +301,29 @@ const chromaCopy = (btn, copyCode, message) => {
 }
 
 /*
+* preloader
+*
+*
+*/
+const preloader = () => {
+    let loader = document.createElement('div')
+    loader.className = 'chroma-preloader'
+    let main = document.createElement('div')
+    main.innerHTML = '<div>L</div>'
+    main.innerHTML += '<div>o</div>'
+    main.innerHTML += '<div>a</div>'
+    main.innerHTML += '<div>d</div>'
+    main.innerHTML += '<div>i</div>'
+    main.innerHTML += '<div>n</div>'
+    main.innerHTML += '<div>g</div>'
+    loader.appendChild(main)
+
+    return loader
+}
+/* unused harmony export preloader */
+
+
+/*
 * Preparing front end output
 * Set code copy button
 * @param string
@@ -290,12 +331,15 @@ const chromaCopy = (btn, copyCode, message) => {
 * @param string
 * @param string
 * @param boolean
+* @param boolean
 */ 
-const presentation = (code, lineSet, headingValue, lang, copy) => {
+const presentation = (code, lineSet, headingValue, lang, copy, loaderValue) => {
+
     if(!headingValue)
         headingValue = lang.toUpperCase()
     let main = document.createElement('div')
     main.className = 'chroma'
+    main.style.fontFamily = 'monospace'
     let chromaHeader = document.createElement('div')
     chromaHeader.className = 'chroma-head chroma-sb'
     let heading = document.createElement('div')
@@ -304,6 +348,7 @@ const presentation = (code, lineSet, headingValue, lang, copy) => {
     if(copy == 'true'){
         btn.innerHTML = 'Copy'
         btn.className = 'chroma-copy'
+        btn.style.display = 'none'
         btn.addEventListener('click', () => {
             chromaCopy(btn, resetEntities(code), 'Code copied successfully')
         })
@@ -313,16 +358,33 @@ const presentation = (code, lineSet, headingValue, lang, copy) => {
         chromaHeader.appendChild(btn)
     
     let result = document.createElement('div')
-    result.className = 'chroma-beautify chroma-flex-row'
+    result.className = 'chroma-beautify'
+    let sub = document.createElement('div')
+    sub.className = 'chroma-flex-row'
     let pre = document.createElement('pre')
+    pre.style.margin = 0
+    pre.style.fontFamily = ''
     let codeBlock = document.createElement('code')
     codeBlock.innerHTML = beautify
     pre.appendChild(codeBlock)
-
-    result.appendChild(lineSet)
-    result.appendChild(pre)
+    sub.appendChild(lineSet)
+    sub.appendChild(pre)
+    result.appendChild(sub)
     main.appendChild(chromaHeader)
     main.appendChild(result)
+    if(loaderValue){
+        result.style.minHeight = '250px'
+        sub.style.display = 'none'
+        let loader = preloader()
+        result.appendChild(loader)
+        setTimeout(() => {
+            loader.remove()
+            result.style.minHeight = '0'
+            sub.style.display = 'flex'
+            if(copy)
+                btn.style.display = 'block'
+        }, 1500)
+    }
     return main
 
 }
@@ -332,9 +394,11 @@ const presentation = (code, lineSet, headingValue, lang, copy) => {
 /*
 * @param string
 * @param object
-* @param string
+* @param string heading=""
+* @param string copy=""
+* @param string preloader=""
 * */
-const convert = (code, lang_kit, heading, copy) => {
+const convert = (code, lang_kit, heading, copy, loader) => {
     matches = Array()
     beautify = ''
 
@@ -347,7 +411,7 @@ const convert = (code, lang_kit, heading, copy) => {
     replaceMatch(code)
 
     let lineSet = prepareCodeLines(totalLines)
-    let result = presentation(code, lineSet, heading, lang_kit.lang, copy)
+    let result = presentation(code, lineSet, heading, lang_kit.lang, copy, loader)
 
     return result
 }
@@ -355,14 +419,14 @@ const convert = (code, lang_kit, heading, copy) => {
 
 
 const defaultOptions = {
-    theme : 'light'
+    theme : 'ace-dark',
 }
 /* harmony export (immutable) */ __webpack_exports__["c"] = defaultOptions;
 
 
 const setOptions = (options) => {
     let head = document.head
-    let link
+    let link, style
     let theme = options.theme
     if(theme){
         link = document.createElement('link')
@@ -392,10 +456,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+const addUtilityCss = () => {
+    let head = document.head
+    let link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'chroma/css/chroma.css'
+    head.appendChild(link)
+}
 
 
 // fetch target blocks with attribute = chroma
 const fetchTargetElements = (options) => {
+
+    addUtilityCss()
+
     let supportedLanguages = __WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* Chroma */].supportedLangugaes()
 
     let blocks = document.querySelectorAll('[chroma]')
@@ -404,11 +478,11 @@ const fetchTargetElements = (options) => {
         let attributes = block.attributes
         let heading = attributes.heading != undefined ? attributes.heading.nodeValue : false
         let copy = attributes.copy != undefined ? attributes.copy.nodeValue : false
-        let lang = attributes.lang != undefined ? attributes.lang.nodeValue : false
-
+        let lang = attributes.language != undefined ? attributes.language.nodeValue : false
+        let loader = attributes.preloader != undefined ? attributes.preloader : false
         let lang_kit = __WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* Chroma */].pickLanguage(supportedLanguages, lang)
         if(lang_kit){
-            let result = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["b" /* convert */])(code, lang_kit, heading, copy)
+            let result = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["b" /* convert */])(code, lang_kit, heading, copy, loader)
             block.innerHTML = ''
             block.appendChild(result)
         }
@@ -425,10 +499,11 @@ const fetchTargetElements = (options) => {
 
 /*
 * Set options
+* Set theme = ['ace-dark', 'coffee', 'danger', 'dark', 'dreamviewer', 'light', 'twilight']
 */
 
 let options = {
-    theme : 'dark'
+    theme : '',
 }
 
 fetchTargetElements(options)
@@ -441,35 +516,43 @@ let kit = {
     lang : 'c',
     conversion : [
         {
-            class: 'meta.preprocessor',
+            class: 'meta.preprocessor.chroma-alpha',
             pattern: /\#([\S\s]*?)$/gm
         },
         {
-            class: 'constant.numeric',
+            class: 'constant.numeric.chroma-echo',
             pattern: /\b\d+\b/g
         },
         {
-            class : 'comment',
+            class : 'comment.chroma-charlie',
             pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
         },
         {
-            class: 'keyword',
+            class: 'keyword.declaration.chroma-delta',
             pattern: /\b(void|int|float|double|char|long|short|signed|unsigned)\b/g
         },
         {
-            class: 'storage.modifier',
+            class: 'keyword.control.chroma-delta',
+            pattern: /\b(break|continue|return)\b/g
+        },
+        {
+            class: 'storage.modifier.chroma-oscar',
             pattern: /\b(static|extern|auto|register|volatile|inline)\b/g
         },
         {
-            class: 'support.type',
+            class : 'keyword.conditional.chroma-lima',
+            pattern: /\b(if|else|for|do|while)\b/g
+        },
+        {
+            class: 'support.type.chroma-oscar',
             pattern: /\b(struct|union|enum)\b/g
         },
         {
-            class : 'string',
+            class : 'string.chroma-bravo',
             pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
         },
         {
-            class : 'entitiy.name.function',
+            class : 'entitiy.name.function.chroma-victor',
             pattern : /(?<=(\w|\*)+)(\s|\n)+((\w+)(?= ?\())/g
         }
     ]
@@ -483,47 +566,52 @@ module.exports = kit
 /***/ (function(module, exports) {
 
 let kit = {
-    lang : 'html',
-    conversion : [{
-            class: 'attribute-name',
-            pattern: /(?<=(\s)*)[a-zA-Z\-]+(?=(\s)*=(&quot;))/g
-        }, 
+    lang : 'css',
+    conversion : [
         {
-            class: 'comment',
-            pattern: /&lt;!--(.*\n.*)*--&gt;/g
+            class : 'comment.chroma-charlie',
+            pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)/g
         },
         {
-            class: 'string',
-            pattern: /&apos;[^&]*[^a]*[^p]*[^o]*[^s]*[^;]*&apos;/g
+            class : 'string.chroma-bravo',
+            pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
         },
         {
-            class: 'string',
-            pattern: /&quot;[^&]*[^q]*[^u]*[^o]*[^t]*[^;]*&quot;/g
+            class : 'constant.numeric.chroma-echo',
+            pattern: /(\d+)(px|em|cm|s|%)?/g
         },
         {
-            class: 'doc-type',
-            pattern: /(?<=&lt;)(!DOCTYPE)(?=&nbsp;)/g
+            class : 'constant.hex.chroma-tango',
+            pattern: /#([a-f0-9]{3}|[a-f0-9]{6})(?=;|\s|,|\))/gi
         },
         {
-            class: 'start-tag-name',
-            pattern: /((?<=(&nbsp;)*))html(?=&gt;)/g
-        },
-        {
-            class: 'start-tag-name',
-            pattern: /(?<=&lt;(&nbsp;)*)[a-zA-Z0-9]+/g
-        },
-        {
-            class: 'close-tag-name',
-            pattern: /(?<=&sol;(&nbsp;)*)[a-zA-Z0-9]+(?=(&nbsp;)*&gt;)/g
-        },
-        {
-            class: 'start-tag',
-            pattern: /&lt;/g
-        },
-        {
-            class: 'close-tag',
+            class: 'direct-descendant.chroma-oscar',
             pattern: /&gt;/g
-        }
+        },
+        {
+            class: 'class.chroma-alpha',
+            pattern: /\.[\w\-_]+/g
+        },
+        {
+            class: 'id.chroma-alpha',
+            pattern: /\#[\w\-_]+/g
+        },
+        {
+            class: 'pseudo.chroma-oscar',
+            pattern: /:[\w\-_]+/g
+        },
+        {
+            class : "property.chroma-oscar",
+            pattern : /[\w-]+(?=\s*:)/g
+        },
+        {
+            class: 'tag.chroma-delta',
+            pattern: /\w+/g
+        },
+        {
+            class : 'vendor.prefix.chroma-vector',
+            pattern: /(-o-|-moz-|-webkit-|-ms-)?[\w-]+(?=\s?:)(?!.*\{)/g
+        },
     ]
     
 }
@@ -535,30 +623,78 @@ module.exports = kit
 /***/ (function(module, exports) {
 
 let kit = {
-    lang : 'sql',
-    conversion : [
+    lang : 'html',
+    conversion : [{
+            class: 'attribute.chroma-lima',
+            pattern: /(?<=(\s)*)[a-zA-Z\-]+(?=(\s)*=("))/g
+        }, 
         {
-            class : 'string',
+            class : 'comment.chroma-charlie',
+            pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
+        },
+        {
+            class : 'string.chroma-bravo',
             pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
         },
         {
-            class: 'comment',
+            class: 'doctype.chroma-oscar',
+            pattern: /(?<=&lt;)(!DOCTYPE)(?=\s+)/g
+        },
+        {
+            class: 'doctype.name.chroma-alpha',
+            pattern: /((?<=(&nbsp;)*))html(?=&gt;)/g
+        },
+        {
+            class: 'start-tag-name.chroma-alpha',
+            pattern: /(?<=&lt;(&nbsp;)*)[a-zA-Z0-9]+/g
+        },
+        {
+            class: 'close-tag-name.chroma-alpha',
+            pattern: /(?<=\/(&nbsp;)*)[a-zA-Z0-9]+(?=(&nbsp;)*&gt;)/g
+        },
+        {
+            class: 'start-tag.chroma-zeus',
+            pattern: /&lt;/g
+        },
+        {
+            class: 'close-tag.chroma-zeus',
+            pattern: /&gt;/g
+        }
+    ]
+    
+}
+
+module.exports = kit
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+let kit = {
+    lang : 'sql',
+    conversion : [
+        {
+            class : 'string.chroma-bravo',
+            pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
+        },
+        {
+            class: 'comment.chroma-charlie',
             pattern: /--.*$|\/\*[\s\S]*?\*\/|(\/\/)[\s\S]*?$/gm
         },
         {
-            class: 'constant.numeric',
+            class: 'constant.numeric.chroma-echo',
             pattern: /\b(\d+(\.\d+)?(e(\+|\-)?\d+)?(f|d)?|0x[\da-f]+)\b/gi
         },
         {
-            class: 'function.call',
+            class: 'function.call.chroma-tango',
             pattern: /(\w+?)(?=\()/g
         },
         {
-            class: 'keyword',
+            class: 'keyword.chroma-delta',
             pattern: /\b(ABSOLUTE|ACTION|ADA|ADD|ALL|ALLOCATE|ALTER|AND|ANY|ARE|AS|ASC|ASSERTION|AT|AUTHORIZATION|AVG|BEGIN|BETWEEN|BIT|BIT_LENGTH|BOTH|BY|CASCADE|CASCADED|CASE|CAST|CATALOG|CHAR|CHARACTER|CHARACTER_LENGTH|CHAR_LENGTH|CHECK|CLOSE|COALESCE|COLLATE|COLLATION|COLUMN|COMMIT|CONNECT|CONNECTION|CONSTRAINT|CONSTRAINTS|CONTINUE|CONVERT|CORRESPONDING|COUNT|CREATE|CROSS|CURRENT|CURRENT_DATE|CURRENT_TIME|CURRENT_TIMESTAMP|CURRENT_USER|CURSOR|DATE|DAY|DEALLOCATE|DEC|DECIMAL|DECLARE|DEFAULT|DEFERRABLE|DEFERRED|DELETE|DESC|DESCRIBE|DESCRIPTOR|DIAGNOSTICS|DISCONNECT|DISTINCT|DOMAIN|DOUBLE|DROP|ELSE|END|END-EXEC|ESCAPE|EXCEPT|EXCEPTION|EXEC|EXECUTE|EXISTS|EXTERNAL|EXTRACT|FALSE|FETCH|FIRST|FLOAT|FOR|FOREIGN|FORTRAN|FOUND|FROM|FULL|GET|GLOBAL|GO|GOTO|GRANT|GROUP|HAVING|HOUR|IDENTITY|IMMEDIATE|IN|INCLUDE|INDEX|INDICATOR|INITIALLY|INNER|INPUT|INSENSITIVE|INSERT|INT|INTEGER|INTERSECT|INTERVAL|INTO|IS|ISOLATION|JOIN|KEY|LANGUAGE|LAST|LEADING|LEFT|LEVEL|LIKE|LIMIT|LOCAL|LOWER|MATCH|MAX|MIN|MINUTE|MODULE|MONTH|classS|NATIONAL|NATURAL|NCHAR|NEXT|NO|NONE|NOT|NULL|NULLIF|NUMERIC|OCTET_LENGTH|OF|ON|ONLY|OPEN|OPTION|OR|ORDER|OUTER|OUTPUT|OVERLAPS|PAD|PARTIAL|PASCAL|POSITION|PRECISION|PREPARE|PRESERVE|PRIMARY|PRIOR|PRIVILEGES|PROCEDURE|PUBLIC|READ|REAL|REFERENCES|RELATIVE|RESTRICT|REVOKE|RIGHT|ROLLBACK|ROWS|SCHEMA|SCROLL|SECOND|SECTION|SELECT|SESSION|SESSION_USER|SET|SIZE|SMALLINT|SOME|SPACE|SQL|SQLCA|SQLCODE|SQLERROR|SQLSTATE|SQLWARNING|SUBSTRING|SUM|SYSTEM_USER|TABLE|TEMPORARY|THEN|TIME|TIMESTAMP|TIMEZONE_HOUR|TIMEZONE_MINUTE|TO|TRAILING|TRANSACTION|TRANSLATE|TRANSLATION|TRIM|TRUE|UNION|UNIQUE|UNKNOWN|UPDATE|UPPER|USAGE|USER|USING|VALUE|VALUES|VARCHAR|VARYING|VIEW|WHEN|WHENEVER|WHERE|WITH|WORK|WRITE|YEAR|ZONE|USE)(?=\b)/gi
         },
         {
-            class: 'keyword.operator',
+            class: 'keyword.operator.chroma-romeo',
             pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
         }
     ]

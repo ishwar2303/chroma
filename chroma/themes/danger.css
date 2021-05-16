@@ -1,0 +1,63 @@
+.chroma{
+    background: rgb(39 39 39);
+    color: white;
+}
+.chroma-head{
+    background: #2b2121;
+    color: white;
+}
+.chroma-beautify{
+    background: linear-gradient(45deg, black, rgb(120 0 0));
+}
+.chroma-beautify pre{
+    margin : 0;
+    padding: 10px 0px;
+}
+.chroma-line-no{
+    margin-right: 5px;
+    padding: 10px;
+    border-bottom-left-radius: 3px;
+}
+.chroma-line-no span:nth-child(odd){
+    color: rgb(159 187 30);
+}
+.chroma-line-no span:nth-child(even){
+    color: rgb(146 135 23);
+}
+
+/* Beautify */
+.chroma-alpha{
+    color : #ec8038;
+}
+/* string */
+.chroma-bravo{
+    color : #56d456;
+}
+/* comment */
+.chroma-charlie{
+    color : #6d6d6d;
+}
+.chroma-delta{
+    color : #9595f5;
+}
+.chroma-echo{
+    color : #3fc7d0; 
+}
+.chroma-lima{
+    color :#ed6464;
+}
+.chroma-oscar{
+    color : #cb3cdc;
+}
+.chroma-romeo{
+    color : #ef2626;
+}
+.chroma-tango{
+    color : ;
+}
+.chroma-victor{
+    color : #d8c029;
+}
+.chroma-zeus{
+    color : gray;
+}

@@ -9,20 +9,25 @@
 </head>
 <body>
     <div class="wrapper">
-                    <div chroma="true" lang="c" heading="Bubble Sort" copy="true">
-#include &lt;iostream>
-#include &lt;algorithm>
-using namespace std;
+                    <pre chroma="true" language="html" heading="HTML Code" copy="true" preloader="true">
+&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Chroma&lt;/title>
+&lt;/head>
+&lt;body>
+    Your Code is beautiful show it off.
+    &lt;div chroma="true" language="html" preloader="true" copy="true" heading="HTML Code">
+        Place your code here...
+    &lt;/div>
+&lt;/body>
+&lt;/html>
+                    </pre>
 
-int main(){
-    signed int a, b;
-    unsigned int sum1 = a + b;
-    char arr[] = "Ishwar int Baisla";
-    return 0;
-}
-                    </div>
-
-                    <div chroma="true" lang="c" copy="true">
+                    <div chroma="true" language="c" copy="true" preloader="true">
 #include &lt;iostream>
 using namespace std;
 
@@ -68,14 +73,59 @@ int main(){
                     </div>
     </div>
     
-    <div chroma="true" lang="html">
-        &lt;div>This is html code&lt;/div>
+    <div chroma="true" language="css"  copy="true" preloader="true">
+/* Beauify */
+
+.comment{
+    color: #0088FF;
+    font-style: italic;
+}
+.string{
+    color: #3AD900;
+}
+.keyword, .doc, .attribute{
+    color: #FFEE80;
+}
+.preprocessor, .start-tag-name, .close-tag-name{
+    color: #FF9D00;
+}
+#constant{
+    color: #FF628C;
+}
+.function:nth-child(odd){
+    color: white;
+}
+div > span{
+    background: blue;
+}
     </div>
 
     
-    <div chroma="true" lang="sql">
-        SELECT * FROM `products` WHERE pro_name = 'phone';
+    <div chroma="true" language="sql" preloader="true">
+SELECT * FROM `products` WHERE pro_name = 'phone';
+
+SELECT column_name(s)
+FROM table_name
+WHERE column_name BETWEEN value_1 AND value_2;
+
+ALTER TABLE table_name 
+ADD column_name datatype;
+
+SELECT column_name,
+  CASE
+    WHEN condition THEN 'Result_1'
+    WHEN condition THEN 'Result_2'
+    ELSE 'Result_3'
+  END
+FROM table_name;
+
+SELECT column_name, COUNT(*)
+FROM table_name
+GROUP BY column_name
+HAVING COUNT(*) > value;
     </div>
+
+    
 
     <script type="module" src="chroma/dist/chroma.js"></script>
 </body>

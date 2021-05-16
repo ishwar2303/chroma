@@ -1,43 +1,39 @@
 let kit = {
     lang : 'html',
     conversion : [{
-            class: 'attribute-name',
-            pattern: /(?<=(\s)*)[a-zA-Z\-]+(?=(\s)*=(&quot;))/g
+            class: 'attribute.chroma-lima',
+            pattern: /(?<=(\s)*)[a-zA-Z\-]+(?=(\s)*=("))/g
         }, 
         {
-            class: 'comment',
-            pattern: /&lt;!--(.*\n.*)*--&gt;/g
+            class : 'comment.chroma-charlie',
+            pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
         },
         {
-            class: 'string',
-            pattern: /&apos;[^&]*[^a]*[^p]*[^o]*[^s]*[^;]*&apos;/g
+            class : 'string.chroma-bravo',
+            pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
         },
         {
-            class: 'string',
-            pattern: /&quot;[^&]*[^q]*[^u]*[^o]*[^t]*[^;]*&quot;/g
+            class: 'doctype.chroma-oscar',
+            pattern: /(?<=&lt;)(!DOCTYPE)(?=\s+)/g
         },
         {
-            class: 'doc-type',
-            pattern: /(?<=&lt;)(!DOCTYPE)(?=&nbsp;)/g
-        },
-        {
-            class: 'start-tag-name',
+            class: 'doctype.name.chroma-alpha',
             pattern: /((?<=(&nbsp;)*))html(?=&gt;)/g
         },
         {
-            class: 'start-tag-name',
+            class: 'start-tag-name.chroma-alpha',
             pattern: /(?<=&lt;(&nbsp;)*)[a-zA-Z0-9]+/g
         },
         {
-            class: 'close-tag-name',
-            pattern: /(?<=&sol;(&nbsp;)*)[a-zA-Z0-9]+(?=(&nbsp;)*&gt;)/g
+            class: 'close-tag-name.chroma-alpha',
+            pattern: /(?<=\/(&nbsp;)*)[a-zA-Z0-9]+(?=(&nbsp;)*&gt;)/g
         },
         {
-            class: 'start-tag',
+            class: 'start-tag.chroma-zeus',
             pattern: /&lt;/g
         },
         {
-            class: 'close-tag',
+            class: 'close-tag.chroma-zeus',
             pattern: /&gt;/g
         }
     ]

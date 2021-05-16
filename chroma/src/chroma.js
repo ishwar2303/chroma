@@ -2,6 +2,7 @@
 import c_kit from './language/c'
 import html_kit from './language/html'
 import sql_kit from './language/sql'
+import css_kit from './language/css'
 
 /* Add all languages to array */
 export var supportedLangugaes = () => {
@@ -9,6 +10,7 @@ export var supportedLangugaes = () => {
     set.push(c_kit)
     set.push(html_kit)
     set.push(sql_kit)
+    set.push(css_kit)
     return set
 }
 
@@ -68,8 +70,16 @@ export const prepareCodeLines = (len) => {
 * @param int
 * @param int
 * */
-export const nestedMatch = (start, end) => {
-    return start >= end ? true : false;
+export const overlapMatch = (start, end) => {
+    return start >= end ? true : false
+}
+
+/*
+* @param int
+* @param int
+* */
+export const nullMatch = (start, end) => {
+    return start != end ? true : false
 }
 
 /*
@@ -80,10 +90,14 @@ export const replaceMatch = (code) => {
 
     matches.forEach((m) => {
         // console.log(m.start, m.end)
-        if(nestedMatch(m.start, endPos)){
-            beautify += '<span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '</span>'
+        if(overlapMatch(m.start, endPos)){
+
+            if(nullMatch(endPos, m.start))
+                beautify += '<span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '</span>'
+
             beautify += '<span class="' + m.class.replace(/\./g, ' ') + '">' + m.value + '</span>'
             endPos = m.end
+
         }
     })
     beautify += code.substr(endPos, code.length)
@@ -144,7 +158,7 @@ export const processCodeWithPatterns = (code, kit) => {
     }
 
     matches.sort((a, b) => {return a.start - b.start})
-    console.log(matches)
+    // console.log(matches)
 }
 
 
@@ -181,6 +195,27 @@ const chromaCopy = (btn, copyCode, message) => {
 }
 
 /*
+* preloader
+*
+*
+*/
+export const preloader = () => {
+    let loader = document.createElement('div')
+    loader.className = 'chroma-preloader'
+    let main = document.createElement('div')
+    main.innerHTML = '<div>L</div>'
+    main.innerHTML += '<div>o</div>'
+    main.innerHTML += '<div>a</div>'
+    main.innerHTML += '<div>d</div>'
+    main.innerHTML += '<div>i</div>'
+    main.innerHTML += '<div>n</div>'
+    main.innerHTML += '<div>g</div>'
+    loader.appendChild(main)
+
+    return loader
+}
+
+/*
 * Preparing front end output
 * Set code copy button
 * @param string
@@ -188,12 +223,15 @@ const chromaCopy = (btn, copyCode, message) => {
 * @param string
 * @param string
 * @param boolean
+* @param boolean
 */ 
-export const presentation = (code, lineSet, headingValue, lang, copy) => {
+export const presentation = (code, lineSet, headingValue, lang, copy, loaderValue) => {
+
     if(!headingValue)
         headingValue = lang.toUpperCase()
     let main = document.createElement('div')
     main.className = 'chroma'
+    main.style.fontFamily = 'monospace'
     let chromaHeader = document.createElement('div')
     chromaHeader.className = 'chroma-head chroma-sb'
     let heading = document.createElement('div')
@@ -202,6 +240,7 @@ export const presentation = (code, lineSet, headingValue, lang, copy) => {
     if(copy == 'true'){
         btn.innerHTML = 'Copy'
         btn.className = 'chroma-copy'
+        btn.style.display = 'none'
         btn.addEventListener('click', () => {
             chromaCopy(btn, resetEntities(code), 'Code copied successfully')
         })
@@ -211,16 +250,33 @@ export const presentation = (code, lineSet, headingValue, lang, copy) => {
         chromaHeader.appendChild(btn)
     
     let result = document.createElement('div')
-    result.className = 'chroma-beautify chroma-flex-row'
+    result.className = 'chroma-beautify'
+    let sub = document.createElement('div')
+    sub.className = 'chroma-flex-row'
     let pre = document.createElement('pre')
+    pre.style.margin = 0
+    pre.style.fontFamily = ''
     let codeBlock = document.createElement('code')
     codeBlock.innerHTML = beautify
     pre.appendChild(codeBlock)
-
-    result.appendChild(lineSet)
-    result.appendChild(pre)
+    sub.appendChild(lineSet)
+    sub.appendChild(pre)
+    result.appendChild(sub)
     main.appendChild(chromaHeader)
     main.appendChild(result)
+    if(loaderValue){
+        result.style.minHeight = '250px'
+        sub.style.display = 'none'
+        let loader = preloader()
+        result.appendChild(loader)
+        setTimeout(() => {
+            loader.remove()
+            result.style.minHeight = '0'
+            sub.style.display = 'flex'
+            if(copy)
+                btn.style.display = 'block'
+        }, 1500)
+    }
     return main
 
 }
@@ -228,9 +284,11 @@ export const presentation = (code, lineSet, headingValue, lang, copy) => {
 /*
 * @param string
 * @param object
-* @param string
+* @param string heading=""
+* @param string copy=""
+* @param string preloader=""
 * */
-export const convert = (code, lang_kit, heading, copy) => {
+export const convert = (code, lang_kit, heading, copy, loader) => {
     matches = Array()
     beautify = ''
 
@@ -243,18 +301,18 @@ export const convert = (code, lang_kit, heading, copy) => {
     replaceMatch(code)
 
     let lineSet = prepareCodeLines(totalLines)
-    let result = presentation(code, lineSet, heading, lang_kit.lang, copy)
+    let result = presentation(code, lineSet, heading, lang_kit.lang, copy, loader)
 
     return result
 }
 
 export const defaultOptions = {
-    theme : 'light'
+    theme : 'ace-dark',
 }
 
 export const setOptions = (options) => {
     let head = document.head
-    let link
+    let link, style
     let theme = options.theme
     if(theme){
         link = document.createElement('link')
