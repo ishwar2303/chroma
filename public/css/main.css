@@ -1,7 +1,11 @@
 *{
     margin : 0;
     padding : 0;
-    font-family : monospace;
+}
+body{
+    font-family: monospace;
+    background: linear-gradient(107deg, #553397, rgb(187 18 69));
+    color: white;
 }
 a{
     text-decoration: none;
@@ -36,6 +40,9 @@ input, select, textarea{
 }
 .mb-10{
     margin-bottom: 10px;
+}
+.mb-20{
+    margin-bottom: 20px;
 }
 .ml-5{
     margin-left: 5px;
@@ -131,9 +138,6 @@ input, select, textarea{
 .flex-col{
     display: flex;
     flex-direction: column;
-}
-.flex-1{
-    flex: 1;
 }
 .align-items-center{
     display: flex;
@@ -283,3 +287,45 @@ input:focus, textarea:focus{
 }
 
 
+.Chroma div{
+    font-size: 70px;
+    color: #021c32;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.exp-head{
+    font-size: 35px;
+    font-weight: bolder;
+    color: #53b0ff;
+}
+.exp-p div{
+    list-style: decimal;
+    font-size: 18px;
+    padding: 3px 0px;
+    line-height: 1.5;
+}
+.exp-p{
+    margin-bottom: 10px;
+}
+.exp-p h3{
+    font-size: 25px;
+    color: rgb(251 135 58);
+}
+.exp-code{
+    background: black;
+    color: #b7b73a;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+.what{
+    font-size: 20px;
+    font-weight: 400;
+}
+.download-chroma-btn{
+    color: white;
+    background: linear-gradient(
+45deg
+, rgb(0 0 0 / 90%), #021b31);
+}

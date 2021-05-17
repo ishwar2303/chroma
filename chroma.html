@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chroma</title>
+    <link rel="stylesheet" href="public/css/main.css">
+    <script src="https://kit.fontawesome.com/196c90f518.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="wrapper p-10-20">
+        <div class="main flex-row flex-center">
+            <div class="flex-col flex-1 w-100" style="max-width: 850px;">
+                <div class="flex-col flex-1" >
+                    <h1 class="Chroma">
+                        <div>
+                            <span style="color: rgb(46 209 249);">C</span>
+                            <span style="color: #ffad1a;">h</span>
+                            <span style="color: rgb(56 236 56);">r</span>
+                            <span style="color: #b8fb44;">o</span>
+                            <span style="color: rgb(255 68 68);">m</span>
+                            <span style="color: #ff66ff;">a</span>
+                        </div>
+                        <div style="font-size: 16px;margin-bottom: 10px;">Let's make your code beautiful</div>
+                    </h1>
+                    <div class="mb-20">
+                        <h3 class="what mb-10">Chroma is a syntax highlighting library written in javascript.</h3>
+                        <h3 class="what">It is lightweight and easy to use.</h3>
+                        <div class="flex-row flex-end">
+                            <button class="btn download-chroma-btn">Download</button>
+                        </div>
+                    </div>
+
+                    <h3 class="exp-head">How to use it?</h3>
+                    <div class="exp-p">
+                        <div class="flex-row">
+                            <div>1.&nbsp;</div> <div>Place chroma folder in your root directory of project.</div>
+                        </div>
+                        <div class="flex-row">
+                            <div>2.&nbsp;</div> <div>Include some markup for code to be highlighted.</div>
+                        </div>
+                        <div class="flex-row">
+                            <div>3.&nbsp;</div> <div>Include Chroma js in the end of body.</div>
+                        </div>
+                        
+                    </div>
+                    <!-- HTML Markup -->
+                    <div >
+                        <div chroma="true" language="html" header="true" linepad="false" heading="Include this markup for code to be highlighted">
+&lt;div chroma="true" language="html" heading="Heading..." linepad="true" copy="true" preloader="true">
+    Place your code here...
+&lt;/div>
+                        </div>
+                    </div>
+
+                    <!-- Chroma script -->
+                    <div >
+                        <div chroma="true" language="html" linepad="false" heading="Include this script in the end of body">
+&lt;script type="module" src="chroma/dist/chroma.js">&lt;/script>
+                        </div>
+                    </div>
+                    <!-- HOW -->
+                    <div>
+                        <div class="exp-head">How does it work?</div>
+                        <div class="exp-p">
+                            <div class="">Chroma analyze your code based on language you choose, It process regular expression on code and wrap matches in <code class="exp-code">&lt;span>&lt;/span></code> tag.</div>
+                            <div>Corresponding css classes are attached and code is ready to be serve.</div>
+                        </div>
+                    </div>
+
+                    <div class="exp-head"></div>
+
+                    <div >
+                        <h3 class="exp-head">Understanding Chroma attributes</h3>
+
+                        <div class="exp-p">
+                            <h3>Required</h3>
+                            <div class="ptb-5">
+                                <code class="exp-code">chroma="true"</code> Chroma need this attribute to target your code
+                            </div>
+                            <div>
+                                <code class="exp-code">language="css"</code> Specifies language to apply related regular expressions
+                            </div>
+                            <div>
+                                If you want to highlight sql than you should change <code class="exp-code">language="css"</code > to <code class="exp-code">language="sql"</code>
+                            </div>
+                            <h3>Optional</h3>
+                            <div>
+                                <code class="exp-code">linepad="true"</code> Shows line number 
+                            </div>
+                            <div>
+                                <code class="exp-code">preloader="true"</code> Loading animation before revealing code
+                            </div>
+                            <div>
+                                <code class="exp-code">header="true"</code> Header attached to code with heading and copy button
+                            </div>
+                            <div>
+                                <code class="exp-code">copy="true"</code> Set Copy button
+                            </div>
+                            <div>
+                                <code class="exp-code">heading="This is a heading"</code> Shows the value in header
+                            </div>
+                            <div>
+                                By default all options are applied to remove any option set value to <code class="exp-code">"false"</code>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="exp-head">Example</div>
+                            <div class="exp-p">
+                                <div>This code is highlighted with <code class="exp-code">header="false"</code></div>
+                            </div>
+                            <div chroma="true" language="c" header="false">
+#include &lt;iostream>
+using namespace std;
+
+int main(){
+
+    cout &lt;&lt; "Hello World!";
+    return 0;
+}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="exp-head">Chroma Themes</div>
+                        <div class="exp-p">
+                            <div>Chroma comes with various themes select your favorite from the list</div>
+                            <div>
+                                <code class="exp-code">ace-dark</code>
+                                <code class="exp-code">coffee</code>
+                                <code class="exp-code">danger</code>
+                                <code class="exp-code">dreamweaver</code>
+                                <code class="exp-code">dark</code>
+                                <code class="exp-code">twilight</code>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="chroma/dist/chroma.js"></script>
+</body>
+</html>

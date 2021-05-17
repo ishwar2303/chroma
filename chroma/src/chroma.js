@@ -3,7 +3,7 @@ import c_kit from './language/c'
 import html_kit from './language/html'
 import sql_kit from './language/sql'
 import css_kit from './language/css'
-
+import js_kit from './language/javascript'
 /* Add all languages to array */
 export var supportedLangugaes = () => {
     let set = Array()
@@ -11,6 +11,7 @@ export var supportedLangugaes = () => {
     set.push(html_kit)
     set.push(sql_kit)
     set.push(css_kit)
+    set.push(js_kit)
     return set
 }
 
@@ -100,7 +101,7 @@ export const replaceMatch = (code) => {
 
         }
     })
-    beautify += code.substr(endPos, code.length)
+    beautify += '<span class="' + 'plain-text">' + code.substr(endPos, code.length) + '</span>'
 }
 
 // sorting matches in ascending order
@@ -128,16 +129,22 @@ export const processPattern = (code, patt, offset) => {
 
     startPos = match.index + offset
     endPos = startPos + match[0].length
+    let embedded = ''
+    if(patt.language)
+        embedded = patt.language
     let obj = {
         value : match[0],
         start : startPos,
         end : endPos,
-        class : patt.class
+        class : patt.class,
+        embedded
     }
+    // console.log('HTML searching...')
+    // console.log(code.substring(startPos, endPos))
     matches.push(obj)
     // console.log(patt)
     return {
-        remaining : code.substr(endPos - offset),
+        remaining : code.substring(endPos - offset),
         offset : endPos
     }
 
@@ -147,18 +154,18 @@ export const processPattern = (code, patt, offset) => {
 * @param string
 * @param array
 */
-export const processCodeWithPatterns = (code, kit) => {
+export const processCodeWithPatterns = (code, kit, offset) => {
 
     let pattern, i
     for(i=0; i<kit.length; i++){
-        let result = processPattern(code, kit[i])
+        let result = processPattern(code, kit[i], offset)
         while(result){
             result = processPattern(result.remaining, kit[i], result.offset)
         }
     }
 
     matches.sort((a, b) => {return a.start - b.start})
-    // console.log(matches)
+    console.log(matches)
 }
 
 
@@ -225,32 +232,36 @@ export const preloader = () => {
 * @param boolean
 * @param boolean
 */ 
-export const presentation = (code, lineSet, headingValue, lang, copy, loaderValue) => {
+export const presentation = (code, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
 
     if(!headingValue)
         headingValue = lang.toUpperCase()
     let main = document.createElement('div')
     main.className = 'chroma'
     main.style.fontFamily = 'monospace'
-    let chromaHeader = document.createElement('div')
-    chromaHeader.className = 'chroma-head chroma-sb'
-    let heading = document.createElement('div')
-    heading.innerHTML = headingValue
-    let btn = document.createElement('button')
-    if(copy == 'true'){
-        btn.innerHTML = 'Copy'
-        btn.className = 'chroma-copy'
-        btn.style.display = 'none'
-        btn.addEventListener('click', () => {
-            chromaCopy(btn, resetEntities(code), 'Code copied successfully')
-        })
+    let chromaHeader, heading, btn
+    if(header === 'true'){
+        chromaHeader = document.createElement('div')
+        chromaHeader.className = 'chroma-head chroma-sb'
+        heading = document.createElement('div')
+        heading.innerHTML = headingValue
+        btn = document.createElement('button')
+        if(copy === 'true'){
+            heading.style.marginRight = '10px'
+            btn.innerHTML = 'Copy'
+            btn.className = 'chroma-copy'
+            btn.style.display = 'none'
+            btn.addEventListener('click', () => {
+                chromaCopy(btn, resetEntities(code), 'Code copied successfully')
+            })
+        }
+        chromaHeader.appendChild(heading)
+        if(copy === 'true')
+            chromaHeader.appendChild(btn)
     }
-    chromaHeader.appendChild(heading)
-    if(copy == 'true')
-        chromaHeader.appendChild(btn)
-    
     let result = document.createElement('div')
     result.className = 'chroma-beautify'
+    header ? result.className += ' chroma-no-header' : ''
     let sub = document.createElement('div')
     sub.className = 'chroma-flex-row'
     let pre = document.createElement('pre')
@@ -259,13 +270,17 @@ export const presentation = (code, lineSet, headingValue, lang, copy, loaderValu
     let codeBlock = document.createElement('code')
     codeBlock.innerHTML = beautify
     pre.appendChild(codeBlock)
-    sub.appendChild(lineSet)
+
+    if(linepad === 'true')
+        sub.appendChild(lineset)
+
     sub.appendChild(pre)
     result.appendChild(sub)
-    main.appendChild(chromaHeader)
+    if(header === 'true')
+        main.appendChild(chromaHeader)
     main.appendChild(result)
-    if(loaderValue){
-        result.style.minHeight = '250px'
+    if(loaderValue === 'true'){
+        // result.style.minHeight = ''
         sub.style.display = 'none'
         let loader = preloader()
         result.appendChild(loader)
@@ -273,7 +288,7 @@ export const presentation = (code, lineSet, headingValue, lang, copy, loaderValu
             loader.remove()
             result.style.minHeight = '0'
             sub.style.display = 'flex'
-            if(copy)
+            if(copy === 'true' && header === 'true')
                 btn.style.display = 'block'
         }, 1500)
     }
@@ -288,7 +303,7 @@ export const presentation = (code, lineSet, headingValue, lang, copy, loaderValu
 * @param string copy=""
 * @param string preloader=""
 * */
-export const convert = (code, lang_kit, heading, copy, loader) => {
+export const convert = (code, lang_kit, header, heading, copy, loader, linepad) => {
     matches = Array()
     beautify = ''
 
@@ -296,12 +311,12 @@ export const convert = (code, lang_kit, heading, copy, loader) => {
     let codeLines = separatecodeLines(code)
     let totalLines = codeLines.length
     
-    processCodeWithPatterns(code, lang_kit.conversion)
-
+    processCodeWithPatterns(code, lang_kit.conversion, 0)
+    // console.log(code)
     replaceMatch(code)
 
     let lineSet = prepareCodeLines(totalLines)
-    let result = presentation(code, lineSet, heading, lang_kit.lang, copy, loader)
+    let result = presentation(code, lineSet, linepad, header, heading, lang_kit.lang, copy, loader)
 
     return result
 }
@@ -310,10 +325,13 @@ export const defaultOptions = {
     theme : 'ace-dark',
 }
 
+/* set options */
 export const setOptions = (options) => {
     let head = document.head
     let link, style
     let theme = options.theme
+
+    // add theme css file in head of dcoument
     if(theme){
         link = document.createElement('link')
         link.rel = 'stylesheet'

@@ -1,36 +1,35 @@
-
 .chroma{
-    background: #002240;
+    background: rgb(39 39 39);
     color: white;
 }
 .chroma-head{
-    background: #021b31;
+    background: rgb(4 4 40 / 56%);
     color: white;
 }
 
 /* Beautify */
 
 .chroma-alpha{
-    color : #FF9D00;
+    color : #0b81e9;
 }
 
 /* string */
 .chroma-bravo{
-    color : #3AD900;
+    color : #56d456;
 }
 
 /* comment */
 .chroma-charlie{
-    color : #0088FF;
+    color : #91641b;
 }
 .chroma-delta{
-    color : #FFEE80;
+    color : #9595f5;
 }
 .chroma-echo{
     color : #FF628C; 
 }
 .chroma-lima{
-    color : #FFEE80;
+    color : #d92b2b;
 }
 .chroma-oscar{
     color : #21c0bb;
@@ -39,7 +38,7 @@
     color : #d778ff;
 }
 .chroma-tango{
-    color : #f95656;
+    color : #d8c029;
 }
 .chroma-victor{
     color : #ffffff;

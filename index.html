@@ -5,11 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syntax Highlighting</title>
-    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="wrapper">
-                    <pre chroma="true" language="html" heading="HTML Code" copy="true" preloader="true">
+    <div class="wrapper">  
+
+        <div chroma="true" language="javascript">
+            
+const showOutput = () => {
+    let el = document.getElementById('editor')
+    el.innerHTML = 'Welcome to chroma world.'
+}
+        </div>
+                    <div chroma="true" language="html" header="false" heading="This is a html code about how to inject chroma beautifer in your project, Your code is beautiful Show it off!" copy="false" preloader="false" linepad="false">
 &lt;!DOCTYPE html>
 &lt;html lang="en">
 &lt;head>
@@ -17,15 +24,66 @@
     &lt;meta http-equiv="X-UA-Compatible" content="IE=edge">
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
     &lt;title>Chroma&lt;/title>
+    &lt;style>
+        .wrapper{
+            display : flex;
+            justify-content : center;
+            align-items : flex-end;
+        }
+        .preprocessor, .start-tag-name, .close-tag-name{
+            color: #FF9D00;
+        }
+        #constant{
+            color: #FF628C;
+        }
+        .function:nth-child(odd){
+            color: white;
+        }
+        div > span{
+            background: blue;
+        }
+    &lt;/style>
+
+    &lt;script>
+        const showOutput = () => {
+            let el = document.getElementById('editor')
+            el.innerHTML = 'Welcome to chroma world.'
+        }
+    &lt;/script>
+
+    &lt;style>
+        .wrapper{
+            display : flex;
+            justify-content : center;
+            align-items : flex-end;
+        }
+        .preprocessor, .start-tag-name, .close-tag-name{
+            color: #FF9D00;
+        }
+        #constant{
+            color: #FF628C;
+        }
+        .function:nth-child(odd){
+            color: white;
+        }
+        div > span{
+            background: blue;
+        }
+    &lt;/style>
+
 &lt;/head>
 &lt;body>
+    &lt;!-- This is a comment -->
     Your Code is beautiful show it off.
     &lt;div chroma="true" language="html" preloader="true" copy="true" heading="HTML Code">
         Place your code here...
     &lt;/div>
+    &lt;?php 
+        echo 'Working';
+    ?&gt;
 &lt;/body>
 &lt;/html>
-                    </pre>
+                    </div >
 
                     <div chroma="true" language="c" copy="true" preloader="true">
 #include &lt;iostream>
@@ -127,6 +185,6 @@ HAVING COUNT(*) > value;
 
     
 
-    <script type="module" src="chroma/dist/chroma.js"></script>
+    <script src="chroma/dist/chroma.js"></script>
 </body>
 </html>

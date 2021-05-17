@@ -9,15 +9,6 @@
 .chroma-beautify{
     background: linear-gradient(45deg, black, rgb(120 0 0));
 }
-.chroma-beautify pre{
-    margin : 0;
-    padding: 10px 0px;
-}
-.chroma-line-no{
-    margin-right: 5px;
-    padding: 10px;
-    border-bottom-left-radius: 3px;
-}
 .chroma-line-no span:nth-child(odd){
     color: rgb(159 187 30);
 }

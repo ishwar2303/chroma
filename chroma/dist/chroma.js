@@ -78,10 +78,12 @@
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__language_c___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__language_c__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_html__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__language_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__language_sql__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_css__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__language_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_javascript__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_javascript___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__language_javascript__);
 /* Import all supported languages */
 
 
@@ -95,6 +97,7 @@ var supportedLangugaes = () => {
     set.push(__WEBPACK_IMPORTED_MODULE_1__language_html___default.a)
     set.push(__WEBPACK_IMPORTED_MODULE_2__language_sql___default.a)
     set.push(__WEBPACK_IMPORTED_MODULE_3__language_css___default.a)
+    set.push(__WEBPACK_IMPORTED_MODULE_4__language_javascript___default.a)
     return set
 }
 
@@ -198,7 +201,7 @@ const replaceMatch = (code) => {
 
         }
     })
-    beautify += code.substr(endPos, code.length)
+    beautify += '<span class="' + 'plain-text">' + code.substr(endPos, code.length) + '</span>'
 }
 /* unused harmony export replaceMatch */
 
@@ -230,16 +233,22 @@ const processPattern = (code, patt, offset) => {
 
     startPos = match.index + offset
     endPos = startPos + match[0].length
+    let embedded = ''
+    if(patt.language)
+        embedded = patt.language
     let obj = {
         value : match[0],
         start : startPos,
         end : endPos,
-        class : patt.class
+        class : patt.class,
+        embedded
     }
+    // console.log('HTML searching...')
+    // console.log(code.substring(startPos, endPos))
     matches.push(obj)
     // console.log(patt)
     return {
-        remaining : code.substr(endPos - offset),
+        remaining : code.substring(endPos - offset),
         offset : endPos
     }
 
@@ -251,18 +260,18 @@ const processPattern = (code, patt, offset) => {
 * @param string
 * @param array
 */
-const processCodeWithPatterns = (code, kit) => {
+const processCodeWithPatterns = (code, kit, offset) => {
 
     let pattern, i
     for(i=0; i<kit.length; i++){
-        let result = processPattern(code, kit[i])
+        let result = processPattern(code, kit[i], offset)
         while(result){
             result = processPattern(result.remaining, kit[i], result.offset)
         }
     }
 
     matches.sort((a, b) => {return a.start - b.start})
-    // console.log(matches)
+    console.log(matches)
 }
 /* unused harmony export processCodeWithPatterns */
 
@@ -333,32 +342,36 @@ const preloader = () => {
 * @param boolean
 * @param boolean
 */ 
-const presentation = (code, lineSet, headingValue, lang, copy, loaderValue) => {
+const presentation = (code, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
 
     if(!headingValue)
         headingValue = lang.toUpperCase()
     let main = document.createElement('div')
     main.className = 'chroma'
     main.style.fontFamily = 'monospace'
-    let chromaHeader = document.createElement('div')
-    chromaHeader.className = 'chroma-head chroma-sb'
-    let heading = document.createElement('div')
-    heading.innerHTML = headingValue
-    let btn = document.createElement('button')
-    if(copy == 'true'){
-        btn.innerHTML = 'Copy'
-        btn.className = 'chroma-copy'
-        btn.style.display = 'none'
-        btn.addEventListener('click', () => {
-            chromaCopy(btn, resetEntities(code), 'Code copied successfully')
-        })
+    let chromaHeader, heading, btn
+    if(header === 'true'){
+        chromaHeader = document.createElement('div')
+        chromaHeader.className = 'chroma-head chroma-sb'
+        heading = document.createElement('div')
+        heading.innerHTML = headingValue
+        btn = document.createElement('button')
+        if(copy === 'true'){
+            heading.style.marginRight = '10px'
+            btn.innerHTML = 'Copy'
+            btn.className = 'chroma-copy'
+            btn.style.display = 'none'
+            btn.addEventListener('click', () => {
+                chromaCopy(btn, resetEntities(code), 'Code copied successfully')
+            })
+        }
+        chromaHeader.appendChild(heading)
+        if(copy === 'true')
+            chromaHeader.appendChild(btn)
     }
-    chromaHeader.appendChild(heading)
-    if(copy == 'true')
-        chromaHeader.appendChild(btn)
-    
     let result = document.createElement('div')
     result.className = 'chroma-beautify'
+    header ? result.className += ' chroma-no-header' : ''
     let sub = document.createElement('div')
     sub.className = 'chroma-flex-row'
     let pre = document.createElement('pre')
@@ -367,13 +380,17 @@ const presentation = (code, lineSet, headingValue, lang, copy, loaderValue) => {
     let codeBlock = document.createElement('code')
     codeBlock.innerHTML = beautify
     pre.appendChild(codeBlock)
-    sub.appendChild(lineSet)
+
+    if(linepad === 'true')
+        sub.appendChild(lineset)
+
     sub.appendChild(pre)
     result.appendChild(sub)
-    main.appendChild(chromaHeader)
+    if(header === 'true')
+        main.appendChild(chromaHeader)
     main.appendChild(result)
-    if(loaderValue){
-        result.style.minHeight = '250px'
+    if(loaderValue === 'true'){
+        // result.style.minHeight = ''
         sub.style.display = 'none'
         let loader = preloader()
         result.appendChild(loader)
@@ -381,7 +398,7 @@ const presentation = (code, lineSet, headingValue, lang, copy, loaderValue) => {
             loader.remove()
             result.style.minHeight = '0'
             sub.style.display = 'flex'
-            if(copy)
+            if(copy === 'true' && header === 'true')
                 btn.style.display = 'block'
         }, 1500)
     }
@@ -398,7 +415,7 @@ const presentation = (code, lineSet, headingValue, lang, copy, loaderValue) => {
 * @param string copy=""
 * @param string preloader=""
 * */
-const convert = (code, lang_kit, heading, copy, loader) => {
+const convert = (code, lang_kit, header, heading, copy, loader, linepad) => {
     matches = Array()
     beautify = ''
 
@@ -406,12 +423,12 @@ const convert = (code, lang_kit, heading, copy, loader) => {
     let codeLines = separatecodeLines(code)
     let totalLines = codeLines.length
     
-    processCodeWithPatterns(code, lang_kit.conversion)
-
+    processCodeWithPatterns(code, lang_kit.conversion, 0)
+    // console.log(code)
     replaceMatch(code)
 
     let lineSet = prepareCodeLines(totalLines)
-    let result = presentation(code, lineSet, heading, lang_kit.lang, copy, loader)
+    let result = presentation(code, lineSet, linepad, header, heading, lang_kit.lang, copy, loader)
 
     return result
 }
@@ -424,10 +441,13 @@ const defaultOptions = {
 /* harmony export (immutable) */ __webpack_exports__["c"] = defaultOptions;
 
 
+/* set options */
 const setOptions = (options) => {
     let head = document.head
     let link, style
     let theme = options.theme
+
+    // add theme css file in head of dcoument
     if(theme){
         link = document.createElement('link')
         link.rel = 'stylesheet'
@@ -456,6 +476,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+/* Add chroma css */
 const addUtilityCss = () => {
     let head = document.head
     let link = document.createElement('link')
@@ -472,24 +493,33 @@ const fetchTargetElements = (options) => {
 
     let supportedLanguages = __WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* Chroma */].supportedLangugaes()
 
-    let blocks = document.querySelectorAll('[chroma]')
+    let blocks = document.querySelectorAll('[chroma="true"]')
     blocks.forEach(block => {
         let code = block.innerHTML
+        
+        // get all attributes of chroma element
         let attributes = block.attributes
+        let header = attributes.header != undefined ? attributes.header.nodeValue : 'true'
         let heading = attributes.heading != undefined ? attributes.heading.nodeValue : false
-        let copy = attributes.copy != undefined ? attributes.copy.nodeValue : false
+        let copy = attributes.copy != undefined ? attributes.copy.nodeValue : 'true'
         let lang = attributes.language != undefined ? attributes.language.nodeValue : false
-        let loader = attributes.preloader != undefined ? attributes.preloader : false
+        let loader = attributes.preloader != undefined ? attributes.preloader.nodeValue : 'true'
+        let linepad = attributes.linepad != undefined ? attributes.linepad.nodeValue : 'true'
+        lang = lang.toLowerCase()
+        // pick language based on language attribute
         let lang_kit = __WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* Chroma */].pickLanguage(supportedLanguages, lang)
         if(lang_kit){
-            let result = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["b" /* convert */])(code, lang_kit, heading, copy, loader)
+            // send code for conversion
+            let result = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["b" /* convert */])(code, lang_kit, header, heading, copy, loader, linepad)
             block.innerHTML = ''
             block.appendChild(result)
         }
         else{
+            // language not supported
             console.error('Set lang="" attribute and specify language, Check supported languages')
         }
     })
+
     let theme = options.theme != '' ? options.theme : __WEBPACK_IMPORTED_MODULE_0__chroma__["c" /* defaultOptions */].theme
     options = {
         theme : theme
@@ -499,7 +529,7 @@ const fetchTargetElements = (options) => {
 
 /*
 * Set options
-* Set theme = ['ace-dark', 'coffee', 'danger', 'dark', 'dreamviewer', 'light', 'twilight']
+* Set theme = ['ace-dark', 'coffee', 'danger', 'dark', 'dreamweaver', 'light', 'twilight']
 */
 
 let options = {
@@ -569,6 +599,14 @@ let kit = {
     lang : 'css',
     conversion : [
         {
+            class : 'style.start.chroma-delta',
+            pattern : /&lt;style\s*&gt;/g
+        },
+        {
+            class : 'style.close.chroma-delta',
+            pattern : /&lt;\/style\s*&gt;/g
+        },
+        {
             class : 'comment.chroma-charlie',
             pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)/g
         },
@@ -624,13 +662,29 @@ module.exports = kit
 
 let kit = {
     lang : 'html',
-    conversion : [{
+    conversion : [
+        {
+            class : 'php.embedded',
+            pattern : /(&lt;\?php|&lt;\?=?(?!xml))([\s\S]*?)(\?&gt;)/g,
+            language : 'php'
+        },
+        {
+            class : 'css.embedded',
+            pattern : /(?<=&lt;style.*?&gt;)([\s\S]*?)(?=(&lt;\/)(style)(&gt;))/g,
+            language : 'css'
+        },
+        {
+            class : 'javascript.embedded',
+            pattern : /(&lt;script(?! src).*?&gt;)([\s\S]*?)(&lt;\/)(script)(&gt;)/g,
+            language : 'javascript'
+        },
+        {
             class: 'attribute.chroma-lima',
             pattern: /(?<=(\s)*)[a-zA-Z\-]+(?=(\s)*=("))/g
         }, 
         {
             class : 'comment.chroma-charlie',
-            pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
+            pattern : /&lt;!--(.*?)--&gt;/g
         },
         {
             class : 'string.chroma-bravo',
@@ -642,24 +696,24 @@ let kit = {
         },
         {
             class: 'doctype.name.chroma-alpha',
-            pattern: /((?<=(&nbsp;)*))html(?=&gt;)/g
+            pattern: /((?<=\s*))html(?=&gt;)/g
         },
         {
             class: 'start-tag-name.chroma-alpha',
-            pattern: /(?<=&lt;(&nbsp;)*)[a-zA-Z0-9]+/g
+            pattern: /(?<=&lt;)[\w]+/g
         },
         {
             class: 'close-tag-name.chroma-alpha',
-            pattern: /(?<=\/(&nbsp;)*)[a-zA-Z0-9]+(?=(&nbsp;)*&gt;)/g
+            pattern: /(?<=\/)\w+(?=\s*&gt;)/g
         },
-        {
-            class: 'start-tag.chroma-zeus',
-            pattern: /&lt;/g
-        },
-        {
-            class: 'close-tag.chroma-zeus',
-            pattern: /&gt;/g
-        }
+        // {
+        //     class: 'start-tag.chroma-zeus',
+        //     pattern: /&lt;(?!=!)/g
+        // },
+        // {
+        //     class: 'close-tag.chroma-zeus',
+        //     pattern: /(?<=\/*\w+\s*)&gt;/g
+        // }
     ]
     
 }
@@ -668,6 +722,136 @@ module.exports = kit
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+let kit = {
+    lang : 'javascript',
+    conversion : [
+        {
+            class : 'comment.chroma-charlie',
+            pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
+        },
+        {
+            class : 'string.chroma-bravo',
+            pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
+        },
+        {
+            class: 'selector',
+            pattern: /\$(?=\.|\()/g
+        },
+        {
+            class: 'support.chroma-oscar',
+            pattern: /\b(window|document)\b/g
+        },
+        {
+            class: 'keyword.chroma-delta',
+            pattern: /\b(export|default|from)\b/g
+        },
+        {
+            class: 'function.call',
+            pattern: /\b(then)(?=\()/g
+        },
+        {
+            class: 'variable.language.this.chroma-oscar',
+            pattern: /\bthis\b/g
+        },
+        {
+            class: 'variable.language.super.chroma-oscar',
+            pattern: /super(?=\.|\()/g
+        },
+        {
+            class: 'storage.type.chroma-delta',
+            pattern: /\b(const|let|var)(?=\s)/g
+        },
+        {
+            matches: {
+                1: 'support.property.chroma-oscar'
+            },
+            pattern: /\.(length|node(class|Value))\b/g
+        },
+        {
+            matches: {
+                1: 'support.function.chroma-delta'
+            },
+            pattern: /(setTimeout|setInterval)(?=\()/g
+        },
+        {
+            class : 'support.method.chroma-delta',
+            pattern: /\.(getAttribute|replace|push|getElementById|getElementsByClassclass|setTimeout|setInterval)(?=\()/g
+        },
+        // {
+        //     class: 'string.regexp',
+        //     matches: {
+        //         1: 'string.regexp.open',
+        //         2: {
+        //             class: 'constant.regexp.escape',
+        //             pattern: /\\(.){1}/g
+        //         },
+        //         3: 'string.regexp.close',
+        //         4: 'string.regexp.modifier'
+        //     },
+        //     pattern: /(\/)((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)(\/)(?!\/)([igm]{0,3})/g
+        // },
+
+        /**
+         * matches runtime function declarations
+         */
+        {
+            class : 'storage.type.chroma-delta',
+            pattern: /(var)?(\s|^)(\S+)(?=\s?=\s?function\()/g
+        },
+
+        /**
+         * matches constructor call
+         */
+        {
+            class : 'keyword.chroma-delta',
+            pattern: /(new)\s+(?!Promise)([^\(]*)(?=\()/g
+        },
+
+        /**
+         * matches any function call in the style functionclass: function()
+         */
+        {
+            class: 'entity.function.chroma-delta',
+            pattern: /(\w+)(?=:\s{0,}function)/g
+        },
+        {
+            class: 'constant.other.chroma-romeo',
+            pattern: /\*(?= as)/g
+        },
+        {
+            class : 'keyword.chroma-delta',
+            pattern: /(export)\s+(\*)/g
+        },
+        {
+            class : 'storage.type.accessor',
+            pattern: /(get|set)\s+(\w+)(?=\()/g
+        },
+        {
+            class : 'entity.class.function.chroma-delta',
+            pattern: /(^\s*)(\w+)(?=\([^\)]*?\)\s*\{)/gm
+        },
+        {
+            class : 'storage.type.class.chroma-charlie',
+            pattern: /(class)\s+(\w+)(?:\s+(extends)\s+(\w+))?(?=\s*\{)/g
+        },
+        {
+            class: 'storage.type.function.arrow.chroma-charlie',
+            pattern: /=&gt;/g
+        },
+        {
+            class: 'support.class.promise',
+            pattern: /\bPromise(?=(\(|\.))/g
+        }
+    ]
+    
+}
+
+module.exports = kit
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports) {
 
 let kit = {

@@ -2,6 +2,14 @@ let kit = {
     lang : 'css',
     conversion : [
         {
+            class : 'style.start.chroma-delta',
+            pattern : /&lt;style\s*&gt;/g
+        },
+        {
+            class : 'style.close.chroma-delta',
+            pattern : /&lt;\/style\s*&gt;/g
+        },
+        {
             class : 'comment.chroma-charlie',
             pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)/g
         },

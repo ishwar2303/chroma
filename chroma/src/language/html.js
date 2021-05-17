@@ -1,12 +1,28 @@
 let kit = {
     lang : 'html',
-    conversion : [{
+    conversion : [
+        {
+            class : 'php.embedded',
+            pattern : /(&lt;\?php|&lt;\?=?(?!xml))([\s\S]*?)(\?&gt;)/g,
+            language : 'php'
+        },
+        {
+            class : 'css.embedded',
+            pattern : /(?<=&lt;style.*?&gt;)([\s\S]*?)(?=(&lt;\/)(style)(&gt;))/g,
+            language : 'css'
+        },
+        {
+            class : 'javascript.embedded',
+            pattern : /(&lt;script(?! src).*?&gt;)([\s\S]*?)(&lt;\/)(script)(&gt;)/g,
+            language : 'javascript'
+        },
+        {
             class: 'attribute.chroma-lima',
             pattern: /(?<=(\s)*)[a-zA-Z\-]+(?=(\s)*=("))/g
         }, 
         {
             class : 'comment.chroma-charlie',
-            pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
+            pattern : /&lt;!--(.*?)--&gt;/g
         },
         {
             class : 'string.chroma-bravo',
@@ -18,24 +34,24 @@ let kit = {
         },
         {
             class: 'doctype.name.chroma-alpha',
-            pattern: /((?<=(&nbsp;)*))html(?=&gt;)/g
+            pattern: /((?<=\s*))html(?=&gt;)/g
         },
         {
             class: 'start-tag-name.chroma-alpha',
-            pattern: /(?<=&lt;(&nbsp;)*)[a-zA-Z0-9]+/g
+            pattern: /(?<=&lt;)[\w]+/g
         },
         {
             class: 'close-tag-name.chroma-alpha',
-            pattern: /(?<=\/(&nbsp;)*)[a-zA-Z0-9]+(?=(&nbsp;)*&gt;)/g
+            pattern: /(?<=\/)\w+(?=\s*&gt;)/g
         },
-        {
-            class: 'start-tag.chroma-zeus',
-            pattern: /&lt;/g
-        },
-        {
-            class: 'close-tag.chroma-zeus',
-            pattern: /&gt;/g
-        }
+        // {
+        //     class: 'start-tag.chroma-zeus',
+        //     pattern: /&lt;(?!=!)/g
+        // },
+        // {
+        //     class: 'close-tag.chroma-zeus',
+        //     pattern: /(?<=\/*\w+\s*)&gt;/g
+        // }
     ]
     
 }
