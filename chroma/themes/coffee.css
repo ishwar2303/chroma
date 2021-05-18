@@ -6,13 +6,25 @@
     background: #5c2a08;
     color: white;
 }
+.chroma-beautify{
+    padding: 0;
+}
 .chroma-copy{
     padding: 5px 10px;
     border-radius: 3px;
     border: none;
 }
+.chroma pre{
+    padding: 3px 10px;
+}
+.chroma-line-no{
+    background: #5c2a08;
+    border-radius: 0;
+    border-bottom-left-radius: 3px;
+    padding: 3px 8px;
+}
 .chroma-line-no span{
-    color: #b55818;
+    color: #e27f3b;
 }
 
 /* Beautify */

@@ -18,74 +18,49 @@ let kit = {
             pattern: /\b(window|document)\b/g
         },
         {
-            class: 'keyword.chroma-delta',
-            pattern: /\b(export|default|from)\b/g
+            class: 'keyword.chroma-romeo',
+            pattern: /\b(return|import|export|default|from)\b/g
         },
         {
-            class: 'function.call',
+            class: 'function.call.chroma-lima',
             pattern: /\b(then)(?=\()/g
         },
         {
-            class: 'variable.language.this.chroma-oscar',
+            class : 'variable.language.this.chroma-oscar',
             pattern: /\bthis\b/g
         },
         {
-            class: 'variable.language.super.chroma-oscar',
+            class : 'variable.language.super.chroma-oscar',
             pattern: /super(?=\.|\()/g
         },
         {
-            class: 'storage.type.chroma-delta',
+            class : 'storage.type.chroma-delta',
             pattern: /\b(const|let|var)(?=\s)/g
         },
         {
-            matches: {
-                1: 'support.property.chroma-oscar'
-            },
+            class : 'support.property.chroma-oscar',
             pattern: /\.(length|node(class|Value))\b/g
         },
         {
-            matches: {
-                1: 'support.function.chroma-delta'
-            },
+            class : 'support.function.chroma-delta',
             pattern: /(setTimeout|setInterval)(?=\()/g
         },
         {
             class : 'support.method.chroma-delta',
             pattern: /\.(getAttribute|replace|push|getElementById|getElementsByClassclass|setTimeout|setInterval)(?=\()/g
         },
-        // {
-        //     class: 'string.regexp',
-        //     matches: {
-        //         1: 'string.regexp.open',
-        //         2: {
-        //             class: 'constant.regexp.escape',
-        //             pattern: /\\(.){1}/g
-        //         },
-        //         3: 'string.regexp.close',
-        //         4: 'string.regexp.modifier'
-        //     },
-        //     pattern: /(\/)((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)(\/)(?!\/)([igm]{0,3})/g
-        // },
-
-        /**
-         * matches runtime function declarations
-         */
+        {
+            class: 'string.regexp.chroma-echo',
+            pattern: /(\/)((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)(\/)(?!\/)([igm]{0,3})/g
+        },
         {
             class : 'storage.type.chroma-delta',
             pattern: /(var)?(\s|^)(\S+)(?=\s?=\s?function\()/g
         },
-
-        /**
-         * matches constructor call
-         */
         {
-            class : 'keyword.chroma-delta',
+            class : 'keyword.chroma-romeo',
             pattern: /(new)\s+(?!Promise)([^\(]*)(?=\()/g
         },
-
-        /**
-         * matches any function call in the style functionclass: function()
-         */
         {
             class: 'entity.function.chroma-delta',
             pattern: /(\w+)(?=:\s{0,}function)/g
@@ -95,11 +70,11 @@ let kit = {
             pattern: /\*(?= as)/g
         },
         {
-            class : 'keyword.chroma-delta',
+            class : 'keyword.chroma-romeo',
             pattern: /(export)\s+(\*)/g
         },
         {
-            class : 'storage.type.accessor',
+            class : 'storage.type.accessor.chroma-lima',
             pattern: /(get|set)\s+(\w+)(?=\()/g
         },
         {
@@ -115,7 +90,7 @@ let kit = {
             pattern: /=&gt;/g
         },
         {
-            class: 'support.class.promise',
+            class: 'promise.chroma-charlie',
             pattern: /\bPromise(?=(\(|\.))/g
         }
     ]

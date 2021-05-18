@@ -13,13 +13,13 @@
 /* Beautify */
 
 .chroma-alpha{
-    color: #c17803;
+    color: #9c4703;
     font-style: italic;
 }
 
 /* string */
 .chroma-bravo{
-    color: #34a909;
+    color: #257507;
     font-style: italic;
 }
 
@@ -33,15 +33,15 @@
     font-style: italic;
 }
 .chroma-echo{
-    color : #FF628C; 
+    color : #ce2626; 
     font-style: italic;
 }
 .chroma-lima{
-    color: #0f72ca;
+    color: #0059a9;
     font-style: italic;
 }
 .chroma-oscar{
-    color: #21c0bb;
+    color: #006662;
     font-style: italic;
 }
 .chroma-romeo{
@@ -53,7 +53,7 @@
     font-style: italic;
 }
 .chroma-victor{
-    color: #e05454;
+    color: #cc3a3a;
     font-style: italic;
 }
 .chroma-zeus{

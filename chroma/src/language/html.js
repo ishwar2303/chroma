@@ -44,14 +44,14 @@ let kit = {
             class: 'close-tag-name.chroma-alpha',
             pattern: /(?<=\/)\w+(?=\s*&gt;)/g
         },
-        // {
-        //     class: 'start-tag.chroma-zeus',
-        //     pattern: /&lt;(?!=!)/g
-        // },
-        // {
-        //     class: 'close-tag.chroma-zeus',
-        //     pattern: /(?<=\/*\w+\s*)&gt;/g
-        // }
+        {
+            class: 'start-tag.chroma-zeus',
+            pattern: /&lt;(?!=!)/g
+        },
+        {
+            class: 'close-tag.chroma-zeus',
+            pattern: /(?<=\/*[\S\s]+)&gt;/g
+        }
     ]
     
 }

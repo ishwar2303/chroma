@@ -4,25 +4,27 @@ import html_kit from './language/html'
 import sql_kit from './language/sql'
 import css_kit from './language/css'
 import js_kit from './language/javascript'
+
 /* Add all languages to array */
+export const languages = Array()
+
 export var supportedLangugaes = () => {
-    let set = Array()
-    set.push(c_kit)
-    set.push(html_kit)
-    set.push(sql_kit)
-    set.push(css_kit)
-    set.push(js_kit)
-    return set
+    languages.push(c_kit)
+    languages.push(html_kit)
+    languages.push(sql_kit)
+    languages.push(css_kit)
+    languages.push(js_kit)
+    return languages
 }
+supportedLangugaes()
 
 /* Pick language for processing regex */
 /*
-* @param Array
 * @param string
 */
-export const pickLanguage = (support, lang) => {
+export const pickLanguage = (lang) => {
     let pick = false
-    support.forEach((s) => {
+    languages.forEach((s) => {
         if(s.lang == lang){
             pick = s
             return
@@ -90,8 +92,7 @@ export const replaceMatch = (code) => {
     let endPos = 0
 
     matches.forEach((m) => {
-        // console.log(m.start, m.end)
-        if(overlapMatch(m.start, endPos)){
+        if(overlapMatch(m.start, endPos) && !m.embedded){
 
             if(nullMatch(endPos, m.start))
                 beautify += '<span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '</span>'
@@ -139,10 +140,7 @@ export const processPattern = (code, patt, offset) => {
         class : patt.class,
         embedded
     }
-    // console.log('HTML searching...')
-    // console.log(code.substring(startPos, endPos))
     matches.push(obj)
-    // console.log(patt)
     return {
         remaining : code.substring(endPos - offset),
         offset : endPos
@@ -153,6 +151,7 @@ export const processPattern = (code, patt, offset) => {
 /*
 * @param string
 * @param array
+* @param int
 */
 export const processCodeWithPatterns = (code, kit, offset) => {
 
@@ -164,10 +163,45 @@ export const processCodeWithPatterns = (code, kit, offset) => {
         }
     }
 
-    matches.sort((a, b) => {return a.start - b.start})
-    console.log(matches)
 }
 
+/* 
+* Process code parts which belongs to other language
+* @param string
+*/
+export const embeddOtherLanguages = (code) => {
+
+    matches.forEach((m) => {
+        if(m.embedded){
+            let kit = pickLanguage(m.embedded)
+            if(kit){
+                processCodeWithPatterns(code.substring(m.start, m.end), kit.conversion, m.start)
+            }
+        }
+    })
+
+}
+
+/*
+* Returns highlighted version of code
+* @param string
+* @param string
+*/
+export const pretty = (code, lang) => {
+    let kit = pickLanguage(lang)
+    code = convertEntities(code)
+    beautify = ''
+    matches = Array()
+    if(kit){
+        processCodeWithPatterns(code, kit.conversion, 0)
+        embeddOtherLanguages(code)
+        matches.sort((a, b) => {return a.start - b.start})
+        replaceMatch(code)
+    }
+    else return false
+
+    return '<pre style="margin:0;"><code>' + beautify + '</code></pre>'
+}
 
 /*
 * @param dom html object
@@ -232,7 +266,7 @@ export const preloader = () => {
 * @param boolean
 * @param boolean
 */ 
-export const presentation = (code, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
+export const presentation = (code, prettyCode, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
 
     if(!headingValue)
         headingValue = lang.toUpperCase()
@@ -264,17 +298,12 @@ export const presentation = (code, lineset, linepad, header, headingValue, lang,
     header ? result.className += ' chroma-no-header' : ''
     let sub = document.createElement('div')
     sub.className = 'chroma-flex-row'
-    let pre = document.createElement('pre')
-    pre.style.margin = 0
-    pre.style.fontFamily = ''
-    let codeBlock = document.createElement('code')
-    codeBlock.innerHTML = beautify
-    pre.appendChild(codeBlock)
 
     if(linepad === 'true')
         sub.appendChild(lineset)
-
-    sub.appendChild(pre)
+    let codeBlock = document.createElement('div')
+    codeBlock.innerHTML = prettyCode
+    sub.appendChild(codeBlock)
     result.appendChild(sub)
     if(header === 'true')
         main.appendChild(chromaHeader)
@@ -298,50 +327,76 @@ export const presentation = (code, lineset, linepad, header, headingValue, lang,
 
 /*
 * @param string
-* @param object
+* @param string
+* @param string
 * @param string heading=""
 * @param string copy=""
 * @param string preloader=""
+* @param html dob object
 * */
-export const convert = (code, lang_kit, header, heading, copy, loader, linepad) => {
-    matches = Array()
-    beautify = ''
+export const convert = (code, lang, header, heading, copy, loader, linepad) => {
+    code = code.trim()
+    // highlighted code
+    let prettyCode = ChromaLocal.pretty(code, lang)
+    if(!prettyCode){
+        let msgBlock = document.createElement('span')
+        let msg = 'Set language="" attribute and specify language, Check supported languages'
+        msgBlock.style.color = 'red'
+        msgBlock.innerText = msg
+        console.error(msg)
+        return msgBlock
+    }
 
-    code = convertEntities(code).trim()
-    let codeLines = separatecodeLines(code)
-    let totalLines = codeLines.length
-    
-    processCodeWithPatterns(code, lang_kit.conversion, 0)
-    // console.log(code)
-    replaceMatch(code)
+    // linepad
+    let lineSet = prepareCodeLines(separatecodeLines(code).length)
 
-    let lineSet = prepareCodeLines(totalLines)
-    let result = presentation(code, lineSet, linepad, header, heading, lang_kit.lang, copy, loader)
+    // final html output
+    let result = presentation(code, prettyCode, lineSet, linepad, header, heading, lang, copy, loader)
 
     return result
 }
 
+
+/* Add chroma css */
+export const addUtilityCss = () => {
+    let head = document.head
+    let link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'chroma/css/chroma.css'
+    head.appendChild(link)
+}
+
+export var selectedTheme = null
+
+/*
+* Default options
+*/
 export const defaultOptions = {
     theme : 'ace-dark',
 }
 
-/* set options */
+/* set options 
+* @param object
+*/
 export const setOptions = (options) => {
     let head = document.head
     let link, style
     let theme = options.theme
-
     // add theme css file in head of dcoument
     if(theme){
+        if(selectedTheme)
+            selectedTheme.remove()
         link = document.createElement('link')
         link.rel = 'stylesheet'
         link.href = 'chroma/themes/' + theme + '.css'
         head.appendChild(link)
+        selectedTheme = link
     }
 }
 
-export const Chroma = {
-    supportedLangugaes,
-    pickLanguage,
+export const ChromaLocal = {
+    pretty,
     setOptions
 }
+
+ChromaLocal.setOptions(defaultOptions)

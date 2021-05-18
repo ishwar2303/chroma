@@ -1,3 +1,4 @@
+var Chroma;
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -74,6 +75,7 @@
 /* unused harmony export supportedLangugaes */
 /* unused harmony export matches */
 /* unused harmony export beautify */
+/* unused harmony export selectedTheme */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__language_c__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__language_c___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__language_c__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_html__ = __webpack_require__(4);
@@ -90,25 +92,29 @@
 
 
 
+
 /* Add all languages to array */
+const languages = Array()
+/* unused harmony export languages */
+
+
 var supportedLangugaes = () => {
-    let set = Array()
-    set.push(__WEBPACK_IMPORTED_MODULE_0__language_c___default.a)
-    set.push(__WEBPACK_IMPORTED_MODULE_1__language_html___default.a)
-    set.push(__WEBPACK_IMPORTED_MODULE_2__language_sql___default.a)
-    set.push(__WEBPACK_IMPORTED_MODULE_3__language_css___default.a)
-    set.push(__WEBPACK_IMPORTED_MODULE_4__language_javascript___default.a)
-    return set
+    languages.push(__WEBPACK_IMPORTED_MODULE_0__language_c___default.a)
+    languages.push(__WEBPACK_IMPORTED_MODULE_1__language_html___default.a)
+    languages.push(__WEBPACK_IMPORTED_MODULE_2__language_sql___default.a)
+    languages.push(__WEBPACK_IMPORTED_MODULE_3__language_css___default.a)
+    languages.push(__WEBPACK_IMPORTED_MODULE_4__language_javascript___default.a)
+    return languages
 }
+supportedLangugaes()
 
 /* Pick language for processing regex */
 /*
-* @param Array
 * @param string
 */
-const pickLanguage = (support, lang) => {
+const pickLanguage = (lang) => {
     let pick = false
-    support.forEach((s) => {
+    languages.forEach((s) => {
         if(s.lang == lang){
             pick = s
             return
@@ -190,8 +196,7 @@ const replaceMatch = (code) => {
     let endPos = 0
 
     matches.forEach((m) => {
-        // console.log(m.start, m.end)
-        if(overlapMatch(m.start, endPos)){
+        if(overlapMatch(m.start, endPos) && !m.embedded){
 
             if(nullMatch(endPos, m.start))
                 beautify += '<span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '</span>'
@@ -243,10 +248,7 @@ const processPattern = (code, patt, offset) => {
         class : patt.class,
         embedded
     }
-    // console.log('HTML searching...')
-    // console.log(code.substring(startPos, endPos))
     matches.push(obj)
-    // console.log(patt)
     return {
         remaining : code.substring(endPos - offset),
         offset : endPos
@@ -259,6 +261,7 @@ const processPattern = (code, patt, offset) => {
 /*
 * @param string
 * @param array
+* @param int
 */
 const processCodeWithPatterns = (code, kit, offset) => {
 
@@ -270,11 +273,50 @@ const processCodeWithPatterns = (code, kit, offset) => {
         }
     }
 
-    matches.sort((a, b) => {return a.start - b.start})
-    console.log(matches)
 }
 /* unused harmony export processCodeWithPatterns */
 
+
+/* 
+* Process code parts which belongs to other language
+* @param string
+*/
+const embeddOtherLanguages = (code) => {
+
+    matches.forEach((m) => {
+        if(m.embedded){
+            let kit = pickLanguage(m.embedded)
+            if(kit){
+                processCodeWithPatterns(code.substring(m.start, m.end), kit.conversion, m.start)
+            }
+        }
+    })
+
+}
+/* unused harmony export embeddOtherLanguages */
+
+
+/*
+* Returns highlighted version of code
+* @param string
+* @param string
+*/
+const pretty = (code, lang) => {
+    let kit = pickLanguage(lang)
+    code = convertEntities(code)
+    beautify = ''
+    matches = Array()
+    if(kit){
+        processCodeWithPatterns(code, kit.conversion, 0)
+        embeddOtherLanguages(code)
+        matches.sort((a, b) => {return a.start - b.start})
+        replaceMatch(code)
+    }
+    else return false
+
+    return '<pre style="margin:0;"><code>' + beautify + '</code></pre>'
+}
+/* unused harmony export pretty */
 
 
 /*
@@ -342,7 +384,7 @@ const preloader = () => {
 * @param boolean
 * @param boolean
 */ 
-const presentation = (code, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
+const presentation = (code, prettyCode, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
 
     if(!headingValue)
         headingValue = lang.toUpperCase()
@@ -374,17 +416,12 @@ const presentation = (code, lineset, linepad, header, headingValue, lang, copy, 
     header ? result.className += ' chroma-no-header' : ''
     let sub = document.createElement('div')
     sub.className = 'chroma-flex-row'
-    let pre = document.createElement('pre')
-    pre.style.margin = 0
-    pre.style.fontFamily = ''
-    let codeBlock = document.createElement('code')
-    codeBlock.innerHTML = beautify
-    pre.appendChild(codeBlock)
 
     if(linepad === 'true')
         sub.appendChild(lineset)
-
-    sub.appendChild(pre)
+    let codeBlock = document.createElement('div')
+    codeBlock.innerHTML = prettyCode
+    sub.appendChild(codeBlock)
     result.appendChild(sub)
     if(header === 'true')
         main.appendChild(chromaHeader)
@@ -410,69 +447,35 @@ const presentation = (code, lineset, linepad, header, headingValue, lang, copy, 
 
 /*
 * @param string
-* @param object
+* @param string
+* @param string
 * @param string heading=""
 * @param string copy=""
 * @param string preloader=""
+* @param html dob object
 * */
-const convert = (code, lang_kit, header, heading, copy, loader, linepad) => {
-    matches = Array()
-    beautify = ''
+const convert = (code, lang, header, heading, copy, loader, linepad) => {
+    code = code.trim()
+    // highlighted code
+    let prettyCode = ChromaLocal.pretty(code, lang)
+    if(!prettyCode){
+        let msgBlock = document.createElement('span')
+        let msg = 'Set language="" attribute and specify language, Check supported languages'
+        msgBlock.style.color = 'red'
+        msgBlock.innerText = msg
+        console.error(msg)
+        return msgBlock
+    }
 
-    code = convertEntities(code).trim()
-    let codeLines = separatecodeLines(code)
-    let totalLines = codeLines.length
-    
-    processCodeWithPatterns(code, lang_kit.conversion, 0)
-    // console.log(code)
-    replaceMatch(code)
+    // linepad
+    let lineSet = prepareCodeLines(separatecodeLines(code).length)
 
-    let lineSet = prepareCodeLines(totalLines)
-    let result = presentation(code, lineSet, linepad, header, heading, lang_kit.lang, copy, loader)
+    // final html output
+    let result = presentation(code, prettyCode, lineSet, linepad, header, heading, lang, copy, loader)
 
     return result
 }
 /* harmony export (immutable) */ __webpack_exports__["b"] = convert;
-
-
-const defaultOptions = {
-    theme : 'ace-dark',
-}
-/* harmony export (immutable) */ __webpack_exports__["c"] = defaultOptions;
-
-
-/* set options */
-const setOptions = (options) => {
-    let head = document.head
-    let link, style
-    let theme = options.theme
-
-    // add theme css file in head of dcoument
-    if(theme){
-        link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = 'chroma/themes/' + theme + '.css'
-        head.appendChild(link)
-    }
-}
-/* unused harmony export setOptions */
-
-
-const Chroma = {
-    supportedLangugaes,
-    pickLanguage,
-    setOptions
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Chroma;
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__chroma__ = __webpack_require__(0);
 
 
 
@@ -484,15 +487,67 @@ const addUtilityCss = () => {
     link.href = 'chroma/css/chroma.css'
     head.appendChild(link)
 }
+/* harmony export (immutable) */ __webpack_exports__["a"] = addUtilityCss;
+
+
+var selectedTheme = null
+
+/*
+* Default options
+*/
+const defaultOptions = {
+    theme : 'dark',
+}
+/* unused harmony export defaultOptions */
+
+
+/* set options 
+* @param object
+*/
+const setOptions = (options) => {
+    let head = document.head
+    let link, style
+    let theme = options.theme
+    // add theme css file in head of dcoument
+    if(theme){
+        if(selectedTheme)
+            selectedTheme.remove()
+        link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = 'chroma/themes/' + theme + '.css'
+        head.appendChild(link)
+        selectedTheme = link
+    }
+}
+/* unused harmony export setOptions */
+
+
+const ChromaLocal = {
+    pretty,
+    setOptions
+}
+/* unused harmony export ChromaLocal */
+
+ChromaLocal.setOptions(defaultOptions)
+
+Chroma = ChromaLocal
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__chroma__ = __webpack_require__(0);
+
+
 
 
 // fetch target blocks with attribute = chroma
-const fetchTargetElements = (options) => {
+const fetchTargetElements = () => {
 
-    addUtilityCss()
-
-    let supportedLanguages = __WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* Chroma */].supportedLangugaes()
-
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* addUtilityCss */])()
+    
     let blocks = document.querySelectorAll('[chroma="true"]')
     blocks.forEach(block => {
         let code = block.innerHTML
@@ -506,41 +561,24 @@ const fetchTargetElements = (options) => {
         let loader = attributes.preloader != undefined ? attributes.preloader.nodeValue : 'true'
         let linepad = attributes.linepad != undefined ? attributes.linepad.nodeValue : 'true'
         lang = lang.toLowerCase()
-        // pick language based on language attribute
-        let lang_kit = __WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* Chroma */].pickLanguage(supportedLanguages, lang)
-        if(lang_kit){
+
+        if(lang){
             // send code for conversion
-            let result = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["b" /* convert */])(code, lang_kit, header, heading, copy, loader, linepad)
+            let result = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["b" /* convert */])(code, lang, header, heading, copy, loader, linepad)
             block.innerHTML = ''
             block.appendChild(result)
         }
-        else{
-            // language not supported
-            console.error('Set lang="" attribute and specify language, Check supported languages')
-        }
     })
 
-    let theme = options.theme != '' ? options.theme : __WEBPACK_IMPORTED_MODULE_0__chroma__["c" /* defaultOptions */].theme
-    options = {
-        theme : theme
-    }
-    __WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* Chroma */].setOptions(options)
 }
 
-/*
-* Set options
-* Set theme = ['ace-dark', 'coffee', 'danger', 'dark', 'dreamweaver', 'light', 'twilight']
-*/
 
-let options = {
-    theme : '',
-}
-
-fetchTargetElements(options)
+fetchTargetElements()
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
+
 
 let kit = {
     lang : 'c',
@@ -706,14 +744,14 @@ let kit = {
             class: 'close-tag-name.chroma-alpha',
             pattern: /(?<=\/)\w+(?=\s*&gt;)/g
         },
-        // {
-        //     class: 'start-tag.chroma-zeus',
-        //     pattern: /&lt;(?!=!)/g
-        // },
-        // {
-        //     class: 'close-tag.chroma-zeus',
-        //     pattern: /(?<=\/*\w+\s*)&gt;/g
-        // }
+        {
+            class: 'start-tag.chroma-zeus',
+            pattern: /&lt;(?!=!)/g
+        },
+        {
+            class: 'close-tag.chroma-zeus',
+            pattern: /(?<=\/*[\S\s]+)&gt;/g
+        }
     ]
     
 }
@@ -744,74 +782,49 @@ let kit = {
             pattern: /\b(window|document)\b/g
         },
         {
-            class: 'keyword.chroma-delta',
-            pattern: /\b(export|default|from)\b/g
+            class: 'keyword.chroma-romeo',
+            pattern: /\b(return|import|export|default|from)\b/g
         },
         {
-            class: 'function.call',
+            class: 'function.call.chroma-lima',
             pattern: /\b(then)(?=\()/g
         },
         {
-            class: 'variable.language.this.chroma-oscar',
+            class : 'variable.language.this.chroma-oscar',
             pattern: /\bthis\b/g
         },
         {
-            class: 'variable.language.super.chroma-oscar',
+            class : 'variable.language.super.chroma-oscar',
             pattern: /super(?=\.|\()/g
         },
         {
-            class: 'storage.type.chroma-delta',
+            class : 'storage.type.chroma-delta',
             pattern: /\b(const|let|var)(?=\s)/g
         },
         {
-            matches: {
-                1: 'support.property.chroma-oscar'
-            },
+            class : 'support.property.chroma-oscar',
             pattern: /\.(length|node(class|Value))\b/g
         },
         {
-            matches: {
-                1: 'support.function.chroma-delta'
-            },
+            class : 'support.function.chroma-delta',
             pattern: /(setTimeout|setInterval)(?=\()/g
         },
         {
             class : 'support.method.chroma-delta',
             pattern: /\.(getAttribute|replace|push|getElementById|getElementsByClassclass|setTimeout|setInterval)(?=\()/g
         },
-        // {
-        //     class: 'string.regexp',
-        //     matches: {
-        //         1: 'string.regexp.open',
-        //         2: {
-        //             class: 'constant.regexp.escape',
-        //             pattern: /\\(.){1}/g
-        //         },
-        //         3: 'string.regexp.close',
-        //         4: 'string.regexp.modifier'
-        //     },
-        //     pattern: /(\/)((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)(\/)(?!\/)([igm]{0,3})/g
-        // },
-
-        /**
-         * matches runtime function declarations
-         */
+        {
+            class: 'string.regexp.chroma-echo',
+            pattern: /(\/)((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)(\/)(?!\/)([igm]{0,3})/g
+        },
         {
             class : 'storage.type.chroma-delta',
             pattern: /(var)?(\s|^)(\S+)(?=\s?=\s?function\()/g
         },
-
-        /**
-         * matches constructor call
-         */
         {
-            class : 'keyword.chroma-delta',
+            class : 'keyword.chroma-romeo',
             pattern: /(new)\s+(?!Promise)([^\(]*)(?=\()/g
         },
-
-        /**
-         * matches any function call in the style functionclass: function()
-         */
         {
             class: 'entity.function.chroma-delta',
             pattern: /(\w+)(?=:\s{0,}function)/g
@@ -821,11 +834,11 @@ let kit = {
             pattern: /\*(?= as)/g
         },
         {
-            class : 'keyword.chroma-delta',
+            class : 'keyword.chroma-romeo',
             pattern: /(export)\s+(\*)/g
         },
         {
-            class : 'storage.type.accessor',
+            class : 'storage.type.accessor.chroma-lima',
             pattern: /(get|set)\s+(\w+)(?=\()/g
         },
         {
@@ -841,7 +854,7 @@ let kit = {
             pattern: /=&gt;/g
         },
         {
-            class: 'support.class.promise',
+            class: 'promise.chroma-charlie',
             pattern: /\bPromise(?=(\(|\.))/g
         }
     ]

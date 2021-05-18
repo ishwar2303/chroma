@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="public/css/main.css">
     <script src="https://kit.fontawesome.com/196c90f518.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const changeTheme = () => {
+            let theme = document.getElementById('select-theme').value
+            console.log(theme)
+            Chroma.setOptions({theme})
+        }
+    </script>
 </head>
 <body>
     <div class="wrapper p-10-20">
@@ -23,42 +30,55 @@
                             <span style="color: rgb(255 68 68);">m</span>
                             <span style="color: #ff66ff;">a</span>
                         </div>
-                        <div style="font-size: 16px;margin-bottom: 10px;">Let's make your code beautiful</div>
+                        <div style="font-size: 16px;margin-bottom: 10px;color: white;"><u>Let's make your code beautiful</u></div>
                     </h1>
                     <div class="mb-20">
                         <h3 class="what mb-10">Chroma is a syntax highlighting library written in javascript.</h3>
                         <h3 class="what">It is lightweight and easy to use.</h3>
-                        <div class="flex-row flex-end">
-                            <button class="btn download-chroma-btn">Download</button>
+                        <div class="flex-row space-between mt-20">
+                            <div class="sel-th-cont">
+                                <label for="">Select Theme</label>
+                                <select id="select-theme">
+                                    <option value="ace-dark">Ace Dark</option>
+                                    <option value="coffee">Coffee</option>
+                                    <option value="danger">Danger</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="dreamweaver">Dreamweaver</option>
+                                    <option value="light">Light</option>
+                                    <option value="rosy">Rosy</option>
+                                    <option value="twilight">Twilight</option>
+                                </select>
+                            </div>
+                            <button class="btn download-chroma-btn" onclick="location.href='https://github.com/ishwar2303/chroma/archive/refs/heads/main.zip'">Download</button>
                         </div>
                     </div>
 
                     <h3 class="exp-head">How to use it?</h3>
-                    <div class="exp-p">
-                        <div class="flex-row">
-                            <div>1.&nbsp;</div> <div>Place chroma folder in your root directory of project.</div>
+                    <div >
+                        <div class="flex-row how">
+                            <div>1.&nbsp;</div> <div>Place chroma folder in the root directory of project.</div>
                         </div>
-                        <div class="flex-row">
+                        <div class="flex-row how">
                             <div>2.&nbsp;</div> <div>Include some markup for code to be highlighted.</div>
                         </div>
-                        <div class="flex-row">
+                        <!-- HTML Markup -->
+                        <div >
+                            <div chroma="true" language="html" header="true" linepad="false" heading="Include this markup for code to be highlighted">
+&lt;div chroma="true" language="html">
+    Place your code here...
+&lt;/div>
+                            </div>
+                        </div>
+                        <div class="flex-row how">
                             <div>3.&nbsp;</div> <div>Include Chroma js in the end of body.</div>
                         </div>
                         
-                    </div>
-                    <!-- HTML Markup -->
-                    <div >
-                        <div chroma="true" language="html" header="true" linepad="false" heading="Include this markup for code to be highlighted">
-&lt;div chroma="true" language="html" heading="Heading..." linepad="true" copy="true" preloader="true">
-    Place your code here...
-&lt;/div>
-                        </div>
                     </div>
 
                     <!-- Chroma script -->
                     <div >
                         <div chroma="true" language="html" linepad="false" heading="Include this script in the end of body">
-&lt;script type="module" src="chroma/dist/chroma.js">&lt;/script>
+&lt;script src="chroma/dist/chroma.js">&lt;/script>
                         </div>
                     </div>
                     <!-- HOW -->
@@ -66,11 +86,35 @@
                         <div class="exp-head">How does it work?</div>
                         <div class="exp-p">
                             <div class="">Chroma analyze your code based on language you choose, It process regular expression on code and wrap matches in <code class="exp-code">&lt;span>&lt;/span></code> tag.</div>
-                            <div>Corresponding css classes are attached and code is ready to be serve.</div>
+                            <div>Corresponding css classes are attached and code is ready to serve.</div>
                         </div>
                     </div>
 
                     <div class="exp-head"></div>
+
+                    <div>
+                        <div class="exp-head">How to use it in your script</div>
+                        <div></div>
+                        <div chroma="true" language="javascript" >
+/*
+* @param string, code to be highlighted
+* @param string, language
+* returns highlighted code
+*/
+var highlighted = Chroma.pretty(code, language)
+
+/*
+* Apply theme
+*/
+var options = {
+    theme : 'rosy'
+}
+Chroma.setOptions(options)
+                        </div>
+                    </div>
+                    <div class="flex-row flex-end">
+                        <a class="anchor" href="example.html">Get Dom code</a>
+                    </div>
 
                     <div >
                         <h3 class="exp-head">Understanding Chroma attributes</h3>
@@ -128,23 +172,45 @@ int main(){
                     <div>
                         <div class="exp-head">Chroma Themes</div>
                         <div class="exp-p">
-                            <div>Chroma comes with various themes select your favorite from the list</div>
+                            <div>Chroma comes with various themes select your favourite from the list</div>
                             <div>
                                 <code class="exp-code">ace-dark</code>
                                 <code class="exp-code">coffee</code>
                                 <code class="exp-code">danger</code>
                                 <code class="exp-code">dreamweaver</code>
                                 <code class="exp-code">dark</code>
+                                <code class="exp-code">light</code>
+                                <code class="exp-code">rosy</code>
                                 <code class="exp-code">twilight</code>
                             </div>
                         </div>
                     </div>
+                    
+                    <div>
+                        <div class="exp-head">Supported Languages</div>
+                        <div class="exp-p">
+                            <div>See if list can cater your needs</div>
+                            <div>
+                                <code class="exp-code">HTML</code>
+                                <code class="exp-code">CSS</code>
+                                <code class="exp-code">JavaScript</code>
+                                <code class="exp-code">SQL</code>
+                                <code class="exp-code">C</code>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <!-- end -->
                 </div>
             </div>
         </div>
     </div>
 
-    <script type="module" src="chroma/dist/chroma.js"></script>
+    <script src="chroma/dist/chroma.js"></script>
+    <script>
+        document.getElementById('select-theme').addEventListener('change', changeTheme)
+
+        Chroma.setOptions({theme : 'dark'})
+    </script>
 </body>
 </html>

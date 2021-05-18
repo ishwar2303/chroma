@@ -56,11 +56,13 @@
     display: flex;
     justify-content: space-between;
 }
-
+.chroma pre{
+    padding-left: 10px;
+    padding-right: 10px;
+}
 .chroma-line-no{
     display: flex;
     flex-direction: column;
-    margin-right: 10px;
 }
 .chroma-line-no span{
     display: flex;
