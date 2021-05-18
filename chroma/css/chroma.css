@@ -86,41 +86,48 @@
 }
 .chroma-preloader div div:nth-child(1){
     background: #15159e;
-    transition: 300ms;
+    transition: 700ms;
+    opacity: 0;
 }
 .chroma-preloader div div:nth-child(2){
     width: 27px;
     height: 27px;
     background: rgb(204 8 122);
-    transition: 700ms;
+    transition: 900ms;
+    opacity: 0;
 }
 .chroma-preloader div div:nth-child(3){
     width: 29px;
     height: 29px;
     background: rgb(21 134 6);
     transition: 1100ms;
+    opacity: 0;
 }
 .chroma-preloader div div:nth-child(4){
     width: 31px;
     height: 31px;
     background: rgb(189 79 6);
     transition: 1500ms;
+    opacity: 0;
 }
 .chroma-preloader div div:nth-child(5){
     width: 29px;
     height: 29px;
     background: rgb(89, 0, 255);
     transition: 1800ms;
+    opacity: 0;
 }
 .chroma-preloader div div:nth-child(6){
     width: 27px;
     height: 27px;
     background: rgb(255, 0, 76);
     transition: 2100ms;
+    opacity: 0;
 }
 .chroma-preloader div div:nth-child(7){
     width: 25px;
     height: 25px;
     background: #03a4c1;
     transition: 2500ms;
+    opacity: 0;
 }

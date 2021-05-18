@@ -1,14 +1,9 @@
-import {
-    addUtilityCss,
-    convert
-} from './chroma'
+import {convert} from './chroma'
 
 
 
 // fetch target blocks with attribute = chroma
 const fetchTargetElements = () => {
-
-    addUtilityCss()
     
     let blocks = document.querySelectorAll('[chroma="true"]')
     blocks.forEach(block => {
@@ -35,4 +30,4 @@ const fetchTargetElements = () => {
 }
 
 
-fetchTargetElements()
+window.onload = fetchTargetElements()

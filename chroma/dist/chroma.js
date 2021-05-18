@@ -475,7 +475,7 @@ const convert = (code, lang, header, heading, copy, loader, linepad) => {
 
     return result
 }
-/* harmony export (immutable) */ __webpack_exports__["b"] = convert;
+/* harmony export (immutable) */ __webpack_exports__["a"] = convert;
 
 
 
@@ -487,8 +487,9 @@ const addUtilityCss = () => {
     link.href = 'chroma/css/chroma.css'
     head.appendChild(link)
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = addUtilityCss;
+/* unused harmony export addUtilityCss */
 
+addUtilityCss()
 
 var selectedTheme = null
 
@@ -496,7 +497,7 @@ var selectedTheme = null
 * Default options
 */
 const defaultOptions = {
-    theme : 'dark',
+    theme : 'ace-dark',
 }
 /* unused harmony export defaultOptions */
 
@@ -528,9 +529,9 @@ const ChromaLocal = {
 }
 /* unused harmony export ChromaLocal */
 
-ChromaLocal.setOptions(defaultOptions)
-
 Chroma = ChromaLocal
+
+ChromaLocal.setOptions(defaultOptions)
 
 /***/ }),
 /* 1 */
@@ -545,8 +546,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // fetch target blocks with attribute = chroma
 const fetchTargetElements = () => {
-
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* addUtilityCss */])()
     
     let blocks = document.querySelectorAll('[chroma="true"]')
     blocks.forEach(block => {
@@ -564,7 +563,7 @@ const fetchTargetElements = () => {
 
         if(lang){
             // send code for conversion
-            let result = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["b" /* convert */])(code, lang, header, heading, copy, loader, linepad)
+            let result = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* convert */])(code, lang, header, heading, copy, loader, linepad)
             block.innerHTML = ''
             block.appendChild(result)
         }
@@ -573,7 +572,7 @@ const fetchTargetElements = () => {
 }
 
 
-fetchTargetElements()
+window.onload = fetchTargetElements()
 
 /***/ }),
 /* 2 */

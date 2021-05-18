@@ -365,6 +365,7 @@ export const addUtilityCss = () => {
     link.href = 'chroma/css/chroma.css'
     head.appendChild(link)
 }
+addUtilityCss()
 
 export var selectedTheme = null
 
