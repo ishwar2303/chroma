@@ -33,24 +33,11 @@
     overflow: auto;
     max-height: 500px;
     padding: 10px;
-    /* border: 0.5px solid rgba(0,0,0,0.5);
-    border-top: none; */
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 }
 .chroma-no-header{
     border-radius: 3px;
-}
-.chroma-copy-msg{
-    position: absolute;
-    padding: 15px 25px;
-    left : 15px;
-    bottom: 15px;
-    position: fixed;
-    border-radius: 5px;
-    z-index: 1000;
-    color: white;
-    background: rgba(0,0,0,0.9);
 }
 .chroma-sb{
     display: flex;
@@ -68,66 +55,77 @@
     display: flex;
     justify-content: flex-end;
 }
-
 /* preloader */
-.chroma-preloader div{
-    display: flex;
-    align-items: center;
+.loading {
+	display: flex;
 }
-.chroma-preloader div div{
-    width: 25px;
-    height: 25px;
-    border-radius: 10%;
-    margin: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
+
+.loading .dot {
+	position: relative;
+	width: 1.2em;
+	height: 1.2em;
+	margin: 0.4em;
+	border-radius: 50%;
 }
-.chroma-preloader div div:nth-child(1){
-    background: #15159e;
-    transition: 700ms;
-    opacity: 0;
+
+.loading .dot::before {
+	position: absolute;
+	content: "";
+	width: 100%;
+	height: 100%;
+	background: inherit;
+	border-radius: inherit;
+	animation: wave 2s ease-out infinite;
 }
-.chroma-preloader div div:nth-child(2){
-    width: 27px;
-    height: 27px;
-    background: rgb(204 8 122);
-    transition: 900ms;
-    opacity: 0;
+
+.loading .dot:nth-child(1) {
+	background: #7ef9ff;
 }
-.chroma-preloader div div:nth-child(3){
-    width: 29px;
-    height: 29px;
-    background: rgb(21 134 6);
-    transition: 1100ms;
-    opacity: 0;
+
+.loading .dot:nth-child(1)::before {
+	animation-delay: 0.2s;
 }
-.chroma-preloader div div:nth-child(4){
-    width: 31px;
-    height: 31px;
-    background: rgb(189 79 6);
-    transition: 1500ms;
-    opacity: 0;
+
+.loading .dot:nth-child(2) {
+	background: #89cff0;
 }
-.chroma-preloader div div:nth-child(5){
-    width: 29px;
-    height: 29px;
-    background: rgb(89, 0, 255);
-    transition: 1800ms;
-    opacity: 0;
+
+.loading .dot:nth-child(2)::before {
+	animation-delay: 0.4s;
 }
-.chroma-preloader div div:nth-child(6){
-    width: 27px;
-    height: 27px;
-    background: rgb(255, 0, 76);
-    transition: 2100ms;
-    opacity: 0;
+
+.loading .dot:nth-child(3) {
+	background: #4682b4;
 }
-.chroma-preloader div div:nth-child(7){
-    width: 25px;
-    height: 25px;
-    background: #03a4c1;
-    transition: 2500ms;
-    opacity: 0;
+
+.loading .dot:nth-child(3)::before {
+	animation-delay: 0.6s;
+}
+
+.loading .dot:nth-child(4) {
+	background: #0f52ba;
+}
+
+.loading .dot:nth-child(4)::before {
+	animation-delay: 0.8s;
+}
+
+.loading .dot:nth-child(5) {
+	background: #000080;
+}
+
+.loading .dot:nth-child(5)::before {
+	animation-delay: 1s;
+}
+
+@keyframes wave {
+	50%,
+  75% {
+		transform: scale(2.5);
+	}
+
+	80%,
+  100% {
+		opacity: 0;
+	}
 }

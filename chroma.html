@@ -64,7 +64,7 @@
                         </div>
                         <!-- HTML Markup -->
                         <div >
-                            <div chroma="true" language="html" header="true" linepad="false" heading="Include this markup for code to be highlighted">
+                            <div chroma="true" language="html" header="true" linepad="false" preloader="2" heading="Include this markup for code to be highlighted">
 &lt;div chroma="true" language="html">
     Place your code here...
 &lt;/div>
@@ -78,7 +78,7 @@
 
                     <!-- Chroma script -->
                     <div >
-                        <div chroma="true" language="html" linepad="false" heading="Include this script in the end of body">
+                        <div chroma="true" language="html" linepad="false" preloader="3" heading="Include this script in the end of body">
 &lt;script src="chroma/dist/chroma.js">&lt;/script>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                     <div>
                         <div class="exp-head">How to use it in your script</div>
                         <div></div>
-                        <div chroma="true" language="javascript" >
+                        <div chroma="true" language="javascript" preloader="false" copy="true">
 /*
 * @param string, code to be highlighted
 * @param string, language
@@ -136,7 +136,7 @@ Chroma.setOptions(options)
                                 <code class="exp-code">linepad="true"</code> Shows line number 
                             </div>
                             <div>
-                                <code class="exp-code">preloader="true"</code> Loading animation before revealing code
+                                <code class="exp-code">preloader="3"</code> Loading animation before revealing code, value is delay (number of seconds for loading)
                             </div>
                             <div>
                                 <code class="exp-code">header="true"</code> Header attached to code with heading and copy button

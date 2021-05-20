@@ -4,6 +4,7 @@ import html_kit from './language/html'
 import sql_kit from './language/sql'
 import css_kit from './language/css'
 import js_kit from './language/javascript'
+import json_kit from './language/json'
 
 /* Add all languages to array */
 export const languages = Array()
@@ -14,6 +15,7 @@ export var supportedLangugaes = () => {
     languages.push(sql_kit)
     languages.push(css_kit)
     languages.push(js_kit)
+    languages.push(json_kit)
     return languages
 }
 supportedLangugaes()
@@ -209,7 +211,6 @@ export const pretty = (code, lang) => {
 * @param string
 */
 const chromaCopy = (btn, copyCode, message) => {
-    btn.disabled = true
     copyCode = copyCode.trim()
     let textarea = document.createElement('textarea')
     let body = document.body
@@ -219,19 +220,22 @@ const chromaCopy = (btn, copyCode, message) => {
     document.execCommand('copy')
     body.removeChild(textarea)
     textarea.remove()
-    let msg = document.createElement('div')
+    let bg = btn.style.background
     if(copyCode != ''){
-        msg.className = 'chroma-copy-msg'
-        msg.innerHTML = message
+        btn.style.background = '#262bde'
+        btn.style.color=  'white'
+        btn.innerHTML = 'Code Copied'
     }
     else{
-        msg.className = 'chroma-copy-msg'
-        msg.innerHTML = 'Empty cannot be copied'
-    }
-    body.appendChild(msg)   
+        btn.innerHTML = 'Empty cannot be copied'
+    }   
+    btn.disabled = true
     setTimeout(() => {
-        msg.remove()
+        btn.style.background = bg
+        btn.style.color = 'black'
+        btn.innerHTML = 'Copy'
         btn.disabled = false
+
     }, 2000)
 }
 
@@ -244,17 +248,17 @@ export const preloader = () => {
     let loader = document.createElement('div')
     loader.className = 'chroma-preloader'
     let main = document.createElement('div')
-    main.innerHTML = '<div>L</div>'
-    main.innerHTML += '<div>o</div>'
-    main.innerHTML += '<div>a</div>'
-    main.innerHTML += '<div>d</div>'
-    main.innerHTML += '<div>i</div>'
-    main.innerHTML += '<div>n</div>'
-    main.innerHTML += '<div>g</div>'
+    main.className = 'loading'
+    main.innerHTML = '<div class="dot"></div>'
+    main.innerHTML += '<div class="dot"></div>'
+    main.innerHTML += '<div class="dot"></div>'
+    main.innerHTML += '<div class="dot"></div>'
+    main.innerHTML += '<div class="dot"></div>'
     loader.appendChild(main)
 
     return loader
 }
+
 
 /*
 * Preparing front end output
@@ -267,7 +271,9 @@ export const preloader = () => {
 * @param boolean
 */ 
 export const presentation = (code, prettyCode, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
-
+    let delay = 2000
+    if(!isNaN(loaderValue))
+        delay = loaderValue*1000
     if(!headingValue)
         headingValue = lang.toUpperCase()
     let main = document.createElement('div')
@@ -284,7 +290,6 @@ export const presentation = (code, prettyCode, lineset, linepad, header, heading
             heading.style.marginRight = '10px'
             btn.innerHTML = 'Copy'
             btn.className = 'chroma-copy'
-            btn.style.display = 'none'
             btn.addEventListener('click', () => {
                 chromaCopy(btn, resetEntities(code), 'Code copied successfully')
             })
@@ -303,13 +308,9 @@ export const presentation = (code, prettyCode, lineset, linepad, header, heading
         sub.appendChild(lineset)
     let codeBlock = document.createElement('div')
     codeBlock.innerHTML = prettyCode
-    sub.appendChild(codeBlock)
-    result.appendChild(sub)
-    if(header === 'true')
-        main.appendChild(chromaHeader)
-    main.appendChild(result)
-    if(loaderValue === 'true'){
-        // result.style.minHeight = ''
+    if(loaderValue != 'false'){
+        if(btn != undefined)
+            btn.style.display = 'none'
         sub.style.display = 'none'
         let loader = preloader()
         result.appendChild(loader)
@@ -319,8 +320,13 @@ export const presentation = (code, prettyCode, lineset, linepad, header, heading
             sub.style.display = 'flex'
             if(copy === 'true' && header === 'true')
                 btn.style.display = 'block'
-        }, 1500)
+        }, delay)
     }
+    sub.appendChild(codeBlock)
+    result.appendChild(sub)
+    if(header === 'true')
+        main.appendChild(chromaHeader)
+    main.appendChild(result)
     return main
 
 }
@@ -373,7 +379,7 @@ export var selectedTheme = null
 * Default options
 */
 export const defaultOptions = {
-    theme : 'ace-dark',
+    theme : 'dark',
 }
 
 /* set options 

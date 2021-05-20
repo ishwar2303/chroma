@@ -1,4 +1,4 @@
-var Chroma;
+var Chroma
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -80,13 +80,16 @@ var Chroma;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__language_c___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__language_c__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_html__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__language_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__language_sql__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_css__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__language_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_javascript__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_javascript___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__language_javascript__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__language_json__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__language_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__language_json__);
 /* Import all supported languages */
+
 
 
 
@@ -104,6 +107,7 @@ var supportedLangugaes = () => {
     languages.push(__WEBPACK_IMPORTED_MODULE_2__language_sql___default.a)
     languages.push(__WEBPACK_IMPORTED_MODULE_3__language_css___default.a)
     languages.push(__WEBPACK_IMPORTED_MODULE_4__language_javascript___default.a)
+    languages.push(__WEBPACK_IMPORTED_MODULE_5__language_json___default.a)
     return languages
 }
 supportedLangugaes()
@@ -325,7 +329,6 @@ const pretty = (code, lang) => {
 * @param string
 */
 const chromaCopy = (btn, copyCode, message) => {
-    btn.disabled = true
     copyCode = copyCode.trim()
     let textarea = document.createElement('textarea')
     let body = document.body
@@ -335,19 +338,22 @@ const chromaCopy = (btn, copyCode, message) => {
     document.execCommand('copy')
     body.removeChild(textarea)
     textarea.remove()
-    let msg = document.createElement('div')
+    let bg = btn.style.background
     if(copyCode != ''){
-        msg.className = 'chroma-copy-msg'
-        msg.innerHTML = message
+        btn.style.background = '#262bde'
+        btn.style.color=  'white'
+        btn.innerHTML = 'Code Copied'
     }
     else{
-        msg.className = 'chroma-copy-msg'
-        msg.innerHTML = 'Empty cannot be copied'
-    }
-    body.appendChild(msg)   
+        btn.innerHTML = 'Empty cannot be copied'
+    }   
+    btn.disabled = true
     setTimeout(() => {
-        msg.remove()
+        btn.style.background = bg
+        btn.style.color = 'black'
+        btn.innerHTML = 'Copy'
         btn.disabled = false
+
     }, 2000)
 }
 
@@ -360,18 +366,18 @@ const preloader = () => {
     let loader = document.createElement('div')
     loader.className = 'chroma-preloader'
     let main = document.createElement('div')
-    main.innerHTML = '<div>L</div>'
-    main.innerHTML += '<div>o</div>'
-    main.innerHTML += '<div>a</div>'
-    main.innerHTML += '<div>d</div>'
-    main.innerHTML += '<div>i</div>'
-    main.innerHTML += '<div>n</div>'
-    main.innerHTML += '<div>g</div>'
+    main.className = 'loading'
+    main.innerHTML = '<div class="dot"></div>'
+    main.innerHTML += '<div class="dot"></div>'
+    main.innerHTML += '<div class="dot"></div>'
+    main.innerHTML += '<div class="dot"></div>'
+    main.innerHTML += '<div class="dot"></div>'
     loader.appendChild(main)
 
     return loader
 }
 /* unused harmony export preloader */
+
 
 
 /*
@@ -385,7 +391,9 @@ const preloader = () => {
 * @param boolean
 */ 
 const presentation = (code, prettyCode, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
-
+    let delay = 2000
+    if(!isNaN(loaderValue))
+        delay = loaderValue*1000
     if(!headingValue)
         headingValue = lang.toUpperCase()
     let main = document.createElement('div')
@@ -402,7 +410,6 @@ const presentation = (code, prettyCode, lineset, linepad, header, headingValue, 
             heading.style.marginRight = '10px'
             btn.innerHTML = 'Copy'
             btn.className = 'chroma-copy'
-            btn.style.display = 'none'
             btn.addEventListener('click', () => {
                 chromaCopy(btn, resetEntities(code), 'Code copied successfully')
             })
@@ -421,13 +428,9 @@ const presentation = (code, prettyCode, lineset, linepad, header, headingValue, 
         sub.appendChild(lineset)
     let codeBlock = document.createElement('div')
     codeBlock.innerHTML = prettyCode
-    sub.appendChild(codeBlock)
-    result.appendChild(sub)
-    if(header === 'true')
-        main.appendChild(chromaHeader)
-    main.appendChild(result)
-    if(loaderValue === 'true'){
-        // result.style.minHeight = ''
+    if(loaderValue != 'false'){
+        if(btn != undefined)
+            btn.style.display = 'none'
         sub.style.display = 'none'
         let loader = preloader()
         result.appendChild(loader)
@@ -437,8 +440,13 @@ const presentation = (code, prettyCode, lineset, linepad, header, headingValue, 
             sub.style.display = 'flex'
             if(copy === 'true' && header === 'true')
                 btn.style.display = 'block'
-        }, 1500)
+        }, delay)
     }
+    sub.appendChild(codeBlock)
+    result.appendChild(sub)
+    if(header === 'true')
+        main.appendChild(chromaHeader)
+    main.appendChild(result)
     return main
 
 }
@@ -497,7 +505,7 @@ var selectedTheme = null
 * Default options
 */
 const defaultOptions = {
-    theme : 'ace-dark',
+    theme : 'dark',
 }
 /* unused harmony export defaultOptions */
 
@@ -530,7 +538,6 @@ const ChromaLocal = {
 /* unused harmony export ChromaLocal */
 
 Chroma = ChromaLocal
-
 ChromaLocal.setOptions(defaultOptions)
 
 /***/ }),
@@ -557,7 +564,7 @@ const fetchTargetElements = () => {
         let heading = attributes.heading != undefined ? attributes.heading.nodeValue : false
         let copy = attributes.copy != undefined ? attributes.copy.nodeValue : 'true'
         let lang = attributes.language != undefined ? attributes.language.nodeValue : false
-        let loader = attributes.preloader != undefined ? attributes.preloader.nodeValue : 'true'
+        let loader = attributes.preloader != undefined ? attributes.preloader.nodeValue : '2'
         let linepad = attributes.linepad != undefined ? attributes.linepad.nodeValue : 'true'
         lang = lang.toLowerCase()
 
@@ -864,6 +871,42 @@ module.exports = kit
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports) {
+
+let kit = {
+    lang : 'json',
+    conversion : [
+        {
+            class : 'property.chroma-victor',
+            pattern : /("|')\w+("|')(?=\s*:)/g
+        },
+        {
+            class : 'string.chroma-bravo',
+            pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
+        },
+        {
+            class: 'string.regexp.chroma-alpha',
+            pattern: /(\/)((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)(\/)(?!\/)([igm]{0,3})/g
+        },
+        {
+            class : 'property.chroma-victor',
+            pattern : /\w+(?=\s*:)/g
+        },
+        {
+            class: 'constant.numeric.chroma-delta',
+            pattern: /\b(-?(0x)?\d*\.?[\da-f]+|NaN|-?Infinity)\b/gi
+        },
+        {
+            class: 'constant.language.chroma-oscar',
+            pattern: /\b(true|false|null)\b/g
+        }
+    ]
+}
+
+module.exports = kit
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports) {
 
 let kit = {

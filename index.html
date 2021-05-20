@@ -5,20 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syntax Highlighting</title>
+    <script>
+        const changeTheme = () => {
+            let theme = document.getElementById('theme').value
+            console.log(theme)
+            Chroma.setOptions({theme})
+        }
+    </script>
 </head>
 <body>
     <div class="wrapper">  
 
-        <div chroma="true" language="javascript">
-            
+        <select class="select" id="theme">
+            <option value="ace-dark">Ace Dark</option>
+            <option value="coffee">Coffee</option>
+            <option value="danger">Danger</option>
+            <option value="dark">Dark</option>
+            <option value="dreamweaver">Dreamweaver</option>
+            <option value="light">Light</option>
+            <option value="rosy">Rosy</option>
+            <option value="sunshine">Sunshine</option>
+            <option value="twilight">Twilight</option>
+        </select>
+
+        <div chroma="true" language="javascript" heading="chroma.js" copy="false" preloader="5">
 /* Import all supported languages */
 import c_kit from './language/c'
 import html_kit from './language/html'
 import sql_kit from './language/sql'
 import css_kit from './language/css'
 import js_kit from './language/javascript'
-/* Add all languages to array */
 
+/* Add all languages to array */
 export const languages = Array()
 
 export var supportedLangugaes = () => {
@@ -29,10 +47,10 @@ export var supportedLangugaes = () => {
     languages.push(js_kit)
     return languages
 }
+supportedLangugaes()
 
 /* Pick language for processing regex */
 /*
-* @param Array
 * @param string
 */
 export const pickLanguage = (lang) => {
@@ -105,7 +123,6 @@ export const replaceMatch = (code) => {
     let endPos = 0
 
     matches.forEach((m) => {
-        // console.log(m.start, m.end)
         if(overlapMatch(m.start, endPos) && !m.embedded){
 
             if(nullMatch(endPos, m.start))
@@ -154,15 +171,7 @@ export const processPattern = (code, patt, offset) => {
         class : patt.class,
         embedded
     }
-    // if(embedded){
-    //     let kit = pickLanguage(supportedLangugaes(), embedded)
-    //     if(kit)
-    //         processCodeWithPatterns(code.substring(startPos, endPos), kit.conversion, startPos)
-    // }
-    // console.log('HTML searching...')
-    // console.log(code.substring(startPos, endPos))
     matches.push(obj)
-    // console.log(patt)
     return {
         remaining : code.substring(endPos - offset),
         offset : endPos
@@ -173,6 +182,7 @@ export const processPattern = (code, patt, offset) => {
 /*
 * @param string
 * @param array
+* @param int
 */
 export const processCodeWithPatterns = (code, kit, offset) => {
 
@@ -186,6 +196,10 @@ export const processCodeWithPatterns = (code, kit, offset) => {
 
 }
 
+/* 
+* Process code parts which belongs to other language
+* @param string
+*/
 export const embeddOtherLanguages = (code) => {
 
     matches.forEach((m) => {
@@ -197,6 +211,27 @@ export const embeddOtherLanguages = (code) => {
         }
     })
 
+}
+
+/*
+* Returns highlighted version of code
+* @param string
+* @param string
+*/
+export const pretty = (code, lang) => {
+    let kit = pickLanguage(lang)
+    code = convertEntities(code)
+    beautify = ''
+    matches = Array()
+    if(kit){
+        processCodeWithPatterns(code, kit.conversion, 0)
+        embeddOtherLanguages(code)
+        matches.sort((a, b) => {return a.start - b.start})
+        replaceMatch(code)
+    }
+    else return false
+
+    return '&lt;pre style="margin:0;">&lt;code>' + beautify + '&lt;/code>&lt;/pre>'
 }
 
 /*
@@ -240,17 +275,17 @@ export const preloader = () => {
     let loader = document.createElement('div')
     loader.className = 'chroma-preloader'
     let main = document.createElement('div')
-    main.innerHTML = '&lt;div>L&lt;/div>'
-    main.innerHTML += '&lt;div>o&lt;/div>'
-    main.innerHTML += '&lt;div>a&lt;/div>'
-    main.innerHTML += '&lt;div>d&lt;/div>'
-    main.innerHTML += '&lt;div>i&lt;/div>'
-    main.innerHTML += '&lt;div>n&lt;/div>'
-    main.innerHTML += '&lt;div>g&lt;/div>'
+    main.className = 'loading'
+    main.innerHTML = '&lt;div class="dot">&lt;/div>'
+    main.innerHTML += '&lt;div class="dot">&lt;/div>'
+    main.innerHTML += '&lt;div class="dot">&lt;/div>'
+    main.innerHTML += '&lt;div class="dot">&lt;/div>'
+    main.innerHTML += '&lt;div class="dot">&lt;/div>'
     loader.appendChild(main)
 
     return loader
 }
+
 
 /*
 * Preparing front end output
@@ -262,8 +297,10 @@ export const preloader = () => {
 * @param boolean
 * @param boolean
 */ 
-export const presentation = (code, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
-
+export const presentation = (code, prettyCode, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
+    let delay = 2000
+    if(!isNaN(loaderValue))
+        delay = loaderValue*1000
     if(!headingValue)
         headingValue = lang.toUpperCase()
     let main = document.createElement('div')
@@ -280,7 +317,6 @@ export const presentation = (code, lineset, linepad, header, headingValue, lang,
             heading.style.marginRight = '10px'
             btn.innerHTML = 'Copy'
             btn.className = 'chroma-copy'
-            btn.style.display = 'none'
             btn.addEventListener('click', () => {
                 chromaCopy(btn, resetEntities(code), 'Code copied successfully')
             })
@@ -294,23 +330,13 @@ export const presentation = (code, lineset, linepad, header, headingValue, lang,
     header ? result.className += ' chroma-no-header' : ''
     let sub = document.createElement('div')
     sub.className = 'chroma-flex-row'
-    let pre = document.createElement('pre')
-    pre.style.margin = 0
-    pre.style.fontFamily = ''
-    let codeBlock = document.createElement('code')
-    codeBlock.innerHTML = beautify
-    pre.appendChild(codeBlock)
 
     if(linepad === 'true')
         sub.appendChild(lineset)
-
-    sub.appendChild(pre)
-    result.appendChild(sub)
-    if(header === 'true')
-        main.appendChild(chromaHeader)
-    main.appendChild(result)
-    if(loaderValue === 'true'){
-        // result.style.minHeight = ''
+    let codeBlock = document.createElement('div')
+    codeBlock.innerHTML = prettyCode
+    if(loaderValue != 'false'){
+        btn.style.display = 'none'
         sub.style.display = 'none'
         let loader = preloader()
         result.appendChild(loader)
@@ -320,233 +346,133 @@ export const presentation = (code, lineset, linepad, header, headingValue, lang,
             sub.style.display = 'flex'
             if(copy === 'true' && header === 'true')
                 btn.style.display = 'block'
-        }, 1500)
+        }, delay)
     }
+    sub.appendChild(codeBlock)
+    result.appendChild(sub)
+    if(header === 'true')
+        main.appendChild(chromaHeader)
+    main.appendChild(result)
     return main
 
 }
 
 /*
 * @param string
-* @param object
+* @param string
+* @param string
 * @param string heading=""
 * @param string copy=""
 * @param string preloader=""
+* @param html dob object
 * */
-export const convert = (code, lang_kit, header, heading, copy, loader, linepad) => {
-    matches = Array()
-    beautify = ''
+export const convert = (code, lang, header, heading, copy, loader, linepad) => {
+    code = code.trim()
+    // highlighted code
+    let prettyCode = ChromaLocal.pretty(code, lang)
+    if(!prettyCode){
+        let msgBlock = document.createElement('span')
+        let msg = 'Set language="" attribute and specify language, Check supported languages'
+        msgBlock.style.color = 'red'
+        msgBlock.innerText = msg
+        console.error(msg)
+        return msgBlock
+    }
 
-    code = convertEntities(code).trim()
-    let codeLines = separatecodeLines(code)
-    let totalLines = codeLines.length
-    
-    processCodeWithPatterns(code, lang_kit.conversion, 0)
+    // linepad
+    let lineSet = prepareCodeLines(separatecodeLines(code).length)
 
-    embeddOtherLanguages(code)
-
-    matches.sort((a, b) => {return a.start - b.start})
-
-    replaceMatch(code)
-
-    let lineSet = prepareCodeLines(totalLines)
-    let result = presentation(code, lineSet, linepad, header, heading, lang_kit.lang, copy, loader)
+    // final html output
+    let result = presentation(code, prettyCode, lineSet, linepad, header, heading, lang, copy, loader)
 
     return result
 }
 
+
+/* Add chroma css */
+export const addUtilityCss = () => {
+    let head = document.head
+    let link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'chroma/css/chroma.css'
+    head.appendChild(link)
+}
+addUtilityCss()
+
+export var selectedTheme = null
+
+/*
+* Default options
+*/
 export const defaultOptions = {
-    theme : 'ace-dark',
+    theme : 'dark',
 }
 
-/* set options */
+/* set options 
+* @param object
+*/
 export const setOptions = (options) => {
     let head = document.head
     let link, style
     let theme = options.theme
-
     // add theme css file in head of dcoument
     if(theme){
+        if(selectedTheme)
+            selectedTheme.remove()
         link = document.createElement('link')
         link.rel = 'stylesheet'
         link.href = 'chroma/themes/' + theme + '.css'
         head.appendChild(link)
+        selectedTheme = link
     }
 }
 
-export const Chroma = {
-    supportedLangugaes,
-    pickLanguage,
+export const ChromaLocal = {
+    pretty,
     setOptions
 }
+
+ChromaLocal.setOptions(defaultOptions)
         </div>
-                    <div chroma="true" language="html">
-&lt;!DOCTYPE html>
-&lt;html lang="en">
-&lt;head>
-    &lt;meta charset="UTF-8">
-    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge">
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
-    &lt;title>Chroma&lt;/title>
-    &lt;style>
-        .wrapper{
-            display : flex;
-            justify-content : center;
-            align-items : flex-end;
-        }
-        .preprocessor, .start-tag-name, .close-tag-name{
-            color: #FF9D00;
-        }
-        #constant{
-            color: #FF628C;
-        }
-        .function:nth-child(odd){
-            color: white;
-        }
-        div > span{
-            background: blue;
-        }
-    &lt;/style>
 
-    &lt;script>
-        const showOutput = () => {
-            let el = document.getElementById('editor')
-            el.innerHTML = 'Welcome to chroma world.'
+        <div chroma="true" language="json" preloader="false" heading="Regex kit" header="false" linepad="false">
+let kit = {
+    lang : 'sql',
+    conversion : [
+        {
+            class : 'string.chroma-bravo',
+            pattern : /((?&lt;![\\])['"])((?:.(?!(?&lt;![\\])\1))*.?)\1/g
+        },
+        {
+            class: 'comment.chroma-charlie',
+            pattern: /--.*$|\/\*[\s\S]*?\*\/|(\/\/)[\s\S]*?$/gm
+        },
+        {
+            class: 'constant.numeric.chroma-echo',
+            pattern: /\b(\d+(\.\d+)?(e(\+|\-)?\d+)?(f|d)?|0x[\da-f]+)\b/gi
+        },
+        {
+            class: 'function.call.chroma-tango',
+            pattern: /(\w+?)(?=\()/g
+        },
+        {
+            "class": 'keyword.operator.chroma-romeo',
+            pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
         }
-    &lt;/script>
-
-    &lt;style>
-        .wrapper{
-            display : flex;
-            justify-content : center;
-            align-items : flex-end;
-        }
-        .preprocessor, .start-tag-name, .close-tag-name{
-            color: #FF9D00;
-        }
-        #constant{
-            color: #FF628C;
-        }
-        .function:nth-child(odd){
-            color: white;
-        }
-        div > span{
-            background: blue;
-        }
-    &lt;/style>
-
-&lt;/head>
-&lt;body>
-    &lt;!-- This is a comment -->
-    Your Code is beautiful show it off.
-    &lt;div chroma="true" language="html" preloader="true" copy="true" heading="HTML Code">
-        Place your code here...
-    &lt;/div>
-    &lt;?php 
-        echo 'Working';
-    ?&gt;
-&lt;/body>
-&lt;/html>
-                    </div >
-
-                    <div chroma="true" language="c" copy="true" preloader="true">
-#include &lt;iostream>
-using namespace std;
-
-void printArray(int arr[], int size){
-    cout &lt;&lt; "Array : ";
-    for(int i=0; i&lt;size; i++)
-        cout &lt;&lt; arr[i] &lt;&lt; " ";
-    cout &lt;&lt; endl;
+    ]
+    
 }
 
-void removeOccurrence(int arr[], int size){
-    int bucket[size]; // max capacity of bucket is size
-    int k = 1; // elements in bucket
-    bucket[0] = arr[0];
-    int control = 0;
-    for(int i=1; i&lt; size; i++){
-        control = 1;
-        for(int j=0; j&lt;k; j++){
-            if(arr[i] == bucket[j]){ // check element in bucket
-                control = 0;
-            }
-        }
-        if(control) // include in bucket
-            bucket[k++] = arr[i];
-    }
-    
-    printArray(bucket, k);
-}
-
-
-int main(){
-
-    int arr[]={1,2,3,1,1,5,2,4,3,2,7,6,2,1,3,2,5,2,3,1};
-
-    int size = sizeof(arr)/sizeof(arr[0]);
-    
-    
-    removeOccurrence(arr, size);
-
-    return 0;
-
-}
-                    </div>
+module.exports = kit
     </div>
-    
-    <div chroma="true" language="css"  copy="true" preloader="true">
-/* Beauify */
-
-.comment{
-    color: #0088FF;
-    font-style: italic;
-}
-.string{
-    color: #3AD900;
-}
-.keyword, .doc, .attribute{
-    color: #FFEE80;
-}
-.preprocessor, .start-tag-name, .close-tag-name{
-    color: #FF9D00;
-}
-#constant{
-    color: #FF628C;
-}
-.function:nth-child(odd){
-    color: white;
-}
-div > span{
-    background: blue;
-}
-    </div>
-
-    
-    <div chroma="true" language="sql" preloader="true">
-SELECT * FROM `products` WHERE pro_name = 'phone';
-
-SELECT column_name(s)
-FROM table_name
-WHERE column_name BETWEEN value_1 AND value_2;
-
-ALTER TABLE table_name 
-ADD column_name datatype;
-
-SELECT column_name,
-  CASE
-    WHEN condition THEN 'Result_1'
-    WHEN condition THEN 'Result_2'
-    ELSE 'Result_3'
-  END
-FROM table_name;
-
-SELECT column_name, COUNT(*)
-FROM table_name
-GROUP BY column_name
-HAVING COUNT(*) > value;
     </div>
 
     <script src="chroma/dist/chroma.js"></script>
+    <script>
+        document.getElementById('theme').addEventListener('change', changeTheme)
+    </script>
+    <script>
+        Chroma.setOptions({theme : 'dark'})
+    </script>
 </body>
 </html>

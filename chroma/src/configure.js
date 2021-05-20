@@ -15,7 +15,7 @@ const fetchTargetElements = () => {
         let heading = attributes.heading != undefined ? attributes.heading.nodeValue : false
         let copy = attributes.copy != undefined ? attributes.copy.nodeValue : 'true'
         let lang = attributes.language != undefined ? attributes.language.nodeValue : false
-        let loader = attributes.preloader != undefined ? attributes.preloader.nodeValue : 'true'
+        let loader = attributes.preloader != undefined ? attributes.preloader.nodeValue : '2'
         let linepad = attributes.linepad != undefined ? attributes.linepad.nodeValue : 'true'
         lang = lang.toLowerCase()
 
