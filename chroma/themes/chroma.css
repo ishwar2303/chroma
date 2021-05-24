@@ -1,0 +1,66 @@
+
+.chroma{
+    background: #1b1b1b;
+    color: #bfbfbf;
+    /* background-image: url('../images/chroma-bg.jpg'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 0.5px solid rgb(97 94 94 / 50%);
+}
+.chroma-head{
+    background: #1b1b1b;
+    color: white;
+}
+.chroma-beautify{
+    padding: 5px;
+}
+.chroma-beautify pre{
+    padding: 5px 5px;
+}
+.chroma-line-no{
+    border-right: 0.5px solid rgba(255,255,255,0.3);
+    padding: 5px 4px;
+    background: #1b1b1b;
+}
+.chroma-line-no span{
+    padding: 0px 4px;
+}
+/* Beautify */
+
+.chroma-alpha{
+    color : #dc4242;
+}
+
+/* string */
+.chroma-bravo{
+    color : #4d9034;
+}
+
+/* comment */
+.chroma-charlie{
+    color : #757575;
+}
+.chroma-delta{
+    color : #c3b765;
+}
+.chroma-echo{
+    color : #c54545; 
+}
+.chroma-lima{
+    color : #5785ad;
+}
+.chroma-oscar{
+    color : #64a1d6;
+}
+.chroma-romeo{
+    color : #9453af;
+}
+.chroma-tango{
+    color : #f95656;
+}
+.chroma-victor{
+    color : #767ed6;
+}
+.chroma-zeus{
+    color : #696969;
+}

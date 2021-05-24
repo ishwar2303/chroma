@@ -1,4 +1,4 @@
-var Chroma
+var Chroma;
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -72,60 +72,21 @@ var Chroma
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export supportedLangugaes */
 /* unused harmony export matches */
 /* unused harmony export beautify */
 /* unused harmony export selectedTheme */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__language_c__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__language_c___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__language_c__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_html__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__language_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_sql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__language_sql__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_css__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__language_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_javascript__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_javascript___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__language_javascript__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__language_json__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__language_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__language_json__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__merge_kit__ = __webpack_require__(9);
 /* Import all supported languages */
 
-
-
-
-
-
-
-/* Add all languages to array */
-const languages = Array()
-/* unused harmony export languages */
-
-
-var supportedLangugaes = () => {
-    languages.push(__WEBPACK_IMPORTED_MODULE_0__language_c___default.a)
-    languages.push(__WEBPACK_IMPORTED_MODULE_1__language_html___default.a)
-    languages.push(__WEBPACK_IMPORTED_MODULE_2__language_sql___default.a)
-    languages.push(__WEBPACK_IMPORTED_MODULE_3__language_css___default.a)
-    languages.push(__WEBPACK_IMPORTED_MODULE_4__language_javascript___default.a)
-    languages.push(__WEBPACK_IMPORTED_MODULE_5__language_json___default.a)
-    return languages
-}
-supportedLangugaes()
 
 /* Pick language for processing regex */
 /*
 * @param string
 */
 const pickLanguage = (lang) => {
-    let pick = false
-    languages.forEach((s) => {
-        if(s.lang == lang){
-            pick = s
-            return
-        }
-    })
-
-    return pick
+    if(lang in __WEBPACK_IMPORTED_MODULE_0__merge_kit__["a" /* default */])
+        return __WEBPACK_IMPORTED_MODULE_0__merge_kit__["a" /* default */][lang]
+    else return false
 }
 /* unused harmony export pickLanguage */
 
@@ -318,7 +279,8 @@ const pretty = (code, lang) => {
     }
     else return false
 
-    return '<pre style="margin:0;"><code>' + beautify + '</code></pre>'
+    let ff = 'font-family: monaco, courier, monospace; min-height: 15px;'
+    return '<pre style="margin:0;' + ff + '"><code style="' + ff + '">' + beautify + '</code></pre>'
 }
 /* unused harmony export pretty */
 
@@ -398,7 +360,7 @@ const presentation = (code, prettyCode, lineset, linepad, header, headingValue, 
         headingValue = lang.toUpperCase()
     let main = document.createElement('div')
     main.className = 'chroma'
-    main.style.fontFamily = 'monospace'
+    main.style.fontFamily = 'monaco, courier, monospace'
     let chromaHeader, heading, btn
     if(header === 'true'){
         chromaHeader = document.createElement('div')
@@ -436,7 +398,6 @@ const presentation = (code, prettyCode, lineset, linepad, header, headingValue, 
         result.appendChild(loader)
         setTimeout(() => {
             loader.remove()
-            result.style.minHeight = '0'
             sub.style.display = 'flex'
             if(copy === 'true' && header === 'true')
                 btn.style.display = 'block'
@@ -488,16 +449,17 @@ const convert = (code, lang, header, heading, copy, loader, linepad) => {
 
 
 /* Add chroma css */
-const addUtilityCss = () => {
+let chromaCss = false
+const addUtilityCss = (path) => {
     let head = document.head
     let link = document.createElement('link')
     link.rel = 'stylesheet'
-    link.href = 'chroma/css/chroma.css'
+    link.href = path + 'chroma/css/chroma.css'
     head.appendChild(link)
+    chromaCss = true
 }
 /* unused harmony export addUtilityCss */
 
-addUtilityCss()
 
 var selectedTheme = null
 
@@ -506,6 +468,7 @@ var selectedTheme = null
 */
 const defaultOptions = {
     theme : 'dark',
+    path : ''
 }
 /* unused harmony export defaultOptions */
 
@@ -514,16 +477,20 @@ const defaultOptions = {
 * @param object
 */
 const setOptions = (options) => {
+        
     let head = document.head
     let link, style
     let theme = options.theme
+    let path = options.path != undefined ? options.path : defaultOptions.path
+    if(!chromaCss)
+        addUtilityCss(path)
     // add theme css file in head of dcoument
     if(theme){
         if(selectedTheme)
             selectedTheme.remove()
         link = document.createElement('link')
         link.rel = 'stylesheet'
-        link.href = 'chroma/themes/' + theme + '.css'
+        link.href = path + 'chroma/themes/' + theme + '.css'
         head.appendChild(link)
         selectedTheme = link
     }
@@ -531,6 +498,9 @@ const setOptions = (options) => {
 /* unused harmony export setOptions */
 
 
+/*
+* public methods
+*/
 const ChromaLocal = {
     pretty,
     setOptions
@@ -538,7 +508,7 @@ const ChromaLocal = {
 /* unused harmony export ChromaLocal */
 
 Chroma = ChromaLocal
-ChromaLocal.setOptions(defaultOptions)
+// ChromaLocal.setOptions(defaultOptions)
 
 /***/ }),
 /* 1 */
@@ -549,15 +519,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__chroma__ = __webpack_require__(0);
 
 
-
-
 // fetch target blocks with attribute = chroma
 const fetchTargetElements = () => {
     
     let blocks = document.querySelectorAll('[chroma="true"]')
     blocks.forEach(block => {
         let code = block.innerHTML
-        
+        let height = block.offsetHeight
         // get all attributes of chroma element
         let attributes = block.attributes
         let header = attributes.header != undefined ? attributes.header.nodeValue : 'true'
@@ -780,7 +748,7 @@ let kit = {
             pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
         },
         {
-            class: 'selector',
+            class: 'selector.chroma-lima',
             pattern: /\$(?=\.|\()/g
         },
         {
@@ -840,6 +808,10 @@ let kit = {
             pattern: /\*(?= as)/g
         },
         {
+            class: 'constant.numeric.chroma-echo',
+            pattern: /\b\d+\b/g
+        },
+        {
             class : 'keyword.chroma-romeo',
             pattern: /(export)\s+(\*)/g
         },
@@ -885,7 +857,7 @@ let kit = {
             pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
         },
         {
-            class: 'string.regexp.chroma-alpha',
+            class: 'string.regexp.chroma-echo',
             pattern: /(\/)((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)(\/)(?!\/)([igm]{0,3})/g
         },
         {
@@ -907,6 +879,91 @@ module.exports = kit
 
 /***/ }),
 /* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+let kit = {
+    lang : 'php',
+    conversion : [
+        {
+            class : 'comment.chroma-charlie',
+            pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
+        },
+        {
+            class : 'string.chroma-bravo',
+            pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
+        },
+        {
+            class: 'support.chroma-delta',
+            pattern: /\b(echo|function|return)\b/ig
+        },
+        {
+            class: 'variable.dollar-sign.chroma-victor',
+            pattern: /(\$)(\w+)\b/g
+        },
+        {
+            class: 'constant.language.chroma-delta',
+            pattern: /true|false|null/ig
+        },
+        {
+            class: 'constant.numeric.chroma-echo',
+            pattern: /\b\d+\b/g
+        },
+        {
+            class: 'keyword.chroma-lima',
+            pattern: /\b(die|end(for(each)?|switch|if)|case|require(_once)?|include(_once)?)(?=\b)/ig
+        },
+        {
+            class: 'keyword.chroma-oscar',
+            pattern: /(instanceof)\s([^\$].*?)(\)|;)/ig
+        },
+        {
+            class:'support.function.chroma-oscar',
+            pattern: /\b(array(_key_exists|_merge|_keys|_shift)?|isset|count|empty|unset|printf|is_(array|string|numeric|object)|sprintf|each|date|time|substr|pos|str(len|pos|tolower|_replace|totime)?|ord|trim|in_array|implode|end|preg_match|explode|fmod|define|link|list|get_class|serialize|file|sort|mail|dir|idate|log|intval|header|chr|function_exists|dirclass|preg_replace|file_exists)(?=\()/ig
+        },
+        {
+            class: 'variable.language.php-tag.chroma-delta',
+            pattern: /(&lt;\?(php)?|\?&gt;)/ig
+        },
+        {
+            class: 'keyword.classspace.chroma-delta',
+            pattern: /\b(classspace|use)\s(.*?);/ig
+        },
+        {
+            class:'keyword.chroma-delta',
+            pattern: /\b(abstract|final)?\s?(class|interface|trait)\s(\w+)(\sextends\s)?([\w\\]*)?(\simplements\s)?([\w\\]*)?\s?\{?(\n|\})/ig
+        },
+        {
+            class: 'keyword.static.chroma-delta',
+            pattern: /self::|static::/ig
+        },
+        {
+            class: 'keyword.chroma-lima',
+            pattern : /\b(const|public|static|protected)\b/g
+        },
+        {
+            class: 'storage.function.chroma-victor',
+            pattern: /(?<=(function)\s)(__.*?)(?=\()/ig
+        },
+        {
+            class: 'storage.function.chroma-victor',
+            pattern: /(?<=(function)\s)(.*?)(?=\()/ig
+        },
+        {
+            class: 'keyword.new.chroma-delta',
+            pattern: /\b(new)\s([^\$][a-z0-9_\\]*?)(?=\)|\(|;)/ig
+        },
+        {
+            class: 'support.class.chroma-delta',
+            pattern: /([\w\\]*?)(::)(?=\b|\$)/g
+        }
+    ]
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (kit);
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports) {
 
 let kit = {
@@ -941,6 +998,44 @@ let kit = {
 }
 
 module.exports = kit
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__language_c__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__language_c___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__language_c__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_css__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__language_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_html__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__language_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_javascript__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_javascript___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__language_javascript__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_json__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__language_json__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__language_php__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__language_sql__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__language_sql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__language_sql__);
+
+
+
+
+
+
+
+let languages = {
+    c : __WEBPACK_IMPORTED_MODULE_0__language_c___default.a,
+    css : __WEBPACK_IMPORTED_MODULE_1__language_css___default.a,
+    html : __WEBPACK_IMPORTED_MODULE_2__language_html___default.a,
+    javascript : __WEBPACK_IMPORTED_MODULE_3__language_javascript___default.a,
+    json : __WEBPACK_IMPORTED_MODULE_4__language_json___default.a,
+    php : __WEBPACK_IMPORTED_MODULE_5__language_php__["a" /* default */],
+    sql : __WEBPACK_IMPORTED_MODULE_6__language_sql___default.a
+
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (languages);
 
 /***/ })
 /******/ ]);

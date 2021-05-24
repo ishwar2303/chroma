@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS | Chroma</title>
+</head>
+<body>
+    <div chroma="true" language="javascript" heading="chroma.js">
 /* Import all supported languages */
 import all_languages from './merge-kit'
 
@@ -20,12 +30,12 @@ export var beautify = '' // final beautiful version of code
 
 // @param string
 export const convertEntities = (code) => {
-    return code.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    return code.replace(/&lt;/g, '&lt;').replace(/>/g, '&gt;')
 }
 
 // @param string
 export const resetEntities = (code) => {
-    return code.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
+    return code.replace(/&lt;/g, '&lt;').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
 }
 
 // @param string
@@ -38,7 +48,7 @@ export const prepareCodeLines = (len) => {
     let i, span
     let lineSet = document.createElement('div')
     lineSet.className = 'chroma-line-no'
-    for(i=1; i<=len; i++){
+    for(i=1; i&lt;=len; i++){
         span = document.createElement('span')
         span.innerHTML = i
         lineSet.appendChild(span)
@@ -72,20 +82,20 @@ export const replaceMatch = (code) => {
         if(overlapMatch(m.start, endPos) && !m.embedded){
 
             if(nullMatch(endPos, m.start))
-                beautify += '<span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '</span>'
+                beautify += '&lt;span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '&lt;/span>'
 
-            beautify += '<span class="' + m.class.replace(/\./g, ' ') + '">' + m.value + '</span>'
+            beautify += '&lt;span class="' + m.class.replace(/\./g, ' ') + '">' + m.value + '&lt;/span>'
             endPos = m.end
 
         }
     })
-    beautify += '<span class="' + 'plain-text">' + code.substr(endPos, code.length) + '</span>'
+    beautify += '&lt;span class="' + 'plain-text">' + code.substr(endPos, code.length) + '&lt;/span>'
 }
 
 // sorting matches in ascending order
 // helps in finding matches overlaps
 export const matchesSorting = (a, b) => {
-    if(a.start < b.start)
+    if(a.start &lt; b.start)
         return true
     else return false
 }
@@ -133,7 +143,7 @@ export const processPattern = (code, patt, offset) => {
 export const processCodeWithPatterns = (code, kit, offset) => {
 
     let pattern, i
-    for(i=0; i<kit.length; i++){
+    for(i=0; i&lt;kit.length; i++){
         let result = processPattern(code, kit[i], offset)
         while(result){
             result = processPattern(result.remaining, kit[i], result.offset)
@@ -176,8 +186,8 @@ export const pretty = (code, lang) => {
         replaceMatch(code)
     }
     else return false
-    let ff = 'font-family: monaco, courier, monospace; min-height: 15px;'
-    return '<pre style="margin:0;' + ff + '"><code style="' + ff + '">' + beautify + '</code></pre>'
+
+    return '&lt;pre style="margin:0;">&lt;code>' + beautify + '&lt;/code>&lt;/pre>'
 }
 
 /*
@@ -224,11 +234,11 @@ export const preloader = () => {
     loader.className = 'chroma-preloader'
     let main = document.createElement('div')
     main.className = 'loading'
-    main.innerHTML = '<div class="dot"></div>'
-    main.innerHTML += '<div class="dot"></div>'
-    main.innerHTML += '<div class="dot"></div>'
-    main.innerHTML += '<div class="dot"></div>'
-    main.innerHTML += '<div class="dot"></div>'
+    main.innerHTML = '&lt;div class="dot">&lt;/div>'
+    main.innerHTML += '&lt;div class="dot">&lt;/div>'
+    main.innerHTML += '&lt;div class="dot">&lt;/div>'
+    main.innerHTML += '&lt;div class="dot">&lt;/div>'
+    main.innerHTML += '&lt;div class="dot">&lt;/div>'
     loader.appendChild(main)
 
     return loader
@@ -338,15 +348,14 @@ export const convert = (code, lang, header, heading, copy, loader, linepad) => {
 
 
 /* Add chroma css */
-let chromaCss = false
-export const addUtilityCss = (path) => {
+export const addUtilityCss = () => {
     let head = document.head
     let link = document.createElement('link')
     link.rel = 'stylesheet'
-    link.href = path + 'chroma/css/chroma.css'
+    link.href = 'chroma/css/chroma.css'
     head.appendChild(link)
-    chromaCss = true
 }
+addUtilityCss()
 
 export var selectedTheme = null
 
@@ -355,7 +364,6 @@ export var selectedTheme = null
 */
 export const defaultOptions = {
     theme : 'dark',
-    path : ''
 }
 
 /* set options 
@@ -365,17 +373,13 @@ export const setOptions = (options) => {
     let head = document.head
     let link, style
     let theme = options.theme
-    let path = options.path != undefined ? options.path : defaultOptions.path
-    if(!chromaCss)
-        addUtilityCss(path)
-        
     // add theme css file in head of dcoument
     if(theme){
         if(selectedTheme)
             selectedTheme.remove()
         link = document.createElement('link')
         link.rel = 'stylesheet'
-        link.href = path + 'chroma/themes/' + theme + '.css'
+        link.href = 'chroma/themes/' + theme + '.css'
         head.appendChild(link)
         selectedTheme = link
     }
@@ -389,4 +393,11 @@ export const ChromaLocal = {
     setOptions
 }
 
-// ChromaLocal.setOptions(defaultOptions)
+ChromaLocal.setOptions(defaultOptions)
+    </div>
+    <script src="../chroma/dist/chroma.js"></script>
+    <script>
+        Chroma.setOptions({theme : 'ace-dark', path : '../'})
+    </script>
+</body>
+</html>

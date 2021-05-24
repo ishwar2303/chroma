@@ -10,7 +10,7 @@ let kit = {
             pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
         },
         {
-            class: 'string.regexp.chroma-alpha',
+            class: 'string.regexp.chroma-echo',
             pattern: /(\/)((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)(\/)(?!\/)([igm]{0,3})/g
         },
         {

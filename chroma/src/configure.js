@@ -1,14 +1,12 @@
 import {convert} from './chroma'
 
-
-
 // fetch target blocks with attribute = chroma
 const fetchTargetElements = () => {
     
     let blocks = document.querySelectorAll('[chroma="true"]')
     blocks.forEach(block => {
         let code = block.innerHTML
-        
+        let height = block.offsetHeight
         // get all attributes of chroma element
         let attributes = block.attributes
         let header = attributes.header != undefined ? attributes.header.nodeValue : 'true'

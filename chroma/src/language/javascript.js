@@ -10,7 +10,7 @@ let kit = {
             pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
         },
         {
-            class: 'selector',
+            class: 'selector.chroma-lima',
             pattern: /\$(?=\.|\()/g
         },
         {
@@ -68,6 +68,10 @@ let kit = {
         {
             class: 'constant.other.chroma-romeo',
             pattern: /\*(?= as)/g
+        },
+        {
+            class: 'constant.numeric.chroma-echo',
+            pattern: /\b\d+\b/g
         },
         {
             class : 'keyword.chroma-romeo',

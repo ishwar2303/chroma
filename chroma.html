@@ -40,6 +40,7 @@
                                 <label for="">Select Theme</label>
                                 <select id="select-theme">
                                     <option value="ace-dark">Ace Dark</option>
+                                    <option value="chroma">Chroma</option>
                                     <option value="coffee">Coffee</option>
                                     <option value="danger">Danger</option>
                                     <option value="dark" selected>Dark</option>
@@ -64,7 +65,7 @@
                         </div>
                         <!-- HTML Markup -->
                         <div >
-                            <div chroma="true" language="html" header="true" linepad="false" preloader="2" heading="Include this markup for code to be highlighted">
+                            <div chroma="true" language="html" header="true" linepad="false" preloader="2" heading="HTML">
 &lt;div chroma="true" language="html">
     Place your code here...
 &lt;/div>
@@ -78,10 +79,22 @@
 
                     <!-- Chroma script -->
                     <div >
-                        <div chroma="true" language="html" linepad="false" preloader="3" heading="Include this script in the end of body">
+                        <div chroma="true" language="html" linepad="false" preloader="3" heading="JavaScript">
 &lt;script src="chroma/dist/chroma.js">&lt;/script>
                         </div>
                     </div>
+
+                    <div>
+                        <div class="flex-row how">
+                            <div>4.&nbsp;</div> <div>Finally include Chroma css in head</div>
+                        </div>
+
+                        <div chroma="true" language="html" linepad="false" preloader="4" heading="CSS">
+&LT;link rel="stylesheet" href="chroma/css/chroma.css">
+&LT;link rel="stylesheet" href="chroma/themes/chroma.css">
+                        </div>
+                    </div>
+
                     <!-- HOW -->
                     <div>
                         <div class="exp-head">How does it work?</div>
@@ -108,7 +121,8 @@ var highlighted = Chroma.pretty(code, language)
 * Apply theme
 */
 var options = {
-    theme : 'rosy'
+    theme : 'rosy',
+    path : ''
 }
 Chroma.setOptions(options)
                         </div>
