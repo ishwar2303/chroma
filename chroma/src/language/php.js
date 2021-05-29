@@ -72,6 +72,16 @@ let kit = {
         {
             class: 'support.class.chroma-delta',
             pattern: /([\w\\]*?)(::)(?=\b|\$)/g
+        },
+        {
+            class : 'css.embedded',
+            pattern : /(?<=&lt;style.*?&gt;)([\s\S]*?)(?=(&lt;\/)(style)(&gt;))/g,
+            language : 'css'
+        },
+        {
+            class : 'javascript.embedded',
+            pattern : /(&lt;script(?! src).*?&gt;)([\s\S]*?)(&lt;\/)(script)(&gt;)/g,
+            language : 'javascript'
         }
     ]
 }

@@ -278,7 +278,6 @@ const pretty = (code, lang) => {
         replaceMatch(code)
     }
     else return false
-
     let ff = 'font-family: monaco, courier, monospace; min-height: 15px;'
     return '<pre style="margin:0;' + ff + '"><code style="' + ff + '">' + beautify + '</code></pre>'
 }
@@ -477,13 +476,13 @@ const defaultOptions = {
 * @param object
 */
 const setOptions = (options) => {
-        
     let head = document.head
     let link, style
     let theme = options.theme
     let path = options.path != undefined ? options.path : defaultOptions.path
     if(!chromaCss)
         addUtilityCss(path)
+        
     // add theme css file in head of dcoument
     if(theme){
         if(selectedTheme)
@@ -508,6 +507,7 @@ const ChromaLocal = {
 /* unused harmony export ChromaLocal */
 
 Chroma = ChromaLocal
+
 // ChromaLocal.setOptions(defaultOptions)
 
 /***/ }),
@@ -956,7 +956,22 @@ let kit = {
         {
             class: 'support.class.chroma-delta',
             pattern: /([\w\\]*?)(::)(?=\b|\$)/g
-        }
+        },
+        {
+            class : 'css.embedded',
+            pattern : /(?<=&lt;style.*?&gt;)([\s\S]*?)(?=(&lt;\/)(style)(&gt;))/g,
+            language : 'css'
+        },
+        {
+            class : 'javascript.embedded',
+            pattern : /(&lt;script(?! src).*?&gt;)([\s\S]*?)(&lt;\/)(script)(&gt;)/g,
+            language : 'javascript'
+        },
+        // {
+        //     class : 'html.embedded',
+        //     pattern : /.*/g,
+        //     language : 'html'
+        // }
     ]
 }
 
