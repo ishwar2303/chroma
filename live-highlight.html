@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <div class="flex-1 chroma print " id="output-container" style="border:4px solid black;" id="output-container" style="box-sizing: border-box;">
-                    <div id="output" class="p-10" style="overflow: auto;"></div>
+                    <div id="output" class="p-10"></div>
                 </div>
         
             </div>
@@ -197,8 +197,12 @@ ORDER BY W.POWER DESC, WP.AGE DESC;
             // fix textarea width
             let textarea = document.getElementById('user-code')  
             let outputContainer = document.getElementById('output-container') 
-            textarea.style.width = textarea.offsetWidth + 'px'
-            outputContainer.style.width = textarea.offsetWidth + 'px'
+            console.log(outputContainer.offsetHeight, outputContainer.offsetWidth)
+            console.log(textarea.offsetHeight, textarea.offsetWidth)
+            textarea.style.width = outputContainer.offsetWidth + 'px'
+            outputContainer.style.width = (outputContainer.offsetWidth - 10) + 'px'
+            textarea.style.height = (outputContainer.offsetHeight - 8) + 'px'
+            outputContainer.style.height = (outputContainer.offsetHeight - 16) + 'px'
 
             let savedCode = localStorage.getItem('chromaLiveHighlightCode')
             if(!savedCode)
