@@ -12,6 +12,7 @@
     <style>
         body{
             background: white;
+            background: #009688;
         }
         @media print {
             *{font-size: 18px;}
@@ -132,7 +133,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 chroma print " style="border:4px solid black;" id="output-container" style="box-sizing: border-box;">
+                <div class="flex-1 chroma print " id="output-container" style="border:4px solid black;" id="output-container" style="box-sizing: border-box;">
                     <div id="output" class="p-10" style="overflow: auto;"></div>
                 </div>
         
@@ -192,6 +193,13 @@ ORDER BY W.POWER DESC, WP.AGE DESC;
             localStorage.setItem('chromaLiveHighlightCode', '')  
         })
         window.onload = () => {
+            
+            // fix textarea width
+            let textarea = document.getElementById('user-code')  
+            let outputContainer = document.getElementById('output-container') 
+            textarea.style.width = textarea.offsetWidth + 'px'
+            outputContainer.style.width = textarea.offsetWidth + 'px'
+
             let savedCode = localStorage.getItem('chromaLiveHighlightCode')
             if(!savedCode)
             savedCode = document.getElementById('demo-code').innerText
@@ -202,9 +210,13 @@ ORDER BY W.POWER DESC, WP.AGE DESC;
             let code = document.getElementById('user-code').value
             if(code)
                 localStorage.setItem('chromaLiveHighlightCode', code)
+
+
         }
         storeCode()
         setInterval(storeCode, 10000)
+
+
     </script>
 
 
