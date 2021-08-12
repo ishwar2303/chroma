@@ -257,7 +257,16 @@ input:focus, textarea:focus{
     /* border-color: blue; */
     transition: 300ms;
 }
-
+.to-live-highlight{
+    font-size: 15px;
+    margin-top: 15px;
+    /* display: block; */
+    color: white;
+    background: black;
+    padding: 10px 20px;
+    border-radius: 3px;
+    border: none;
+}
 .custom-input{
     position: relative;
     height: 50px;
@@ -342,14 +351,16 @@ input:focus, textarea:focus{
     color: black;
     font-size: 11px;
     font-weight: bold;
-    z-index: -1;
+    z-index: 1;
 }
 #select-theme{
-    border: 2.5px solid rgb(79 91 95 / 70%);
+    border: none;
     border-radius: 3px;
     padding: 6px 5px;
     padding-top: 18px;
-    background: transparent;
+    /* background: transparent; */
+    background: black;
+    color: white;
 }
 
 .how{
