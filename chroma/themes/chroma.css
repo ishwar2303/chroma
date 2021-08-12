@@ -29,38 +29,49 @@
 
 .chroma-alpha{
     color : #dc4242;
+    font-weight: bold;
 }
 
 /* string */
 .chroma-bravo{
     color : #4d9034;
+    font-weight: bold;
 }
 
 /* comment */
 .chroma-charlie{
     color : #757575;
+    font-weight: bold;
 }
 .chroma-delta{
     color : #c3b765;
+    font-weight: bold;
 }
 .chroma-echo{
     color : #c54545; 
+    font-weight: bold;
 }
 .chroma-lima{
     color : #5785ad;
+    font-weight: bold;
 }
 .chroma-oscar{
     color : #64a1d6;
+    font-weight: bold;
 }
 .chroma-romeo{
     color : #9453af;
+    font-weight: bold;
 }
 .chroma-tango{
     color : #f95656;
+    font-weight: bold;
 }
 .chroma-victor{
     color : #767ed6;
+    font-weight: bold;
 }
 .chroma-zeus{
     color : #696969;
+    font-weight: bold;
 }

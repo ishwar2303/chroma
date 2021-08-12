@@ -75,7 +75,7 @@ var Chroma;
 /* unused harmony export matches */
 /* unused harmony export beautify */
 /* unused harmony export selectedTheme */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__merge_kit__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__merge_kit__ = __webpack_require__(10);
 /* Import all supported languages */
 
 
@@ -505,7 +505,6 @@ const ChromaLocal = {
     setOptions
 }
 /* unused harmony export ChromaLocal */
-
 Chroma = ChromaLocal
 
 // ChromaLocal.setOptions(defaultOptions)
@@ -558,8 +557,20 @@ let kit = {
     lang : 'c',
     conversion : [
         {
+            class: 'header-file.chroma-echo',
+            pattern : /(?<=#include\s*)(&lt;|\").*(&gt;|\")/g
+        },
+        {
             class: 'meta.preprocessor.chroma-alpha',
-            pattern: /\#([\S\s]*?)$/gm
+            pattern: /\#(\w+)(?!=(&lt;|\"))/gm
+        },
+        {
+            class: 'name-space.chroma-alpha',
+            pattern : /\busing\s+namespace\b/g
+        },
+        {
+            class: 'constant.language.chroma-echo',
+            pattern: /true|false/g
         },
         {
             class: 'constant.numeric.chroma-echo',
@@ -571,7 +582,7 @@ let kit = {
         },
         {
             class: 'keyword.declaration.chroma-delta',
-            pattern: /\b(void|int|float|double|char|long|short|signed|unsigned)\b/g
+            pattern: /\b(void|int|float|double|char|long|short|signed|unsigned|class|this)\b/g
         },
         {
             class: 'keyword.control.chroma-delta',
@@ -966,12 +977,7 @@ let kit = {
             class : 'javascript.embedded',
             pattern : /(&lt;script(?! src).*?&gt;)([\s\S]*?)(&lt;\/)(script)(&gt;)/g,
             language : 'javascript'
-        },
-        // {
-        //     class : 'html.embedded',
-        //     pattern : /.*/g,
-        //     language : 'html'
-        // }
+        }
     ]
 }
 
@@ -979,6 +985,88 @@ let kit = {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports) {
+
+
+let kit = {
+    lang : 'c',
+    conversion : [
+        {
+            class: 'variable.self',
+            pattern: /self/g
+        },
+        {
+            class: 'comment.docstring.chroma-charlie',
+            pattern: /('{3}|"{3})[\s\S]*?\1/gm
+        },
+        {
+            class: 'constant.language.chroma-oscar',
+            pattern: /None|True|False|NotImplemented|\.\.\./g
+        },
+        {
+            class : 'comment.chroma-charlie',
+            pattern : /#.*/g
+        },
+        {
+            class : 'string.chroma-bravo',
+            pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
+        },
+        {
+            class: 'support.object.',
+            pattern: /object/g
+        },
+        {
+            class: 'support.function.python.chroma-victor',
+            pattern: /\b(bs|divmod|input|strip|split|open|staticmethod|all|enumerate|int|ord|str|any|eval|isinstance|pow|sum|basestring|execfile|issubclass|print|super|bin|file|iter|property|tuple|bool|filter|len|range|type|bytearray|float|list|raw_input|unichr|callable|format|locals|reduce|unicode|chr|frozenset|long|reload|vars|classmethod|getattr|map|repr|xrange|cmp|globals|max|reversed|zip|compile|hasattr|memoryview|round|__import__|complex|hash|min|set|apply|delattr|help|next|setattr|buffer|dict|hex|object|slice|coerce|dir|id|oct|sorted|intern)(?=\()/g
+        },
+        {
+            class : 'keywords.chroma-lima',
+            pattern: /\b(pass|lambda|with|is|not|in|from|raise|del)(?=\b)/g
+        },
+        {
+            class : 'keywords.chroma-romeo',
+            pattern: /\b(return|import|as)(?=\b)/g
+        },
+        {
+            class : 'keyword.conditional.chroma-lima',
+            pattern: /\b(if|else|elif|for|do|while)\b/g
+        },
+        {
+            class: 'constant.numeric.chroma-echo',
+            pattern: /\b\d+\b/g
+        },
+        {
+            class : 'chroma-delta',
+            pattern: /(class)\s+(\w+)\((\w+?)\)/g
+        },
+        {
+            class : 'chroma-alpha',
+            pattern: /\bdef\b/g
+        },
+        {
+            class: 'support.magic.chroma-alpha',
+            pattern: /__(class)__/g
+        },
+        {
+            class : 'chroma-oscar',
+            pattern: /(except) (\w+):/g
+        },
+        {
+            class: 'entity.class.function.decorator.chroma-victor',
+            pattern: /@([\w\.]+)/g
+        },
+        {
+            class : 'function-call.chroma-delta',
+            pattern : /[\w\d_]+(?=\s*\()/g
+        }
+    ]
+    
+}
+
+module.exports = kit
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports) {
 
 let kit = {
@@ -1015,7 +1103,7 @@ let kit = {
 module.exports = kit
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1030,8 +1118,11 @@ module.exports = kit
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_json__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__language_json__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__language_php__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__language_sql__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__language_sql__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__language_sql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__language_sql__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__language_python__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__language_python___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__language_python__);
+
 
 
 
@@ -1046,8 +1137,8 @@ let languages = {
     javascript : __WEBPACK_IMPORTED_MODULE_3__language_javascript___default.a,
     json : __WEBPACK_IMPORTED_MODULE_4__language_json___default.a,
     php : __WEBPACK_IMPORTED_MODULE_5__language_php__["a" /* default */],
-    sql : __WEBPACK_IMPORTED_MODULE_6__language_sql___default.a
-
+    sql : __WEBPACK_IMPORTED_MODULE_6__language_sql___default.a,
+    python : __WEBPACK_IMPORTED_MODULE_7__language_python___default.a
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (languages);

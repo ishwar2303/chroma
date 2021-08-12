@@ -3,8 +3,20 @@ let kit = {
     lang : 'c',
     conversion : [
         {
+            class: 'header-file.chroma-echo',
+            pattern : /(?<=#include\s*)(&lt;|\").*(&gt;|\")/g
+        },
+        {
             class: 'meta.preprocessor.chroma-alpha',
-            pattern: /\#([\S\s]*?)$/gm
+            pattern: /\#(\w+)(?!=(&lt;|\"))/gm
+        },
+        {
+            class: 'name-space.chroma-alpha',
+            pattern : /\busing\s+namespace\b/g
+        },
+        {
+            class: 'constant.language.chroma-echo',
+            pattern: /true|false/g
         },
         {
             class: 'constant.numeric.chroma-echo',
@@ -16,7 +28,7 @@ let kit = {
         },
         {
             class: 'keyword.declaration.chroma-delta',
-            pattern: /\b(void|int|float|double|char|long|short|signed|unsigned)\b/g
+            pattern: /\b(void|int|float|double|char|long|short|signed|unsigned|class|this)\b/g
         },
         {
             class: 'keyword.control.chroma-delta',

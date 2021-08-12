@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Highlight</title>
+    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3QD//wAAAAAAAAAAAAAAAAAAAAAAAAAA/xEA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT/AP8AAAAAAAAAAAAAAADdAP//AAAAAAAAAAAAAAAAAAAAAP8RAP8A6v8HAAAAAAAAAAAAAAAAAAAAAAT/AP8AAAAAAAAAAAAAAAAAAAAAAOr/B90A//8AAAAAAOr/BwDq/wf/EQD/AOr/BwDq/wcAAAAAAOr/BwT/AP8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAA6v8H3QD//wDq/wcA6v8H/xEA/wDq/wcA6v8HAOr/BwT/AP8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwAAAAAE/wD//xEA//8RAP/dAP//3QD//90A//8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAAAAAAAOr/BwDq/wcA6v//BP8A/wT/AP//EQD//xEA/90A///dAP//3QD//wDq/wcAAAAAAAAAAAAAAAAAAAAAAAAAAADq/wcA6v8HAOr//wDq//8E/wD/BP8A//8RAP//EQD/3QD//90A//8A6v8HAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwBm//8A6v//AOr//wT/AP8E/wD//xEA//8RAP/dAP//AOr/BwDq/wcA6v8HAAAAAABm//8AZv//AGb//wBm//8AZv//AGb//wDq//8A6v//BP8A/wT/AP//EQD//xEA/wDq//8A6v//AOr//wDq//8AAAAAAAAAAADq/wcA6v8HAAD//wBm//8AZv//AOr//wDq//8E/wD/BP8A//8RAP8A6v8HAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwAA//8AAP//AGb//wBm//8A6v//AOr//wT/AP8E/wD/AOr/BwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADq/wcAAAAAAAD//wAA//8AZv//AGb//wDq//8A6v//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HBP8A/wDq/wcA6v8HAAD//wDq/wcA6v8HAOr/BwBm//8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HBP8A/wAAAAAA6v8HAOr/BwAA//8A6v8HAOr/BwAAAAAAAAAAAGb//wAAAAAAAAAAAAAAAAAAAAAAAAAABP8A/wAAAAAAAAAAAAAAAAAAAAAAAP//AOr/BwAAAAAAAAAAAAAAAADq/wcAZv//AAAAAAAAAAAAAAAABP8A/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABm//8AAAAAvv0AAN77AADu9wAA9u8AAPgfAADwDwAA8A8AAPAPAAAAAAAA8A8AAPAPAAD4HwAA9u8AAO73AADe+wAAvv0AAA==" rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" href="public/css/main.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body{
+            background: white;
+        }
+        @media print {
+            *{font-size: 18px;}
+            .no-print{
+                display: none;
+            }
+            .print{
+                display: block;
+            }
+        }
+        #output {
+            min-height: 100%;
+            box-sizing: border-box;
+        }
+        #output-container{
+            overflow-x: auto;
+        }
+        .fix-wrapper {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+    BACKGROUND: linear-gradient( 
+0deg
+ , #009688, #8bc34a, #8bc34a, #ff5722, #e91e63);
+ background: #009688;
+        }
+        
+        .btn-pad {
+            padding: 10px 25px;
+        }
+        #select-theme-dd {
+            background: black;
+            color: white;
+            border-radius: 3px;
+            border: none;
+        }
+        #language {
+            background: black;
+            color: white;
+            border-radius: 3px;
+            border: none;
+        }
+        #clear-code {
+            color: white;
+        }
+        #convert, #clear-code{
+            background: black;
+            border-radius: 3px;
+            border: none;
+        }
+        .border-4px {
+            border :4px solid black;
+        }
+        #tag-line {
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        #text-smily {
+            transform: rotate(90deg);
+            margin-left: 10px;
+        }
+    </style>
+    <script>
+        const changeTheme = () => {
+            let theme = document.getElementById('select-theme-dd').value
+            console.log(theme)
+            Chroma.setOptions({theme})
+        }
+    </script>
+</head>
+<body>
+    <div class="fix-wrapper">
+        <div class="m-10 flex-col flex-1">
+            <div class="flex-row no-print space-between">
+                <div class="flex-row sel-th-cont no-print mr-5">
+                    <select id="select-theme-dd" class="btn-pad">
+                        <option value="ace-dark">Ace Dark</option>
+                        <option value="chroma">Chroma</option>
+                        <option value="coffee">Coffee</option>
+                        <option value="danger">Danger</option>
+                        <option value="dark" selected>Dark</option>
+                        <option value="dreamweaver">Dreamweaver</option>
+                        <option value="light">Light</option>
+                        <option value="rosy">Rosy</option>
+                        <option value="sunshine">Sunshine</option>
+                        <option value="twilight">Twilight</option>
+                    </select>
+                    <div id="tag-line" class="ml-10">Your Code is Beautiful Show it off 
+                        <span id="text-smily">:)</span>
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <button id="clear-code" class="btn-pad mr-5">Clear</button>
+                    <select id="language" class="btn-pad">
+                        <option value="c">C | C++</option>
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="json">JSON</option>
+                        <option value="php">PHP</option>
+                        <option value="python">Python</option>
+                        <option value="sql" selected>SQL</option>
+                    </select>
+                    <button style="display: none;" class="btn white btn-pad" id="convert">Highlight</button>
+                </div>
+            </div>
+            <div class="flex-row" style="height: 100%;">
+                <div class="flex-row mt-10 mb-10 mr-10 flex-1 no-print" >
+                    <div class="flex-col flex-1">
+                        <div class="flex-1">
+                            <textarea id="user-code" spellcheck="false" placeholder="Type your code here..." class="border br-3 w-100 p-10 border-4px" style="resize:none;height: 100%; box-sizing: border-box;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 chroma print " style="border:4px solid black;" id="output-container" style="box-sizing: border-box;">
+                    <div id="output" class="p-10" style="overflow: auto;"></div>
+                </div>
+        
+            </div>
+        </div>
+        
+    </div>
+
+    <pre id="demo-code" style="display: none;">
+SELECT
+        W.ID,
+        WP.AGE,
+        W.COINS_NEEDED,
+        W.POWER
+FROM WANDS W
+INNER JOIN WANDS_PROPERTY WP ON W.CODE = WP.CODE
+INNER JOIN
+(
+    SELECT 
+            AGE AS _AGE,
+            MIN(COINS_NEEDED) AS _MINIMUM_COINS_NEEDED,
+            POWER AS _POWER
+    FROM WANDS W1
+    INNER JOIN WANDS_PROPERTY WP1 ON W1.CODE = WP1.CODE
+    WHERE IS_EVIL = 0
+    GROUP BY POWER, AGE
+) AS ALIASTABLE
+ON W.POWER = _POWER AND W.COINS_NEEDED = _MINIMUM_COINS_NEEDED AND WP.AGE = _AGE
+ORDER BY W.POWER DESC, WP.AGE DESC;
+    </pre>
+    <script src="chroma/dist/chroma.js"></script>
+    <script>
+
+    </script>
+    <script>
+        document.getElementById('select-theme-dd').addEventListener('change', changeTheme)
+
+        Chroma.setOptions({theme : 'dark'})
+        let convert = document.getElementById('convert')
+        const highlight = () => {
+            let userCode = document.getElementById('user-code').value
+            let output = document.getElementById('output')
+            let lang = document.getElementById('language').value
+            output.innerHTML = Chroma.pretty(userCode, lang)
+        }
+        convert.addEventListener('click', highlight)
+        document.getElementById('user-code').addEventListener('input', highlight)
+        document.getElementById('language').addEventListener('change', highlight)
+    </script>
+
+
+
+    <script>
+        // store locally
+        document.getElementById('clear-code').addEventListener('click', () => {
+            document.getElementById('user-code').value = ''
+            localStorage.setItem('chromaLiveHighlightCode', '')  
+        })
+        window.onload = () => {
+            let savedCode = localStorage.getItem('chromaLiveHighlightCode')
+            if(!savedCode)
+            savedCode = document.getElementById('demo-code').innerText
+            document.getElementById('user-code').value = savedCode
+            highlight()
+        }
+        const storeCode  = () => {
+            let code = document.getElementById('user-code').value
+            if(code)
+                localStorage.setItem('chromaLiveHighlightCode', code)
+        }
+        storeCode()
+        setInterval(storeCode, 10000)
+    </script>
+
+
+
+    <script>
+        $("#user-code").keydown(function(e) {
+            if(e.keyCode === 9) { // tab was pressed
+                // get caret position/selection
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+
+                var $this = $(this);
+                var value = $this.val();
+
+                // set textarea value to: text before caret + tab + text after caret
+                $this.val(value.substring(0, start)
+                            + "\t"
+                            + value.substring(end));
+
+                // put caret at right position again (add one for the tab)
+                this.selectionStart = this.selectionEnd = start + 1;
+
+                // prevent the focus lose
+                e.preventDefault();
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>
