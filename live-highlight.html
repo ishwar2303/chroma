@@ -79,6 +79,10 @@
             transform: rotate(90deg);
             margin-left: 10px;
         }
+        #user-code{
+            background: black;
+            color: white;
+        }
     </style>
     <script>
         const changeTheme = () => {
@@ -96,13 +100,13 @@
                     <select id="select-theme-dd" class="btn-pad">
                         <option value="ace-dark">Ace Dark</option>
                         <option value="chroma">Chroma</option>
-                        <option value="coffee">Coffee</option>
+                        <!-- <option value="coffee">Coffee</option> -->
                         <option value="danger">Danger</option>
                         <option value="dark" selected>Dark</option>
-                        <option value="dreamweaver">Dreamweaver</option>
-                        <option value="light">Light</option>
+                        <!-- <option value="dreamweaver">Dreamweaver</option>
+                        <option value="light">Light</option> -->
                         <option value="rosy">Rosy</option>
-                        <option value="sunshine">Sunshine</option>
+                        <!-- <option value="sunshine">Sunshine</option> -->
                         <option value="twilight">Twilight</option>
                     </select>
                     <div id="tag-line" class="ml-10">
@@ -197,16 +201,16 @@ ORDER BY W.POWER DESC, WP.AGE DESC;
             // fix textarea width
             let textarea = document.getElementById('user-code')  
             let outputContainer = document.getElementById('output-container') 
-            console.log(outputContainer.offsetHeight, outputContainer.offsetWidth)
+            console.log(outputContainer.offsetHeight, outputContainer.offsetWidth-18)
             console.log(textarea.offsetHeight, textarea.offsetWidth)
-            textarea.style.width = outputContainer.offsetWidth + 'px'
-            outputContainer.style.width = (outputContainer.offsetWidth - 10) + 'px'
-            textarea.style.height = (outputContainer.offsetHeight - 8) + 'px'
-            outputContainer.style.height = (outputContainer.offsetHeight - 16) + 'px'
+            textarea.style.width = (textarea.offsetWidth - 10)+ 'px'
+            outputContainer.style.width = (textarea.offsetWidth) + 'px'
+            // textarea.style.height = (outputContainer.offsetHeight ) + 'px'
+            outputContainer.style.height = (outputContainer.offsetHeight) + 'px'
 
             let savedCode = localStorage.getItem('chromaLiveHighlightCode')
-            if(!savedCode)
-            savedCode = document.getElementById('demo-code').innerText
+            // if(!savedCode)
+            // savedCode = document.getElementById('demo-code').innerText
             document.getElementById('user-code').value = savedCode
             highlight()
         }
