@@ -124,7 +124,7 @@
                         <option value="json">JSON</option>
                         <option value="php">PHP</option>
                         <option value="python">Python</option>
-                        <option value="sql" selected>SQL</option>
+                        <option value="sql">SQL</option>
                     </select>
                     <button style="display: none;" class="btn white btn-pad" id="convert">Highlight</button>
                 </div>
@@ -147,26 +147,51 @@
     </div>
 
     <pre id="demo-code" style="display: none;">
-SELECT
-        W.ID,
-        WP.AGE,
-        W.COINS_NEEDED,
-        W.POWER
-FROM WANDS W
-INNER JOIN WANDS_PROPERTY WP ON W.CODE = WP.CODE
-INNER JOIN
-(
-    SELECT 
-            AGE AS _AGE,
-            MIN(COINS_NEEDED) AS _MINIMUM_COINS_NEEDED,
-            POWER AS _POWER
-    FROM WANDS W1
-    INNER JOIN WANDS_PROPERTY WP1 ON W1.CODE = WP1.CODE
-    WHERE IS_EVIL = 0
-    GROUP BY POWER, AGE
-) AS ALIASTABLE
-ON W.POWER = _POWER AND W.COINS_NEEDED = _MINIMUM_COINS_NEEDED AND WP.AGE = _AGE
-ORDER BY W.POWER DESC, WP.AGE DESC;
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+void print(vector&lt;int&gt; v, string status) {
+	cout &lt;&lt; status &lt;&lt; " : ";
+	for(auto val : v)
+		cout &lt;&lt; val &lt;&lt; " ";
+	cout &lt;&lt; endl;
+}
+
+int trapped_water(vector&lt;int&gt; building) {
+	int n = building.size();
+	vector&lt;int&gt; left(n);
+	vector&lt;int&gt; right(n);
+
+	int max_left = 0;
+	int max_right = 0;
+	for(int i=0; i&lt;n; i++) {
+		max_left = max(max_left, building[i]);
+		left[i] = max_left;
+	}
+	for(int i=n-1; i&gt;=0; i--) {
+		max_right = max(max_right, building[i]);
+		right[i] = max_right;
+	}
+	print(left, "Left");
+	print(right, "Right");
+
+	int trap = 0;
+	for(int i=0; i&lt;n; i++) {
+		trap +=	min(left[i], right[i]) - building[i];
+	}
+	return trap;
+}
+
+int main() {
+
+	int n;
+	cin &gt;&gt; n;
+	vector&lt;int&gt; building(n);
+	for(int i=0; i&lt;n; i++)
+		cin &gt;&gt; building[i];
+	cout &lt;&lt; trapped_water(building);
+	return 0;
+}
     </pre>
     <script src="chroma/dist/chroma.js"></script>
     <script>
@@ -177,15 +202,33 @@ ORDER BY W.POWER DESC, WP.AGE DESC;
 
         Chroma.setOptions({theme : 'dark'})
         let convert = document.getElementById('convert')
-        const highlight = () => {
+        const highlight = (lang) => {
             let userCode = document.getElementById('user-code').value
             let output = document.getElementById('output')
-            let lang = document.getElementById('language').value
             output.innerHTML = Chroma.pretty(userCode, lang)
         }
-        convert.addEventListener('click', highlight)
-        document.getElementById('user-code').addEventListener('input', highlight)
-        document.getElementById('language').addEventListener('change', highlight)
+        convert.addEventListener('click', () => {
+            let lang = selectedLanguage()
+            highlight(lang)
+        })
+        const selectedLanguage = () => {
+            let lang = document.getElementById('language').value
+            let savedLang = localStorage.getItem('chromaLiveHighlightLang')
+            if(!savedLang)
+                savedLang = lang
+            return savedLang
+        }
+
+        document.getElementById('user-code').addEventListener('input', () => {
+            let lang = selectedLanguage()
+            highlight(lang)
+        })
+        document.getElementById('language').addEventListener('change', () => {
+            let languageSelect = document.getElementById('language')
+            localStorage.setItem('chromaLiveHighlightLang', languageSelect.value)
+            let lang = selectedLanguage()
+            highlight(lang)
+        })
     </script>
 
 
@@ -195,11 +238,14 @@ ORDER BY W.POWER DESC, WP.AGE DESC;
         document.getElementById('clear-code').addEventListener('click', () => {
             document.getElementById('user-code').value = ''
             localStorage.setItem('chromaLiveHighlightCode', '')  
+            localStorage.setItem('chromaLiveHighlightLang', 'c')
+            document.getElementById('output').innerText = ''
         })
         window.onload = () => {
-            
+
             // fix textarea width
-            let textarea = document.getElementById('user-code')  
+            let textarea = document.getElementById('user-code') 
+            textarea.focus() 
             let outputContainer = document.getElementById('output-container') 
             console.log(outputContainer.offsetHeight, outputContainer.offsetWidth-18)
             console.log(textarea.offsetHeight, textarea.offsetWidth)
@@ -209,10 +255,18 @@ ORDER BY W.POWER DESC, WP.AGE DESC;
             outputContainer.style.height = (outputContainer.offsetHeight - 8) + 'px'
 
             let savedCode = localStorage.getItem('chromaLiveHighlightCode')
-            // if(!savedCode)
-            // savedCode = document.getElementById('demo-code').innerText
+            if(!savedCode)
+                savedCode = document.getElementById('demo-code').innerText
             document.getElementById('user-code').value = savedCode
-            highlight()
+            let lang = selectedLanguage()
+            let languageSelect = document.getElementById('language')
+            let options = languageSelect.getElementsByTagName('option')
+            for(i=0; i<options.length; i++) {
+                if(options[i].value == lang)
+                    options[i].selected = true
+                else options[i].selected = false
+            }
+            highlight(lang)
         }
         const storeCode  = () => {
             let code = document.getElementById('user-code').value
