@@ -1,4 +1,4 @@
-#Chroma
+# Chroma
 ## Chroma is a syntax highlighting library written in javascript.
 
 [Visit Chroma](https://ishwar2303.github.io/chroma/)
