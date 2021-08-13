@@ -147,6 +147,47 @@
     </div>
 
     <pre id="demo-code" style="display: none;">
+USE INFORMATION_SCHEMA;
+
+SET @NUM1 = 1;
+SET @NUM2 = 1;
+SET @PRIME_OUTPUT = "";
+
+SELECT
+        SUBSTR(O, 1, LENGTH(O)-1) AS FO
+FROM
+(
+    SELECT
+            @PRIME_OUTPUT := CONCAT(@PRIME_OUTPUT, N2, '&') AS O
+    FROM 
+    (
+        SELECT 
+                N2
+        FROM 
+        (
+            SELECT 
+                    N1,
+                    N2
+            FROM
+            (
+                SELECT 
+                        @NUM1 := @NUM1 + 1 AS N1
+                FROM TABLES T1, TABLES T2
+                LIMIT 1000
+            ) A
+            CROSS JOIN
+            (
+                SELECT 
+                        @NUM2 := @NUM2 + 1 AS N2
+                FROM TABLES T1, TABLES T2
+                LIMIT 1000
+            ) B
+            WHERE N2 % N1 = 0
+        ) ALIAS_TABLE
+        GROUP BY N2 HAVING(COUNT(N2) = 1)
+    ) A
+) B 
+ORDER BY LENGTH(FO) DESC LIMIT 1;
 SELECT
 H.HACKER_ID,
 H.NAME,
