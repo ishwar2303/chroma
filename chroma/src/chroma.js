@@ -356,7 +356,7 @@ export var selectedTheme = null
 export const defaultOptions = {
     theme : 'dark',
     path : '',
-    boldMode : true
+    boldMode : false
 }
 
 /* set options 
@@ -382,18 +382,14 @@ export const setOptions = (options) => {
         selectedTheme = link
     }
 
-    if(boldMode) {
-        var allKeywords = document.getElementsByClassName('chroma-bold')
-        for(let i=0; i<allKeywords.length; i++) {
-            allKeywords[i].style.fontWeight = 'bold'
-        }
-    }else {
-        
-        var allKeywords = document.getElementsByClassName('chroma-bold')
-        for(let i=0; i<allKeywords.length; i++) {
-            allKeywords[i].style.fontWeight = 'normal'
-        }
+    if(!style) {
+        style = document.createElement('style')
+        style.innerHTML = ''
+        head.appendChild(style)
     }
+    if(boldMode) 
+        style.innerHTML = '.chroma-bold{font-weight : bold;}'
+    else style.innerHTML = '.chroma-bold{font-weight : normal;}'
 }
 
 /*

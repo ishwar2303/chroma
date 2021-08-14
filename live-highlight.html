@@ -7,7 +7,7 @@
     <title>Live Highlight</title>
     <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3QD//wAAAAAAAAAAAAAAAAAAAAAAAAAA/xEA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT/AP8AAAAAAAAAAAAAAADdAP//AAAAAAAAAAAAAAAAAAAAAP8RAP8A6v8HAAAAAAAAAAAAAAAAAAAAAAT/AP8AAAAAAAAAAAAAAAAAAAAAAOr/B90A//8AAAAAAOr/BwDq/wf/EQD/AOr/BwDq/wcAAAAAAOr/BwT/AP8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAA6v8H3QD//wDq/wcA6v8H/xEA/wDq/wcA6v8HAOr/BwT/AP8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwAAAAAE/wD//xEA//8RAP/dAP//3QD//90A//8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAAAAAAAOr/BwDq/wcA6v//BP8A/wT/AP//EQD//xEA/90A///dAP//3QD//wDq/wcAAAAAAAAAAAAAAAAAAAAAAAAAAADq/wcA6v8HAOr//wDq//8E/wD/BP8A//8RAP//EQD/3QD//90A//8A6v8HAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwBm//8A6v//AOr//wT/AP8E/wD//xEA//8RAP/dAP//AOr/BwDq/wcA6v8HAAAAAABm//8AZv//AGb//wBm//8AZv//AGb//wDq//8A6v//BP8A/wT/AP//EQD//xEA/wDq//8A6v//AOr//wDq//8AAAAAAAAAAADq/wcA6v8HAAD//wBm//8AZv//AOr//wDq//8E/wD/BP8A//8RAP8A6v8HAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwAA//8AAP//AGb//wBm//8A6v//AOr//wT/AP8E/wD/AOr/BwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADq/wcAAAAAAAD//wAA//8AZv//AGb//wDq//8A6v//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HBP8A/wDq/wcA6v8HAAD//wDq/wcA6v8HAOr/BwBm//8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HBP8A/wAAAAAA6v8HAOr/BwAA//8A6v8HAOr/BwAAAAAAAAAAAGb//wAAAAAAAAAAAAAAAAAAAAAAAAAABP8A/wAAAAAAAAAAAAAAAAAAAAAAAP//AOr/BwAAAAAAAAAAAAAAAADq/wcAZv//AAAAAAAAAAAAAAAABP8A/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABm//8AAAAAvv0AAN77AADu9wAA9u8AAPgfAADwDwAA8A8AAPAPAAAAAAAA8A8AAPAPAAD4HwAA9u8AAO73AADe+wAAvv0AAA==" rel="icon" type="image/x-icon" />
     <link rel="stylesheet" href="public/css/main.css">
-    
+    <script src="https://kit.fontawesome.com/f9bbf9ac4e.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         body{
@@ -34,10 +34,10 @@
             min-height: 100vh;
             width: 100%;
             display: flex;
-    BACKGROUND: linear-gradient( 
-0deg
- , #009688, #8bc34a, #8bc34a, #ff5722, #e91e63);
- background: #009688;
+            BACKGROUND: linear-gradient( 
+        0deg
+        , #009688, #8bc34a, #8bc34a, #ff5722, #e91e63);
+        background: #009688;
         }
         
         .btn-pad {
@@ -58,7 +58,7 @@
         #clear-code {
             color: white;
         }
-        #convert, #clear-code, #keyword-toggle{
+        #convert, #clear-code{
             background: black;
             border-radius: 3px;
             border: none;
@@ -84,13 +84,67 @@
             background: black;
             color: white;
         }
-    </style>
-    <script>
-        const changeTheme = () => {
-            let theme = document.getElementById('select-theme-dd').value
-            Chroma.setOptions({theme})
+        /* custom toggle button start */
+
+        .custom-toggle-btn {
+            height: 26px;
+            width: 50px;
+            border-radius: 50px;
+            background: black;
+            position: relative;
+            cursor: pointer;
+            border: 2px solid black;
         }
-    </script>
+
+        .custom-toggle-btn input {
+            display: none;
+        }
+
+        .custom-toggle-btn>span {
+            transition: 300ms;
+            background: white;
+            height: 21px;
+            width: 21px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 2px;
+            transform: translate(0, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .custom-toggle-btn>span>i {
+            font-size: 8px;
+            color: white;
+        }
+
+        .custom-toggle-btn input:checked~span {
+            transition: 300ms;
+            -webkit-transition: .4s;
+            background: #30af10;
+            position: absolute;
+            top: 50%;
+            transform: translate(25px, -50%) rotate(360deg);
+            height: 21px;
+            width: 21px;
+            transition: 300ms;
+        }
+
+        .custom-toggle-btn input:checked~span:hover {
+            transition: 300ms;
+            box-shadow: 0px 0px 0px 8px rgba(95, 95, 95, 0.5);
+        }
+
+        .custom-toggle-btn:hover span {
+            transition: 300ms;
+            box-shadow: 0px 0px 0px 8px rgba(99, 99, 99, 0.5);
+        }
+
+        /* custom toggle button end */
+
+    </style>
 </head>
 <body>
     <div class="fix-wrapper">
@@ -115,7 +169,14 @@
                     </div>
                 </div>
                 <div class="flex-row">
-                    <button id="keyword-toggle" class="btn-pad mr-5">Normal Keyword</button>
+                    <div class="flex-center mr-5">
+                        <label class="custom-toggle-btn">
+                            <input id="keyword-toggle" type="checkbox" name="gender">
+                            <span>
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </label>
+                    </div>
                     <button id="clear-code" class="btn-pad mr-5">Clear</button>
                     <select id="language" class="btn-pad">
                         <option value="c">C | C++</option>
@@ -148,67 +209,62 @@
     </div>
 
     <pre id="demo-code" style="display: none;">
-USE INFORMATION_SCHEMA;
-
-SET @NUM1 = 1;
-SET @NUM2 = 1;
-SET @PRIME_OUTPUT = "";
-
 SELECT
-        SUBSTR(O, 1, LENGTH(O)-1) AS FO
-FROM
-(
-    SELECT
-            @PRIME_OUTPUT := CONCAT(@PRIME_OUTPUT, N2, '&') AS O
-    FROM 
+H.HACKER_ID,
+H.NAME,
+COUNT(H.HACKER_ID) AS CCBH
+FROM HACKERS H INNER JOIN CHALLENGES C ON H.HACKER_ID = C.HACKER_ID
+GROUP BY H.HACKER_ID, H.NAME
+HAVING CCBH IN (
+    SELECT 
+        CCBH    
+    FROM
     (
         SELECT 
-                N2
-        FROM 
-        (
-            SELECT 
-                    N1,
-                    N2
-            FROM
-            (
-                SELECT 
-                        @NUM1 := @NUM1 + 1 AS N1
-                FROM TABLES T1, TABLES T2
-                LIMIT 1000
-            ) A
-            CROSS JOIN
-            (
-                SELECT 
-                        @NUM2 := @NUM2 + 1 AS N2
-                FROM TABLES T1, TABLES T2
-                LIMIT 1000
-            ) B
-            WHERE N2 % N1 = 0
-        ) ALIAS_TABLE
-        GROUP BY N2 HAVING(COUNT(N2) = 1)
-    ) A
-) B 
-ORDER BY LENGTH(FO) DESC LIMIT 1;
-</pre>
+                COUNT(H.HACKER_ID) AS CCBH
+        FROM HACKERS H
+        INNER JOIN CHALLENGES C ON H.HACKER_ID = C.HACKER_ID
+        GROUP BY H.HACKER_ID, H.NAME
+    ) ALIAS_tABLE
+    GROUP BY CCBH
+    HAVING COUNT(*) = 1
+)
+OR
+CCBH = (
+    SELECT 
+            MAX(CCBH) AS MCC
+    FROM
+    (
+        SELECT 
+                COUNT(H.HACKER_ID) AS CCBH
+        FROM HACKERS H
+        INNER JOIN CHALLENGES C ON H.HACKER_ID = C.HACKER_ID
+        GROUP BY H.HACKER_ID, H.NAME
+    ) ALIAST_TABLE
+)
+ORDER BY CCBH DESC, H.HACKER_ID ASC;
+    </pre>
     <script src="chroma/dist/chroma.js"></script>
     <script>
-
-    </script>
-    <script>
         // keyword toggle
-        var boldMode = true;
-        var btnStatus;
+        var boldMode = false;
         var keywordToggleBtn = document.getElementById('keyword-toggle')
-        const changeKeyword = () => {
-            boldMode = !boldMode
-            if(boldMode)
-                btnStatus = 'Normal Keyword'
-            else btnStatus = '<b>Bold Keyword</b>'
-            keywordToggleBtn.innerHTML = btnStatus
+        const changeKeyword = (bm) => {
+            boldMode = !bm
             Chroma.setOptions({boldMode})
         }
-        keywordToggleBtn.addEventListener('click', changeKeyword)
+        keywordToggleBtn.addEventListener('click', () => {
+            changeKeyword(boldMode)
+        })
 
+        const changeTheme = () => {
+            let theme = document.getElementById('select-theme-dd').value
+            Chroma.setOptions({theme})
+            bold = true
+            if(keywordToggleBtn.checked)
+                bold = false
+            changeKeyword(bold)
+        }
         document.getElementById('select-theme-dd').addEventListener('change', changeTheme)
 
         Chroma.setOptions({theme : 'dark'})
@@ -241,8 +297,6 @@ ORDER BY LENGTH(FO) DESC LIMIT 1;
             highlight(lang)
         })
     </script>
-
-
 
     <script>
         // store locally
@@ -296,23 +350,19 @@ ORDER BY LENGTH(FO) DESC LIMIT 1;
 
     <script>
         $("#user-code").keydown(function(e) {
-            if(e.keyCode === 9) { // tab was pressed
-                // get caret position/selection
+            if(e.keyCode === 9) {
                 var start = this.selectionStart;
                 var end = this.selectionEnd;
 
                 var $this = $(this);
                 var value = $this.val();
 
-                // set textarea value to: text before caret + tab + text after caret
                 $this.val(value.substring(0, start)
                             + "\t"
                             + value.substring(end));
 
-                // put caret at right position again (add one for the tab)
                 this.selectionStart = this.selectionEnd = start + 1;
 
-                // prevent the focus lose
                 e.preventDefault();
             }
         });
