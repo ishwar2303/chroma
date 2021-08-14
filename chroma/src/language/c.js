@@ -7,6 +7,14 @@ let kit = {
             pattern : /(?<=#include\s*)(&lt;|\").*(&gt;|\")/g
         },
         {
+            class: 'keyword.operator.chroma-romeo',
+            pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
+        },
+        {
+            class : 'function-call.chroma-delta',
+            pattern : /[\w\d_]+(?=\s*\()/g
+        },
+        {
             class: 'meta.preprocessor.chroma-alpha',
             pattern: /\#(\w+)(?!=(&lt;|\"))/gm
         },

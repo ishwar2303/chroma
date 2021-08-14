@@ -11,16 +11,15 @@
     color: #b7b73a;
 }
 /* Beautify */
-
 .chroma-alpha{
     color : #e9651b;
-    font-weight : bold;
+    
 }
 
 /* string */
 .chroma-bravo{
     color : #b7b73a;
-    font-weight : bold;
+    
 }
 
 /* comment */
@@ -30,34 +29,34 @@
 .chroma-delta{
     color : #bc5cff;
     color : #37b9e2;
-    font-weight : bold;
+    
 }
 .chroma-echo{
     color : #FF628C; 
-    font-weight : bold;
+    
 }
 .chroma-lima{
     color : #f63b3b;
-    font-weight : bold;
+    
 }
 .chroma-oscar{
     color : #21c0bb;
-    font-weight : bold;
+    
 }
 .chroma-romeo{
     color : #bc5cff;
-    font-weight : bold;
+    
 }
 .chroma-tango{
     color : #f95656;
-    font-weight : bold;
+    
 }
 .chroma-victor{
     color : #3AD900;
     color : #24c56f;
-    font-weight : bold;
+    
 }
 .chroma-zeus{
     color : gray;
-    font-weight : bold;
+    
 }

@@ -11,13 +11,13 @@
 
 .chroma-alpha{
     color: #9c4703;
-    font-weight : bold;
+    
 }
 
 /* string */
 .chroma-bravo{
     color: #257507;
-    font-weight : bold;
+    
 }
 
 /* comment */
@@ -27,33 +27,33 @@
 }
 .chroma-delta{
     color: rgb(46 46 160);
-    font-weight : bold;
+    
 }
 .chroma-echo{
     color : #ce2626; 
-    font-weight : bold;
+    
 }
 .chroma-lima{
     color: #0059a9;
-    font-weight : bold;
+    
 }
 .chroma-oscar{
     color: #006662;
-    font-weight : bold;
+    
 }
 .chroma-romeo{
     color : #912ebb;
-    font-weight : bold;
+    
 }
 .chroma-tango{
     color : #f95656;
-    font-weight : bold;
+    
 }
 .chroma-victor{
     color: #cc3a3a;
-    font-weight : bold;
+    
 }
 .chroma-zeus{
     color : gray;
-    font-weight : bold;
+    
 }

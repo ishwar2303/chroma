@@ -67,14 +67,14 @@ export const nullMatch = (start, end) => {
 */
 export const replaceMatch = (code) => {
     let endPos = 0
-
+    let chromaBold = ' chroma-bold'
     matches.forEach((m) => {
         if(overlapMatch(m.start, endPos) && !m.embedded){
 
             if(nullMatch(endPos, m.start))
                 beautify += '<span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '</span>'
 
-            beautify += '<span class="' + m.class.replace(/\./g, ' ') + '">' + m.value + '</span>'
+            beautify += '<span class="' + m.class.replace(/\./g, ' ') + chromaBold + '">' + m.value + '</span>'
             endPos = m.end
 
         }
@@ -355,7 +355,8 @@ export var selectedTheme = null
 */
 export const defaultOptions = {
     theme : 'dark',
-    path : ''
+    path : '',
+    boldMode : true
 }
 
 /* set options 
@@ -365,6 +366,7 @@ export const setOptions = (options) => {
     let head = document.head
     let link, style
     let theme = options.theme
+    let boldMode = options.boldMode != undefined ? options.boldMode : defaultOptions.boldMode
     let path = options.path != undefined ? options.path : defaultOptions.path
     if(!chromaCss)
         addUtilityCss(path)
@@ -379,6 +381,19 @@ export const setOptions = (options) => {
         head.appendChild(link)
         selectedTheme = link
     }
+
+    if(boldMode) {
+        var allKeywords = document.getElementsByClassName('chroma-bold')
+        for(let i=0; i<allKeywords.length; i++) {
+            allKeywords[i].style.fontWeight = 'bold'
+        }
+    }else {
+        
+        var allKeywords = document.getElementsByClassName('chroma-bold')
+        for(let i=0; i<allKeywords.length; i++) {
+            allKeywords[i].style.fontWeight = 'normal'
+        }
+    }
 }
 
 /*
@@ -388,5 +403,5 @@ export const ChromaLocal = {
     pretty,
     setOptions
 }
-
+// Chroma = ChromaLocal
 // ChromaLocal.setOptions(defaultOptions)

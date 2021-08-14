@@ -10,35 +10,35 @@
 /* Beauify */
 .chroma-alpha{
     color: rgb(181 72 0);
-    font-weight : bold;
+    
 }
 .chroma-bravo{
     color: rgb(0 150 0);
     font-style: oblique;
-    font-weight : bold;
+    
 }
 .chroma-charlie{
     color: rgb(150 150 226);
-    font-weight : bold;
+    
     font-style: italic;
 }
 .chroma-delta {
     color: rgb(234 45 45);
-    font-weight : bold;
+    
 }
 .chroma-romeo{
     color: rgb(9 9 236);
-    font-weight : bold;
+    
 }
 .chroma-tango{
     color: rgb(12, 117, 124);
-    font-weight : bold;
+    
 }
 .chroma-victor{
     color : rgb(203 60 220);
-    font-weight : bold;
+    
 }
 .chroma-zeus{
     color : #ed6464;
-    font-weight : bold;
+    
 }

@@ -16,7 +16,7 @@
     border-bottom-left-radius: 3px;
 }
 .chroma-line-no{
-    font-weight: bold;
+    
 }
 .chroma-copy{
     background: #806e04;
@@ -25,13 +25,13 @@
 
 .chroma-alpha{
     color : rgb(81 1 25);
-    font-weight: bold;
+    
 }
 
 /* string */
 .chroma-bravo{
     color : #133d04;
-    font-weight: bold;
+    
 }
 
 /* comment */
@@ -39,34 +39,34 @@
     color : #584c02;
 }
 .chroma-delta{
-    font-weight: bold;
+    
     color: #053c41;
 }
 .chroma-echo{
     color : #8d0000; 
-    font-weight: bold;
+    
 }
 .chroma-lima{
     color : #220045;
-    font-weight: bold;
+    
 }
 .chroma-oscar{
     color : #131366;
-    font-weight: bold;
+    
 }
 .chroma-romeo{
     color: #35034a;
-    font-weight: bold;
+    
 }
 .chroma-tango{
     color : #682b2b;
-    font-weight: bold;
+    
 }
 .chroma-victor{
     color : rgb(102 8 63);
-    font-weight: bold;
+    
 }
 .chroma-zeus{
     color : #494949;
-    font-weight: bold;
+    
 }

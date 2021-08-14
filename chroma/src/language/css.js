@@ -2,6 +2,10 @@ let kit = {
     lang : 'css',
     conversion : [
         {
+            class: 'keyword.operator.chroma-romeo',
+            pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
+        },
+        {
             class : 'style.start.chroma-delta',
             pattern : /&lt;style\s*&gt;/g
         },

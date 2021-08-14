@@ -2,6 +2,14 @@ let kit = {
     lang : 'javascript',
     conversion : [
         {
+            class: 'keyword.operator.chroma-romeo',
+            pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
+        },
+        {
+            class : 'function-call.chroma-delta',
+            pattern : /[\w\d_]+(?=\s*\()/g
+        },
+        {
             class : 'comment.chroma-charlie',
             pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
         },
@@ -36,6 +44,10 @@ let kit = {
         {
             class : 'storage.type.chroma-delta',
             pattern: /\b(const|let|var)(?=\s)/g
+        },
+        {
+            class : 'block.type.chroma-alpha',
+            pattern: /\bfunction|try|catch|finally(?=\s\{)/g
         },
         {
             class : 'support.property.chroma-oscar',

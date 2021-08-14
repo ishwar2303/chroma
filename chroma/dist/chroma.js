@@ -159,14 +159,14 @@ const nullMatch = (start, end) => {
 */
 const replaceMatch = (code) => {
     let endPos = 0
-
+    let chromaBold = ' chroma-bold'
     matches.forEach((m) => {
         if(overlapMatch(m.start, endPos) && !m.embedded){
 
             if(nullMatch(endPos, m.start))
                 beautify += '<span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '</span>'
 
-            beautify += '<span class="' + m.class.replace(/\./g, ' ') + '">' + m.value + '</span>'
+            beautify += '<span class="' + m.class.replace(/\./g, ' ') + chromaBold + '">' + m.value + '</span>'
             endPos = m.end
 
         }
@@ -467,7 +467,8 @@ var selectedTheme = null
 */
 const defaultOptions = {
     theme : 'dark',
-    path : ''
+    path : '',
+    boldMode : true
 }
 /* unused harmony export defaultOptions */
 
@@ -479,6 +480,7 @@ const setOptions = (options) => {
     let head = document.head
     let link, style
     let theme = options.theme
+    let boldMode = options.boldMode != undefined ? options.boldMode : defaultOptions.boldMode
     let path = options.path != undefined ? options.path : defaultOptions.path
     if(!chromaCss)
         addUtilityCss(path)
@@ -493,6 +495,19 @@ const setOptions = (options) => {
         head.appendChild(link)
         selectedTheme = link
     }
+
+    if(boldMode) {
+        var allKeywords = document.getElementsByClassName('chroma-bold')
+        for(let i=0; i<allKeywords.length; i++) {
+            allKeywords[i].style.fontWeight = 'bold'
+        }
+    }else {
+        
+        var allKeywords = document.getElementsByClassName('chroma-bold')
+        for(let i=0; i<allKeywords.length; i++) {
+            allKeywords[i].style.fontWeight = 'normal'
+        }
+    }
 }
 /* unused harmony export setOptions */
 
@@ -505,8 +520,8 @@ const ChromaLocal = {
     setOptions
 }
 /* unused harmony export ChromaLocal */
-Chroma = ChromaLocal
 
+Chroma = ChromaLocal
 // ChromaLocal.setOptions(defaultOptions)
 
 /***/ }),
@@ -559,6 +574,14 @@ let kit = {
         {
             class: 'header-file.chroma-echo',
             pattern : /(?<=#include\s*)(&lt;|\").*(&gt;|\")/g
+        },
+        {
+            class: 'keyword.operator.chroma-romeo',
+            pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
+        },
+        {
+            class : 'function-call.chroma-delta',
+            pattern : /[\w\d_]+(?=\s*\()/g
         },
         {
             class: 'meta.preprocessor.chroma-alpha',
@@ -621,6 +644,10 @@ module.exports = kit
 let kit = {
     lang : 'css',
     conversion : [
+        {
+            class: 'keyword.operator.chroma-romeo',
+            pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
+        },
         {
             class : 'style.start.chroma-delta',
             pattern : /&lt;style\s*&gt;/g
@@ -751,6 +778,14 @@ let kit = {
     lang : 'javascript',
     conversion : [
         {
+            class: 'keyword.operator.chroma-romeo',
+            pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
+        },
+        {
+            class : 'function-call.chroma-delta',
+            pattern : /[\w\d_]+(?=\s*\()/g
+        },
+        {
             class : 'comment.chroma-charlie',
             pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
         },
@@ -785,6 +820,10 @@ let kit = {
         {
             class : 'storage.type.chroma-delta',
             pattern: /\b(const|let|var)(?=\s)/g
+        },
+        {
+            class : 'block.type.chroma-alpha',
+            pattern: /\bfunction|try|catch|finally(?=\s\{)/g
         },
         {
             class : 'support.property.chroma-oscar',
