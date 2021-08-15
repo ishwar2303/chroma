@@ -778,10 +778,6 @@ let kit = {
             pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
         },
         {
-            class : 'function-call.chroma-delta',
-            pattern : /[\w\d_]+(?=\s*\()/g
-        },
-        {
             class : 'comment.chroma-charlie',
             pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
         },
@@ -814,12 +810,20 @@ let kit = {
             pattern: /super(?=\.|\()/g
         },
         {
+            class : 'variable.language.super.chroma-oscar',
+            pattern: /\b(try|catch|finally|if|else)\b/g
+        },
+        {
+            class : 'function-call.chroma-delta',
+            pattern : /[\w\d_]+(?=\s*\()/g
+        },
+        {
             class : 'storage.type.chroma-delta',
-            pattern: /\b(const|let|var)(?=\s)/g
+            pattern: /\b(const|let|var|null|undefined)(?=\s)/g
         },
         {
             class : 'block.type.chroma-alpha',
-            pattern: /\bfunction|try|catch|finally(?=\s\{)/g
+            pattern: /\b(function)(?=\s\{)/g
         },
         {
             class : 'support.property.chroma-oscar',
@@ -855,7 +859,7 @@ let kit = {
         },
         {
             class: 'constant.numeric.chroma-echo',
-            pattern: /\b\d+\b/g
+            pattern: /\b(\d+|true|false)\b/g
         },
         {
             class : 'keyword.chroma-romeo',
