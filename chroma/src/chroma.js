@@ -244,6 +244,9 @@ export const preloader = () => {
 * @param string
 * @param boolean
 * @param boolean
+* @param boolean
+* @param boolean
+* @param integer
 */ 
 export const presentation = (code, prettyCode, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
     let delay = 2000

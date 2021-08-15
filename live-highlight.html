@@ -4,168 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Highlight</title>
+    <title>Live Highlight | Chroma</title>
     <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3QD//wAAAAAAAAAAAAAAAAAAAAAAAAAA/xEA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT/AP8AAAAAAAAAAAAAAADdAP//AAAAAAAAAAAAAAAAAAAAAP8RAP8A6v8HAAAAAAAAAAAAAAAAAAAAAAT/AP8AAAAAAAAAAAAAAAAAAAAAAOr/B90A//8AAAAAAOr/BwDq/wf/EQD/AOr/BwDq/wcAAAAAAOr/BwT/AP8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAA6v8H3QD//wDq/wcA6v8H/xEA/wDq/wcA6v8HAOr/BwT/AP8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwAAAAAE/wD//xEA//8RAP/dAP//3QD//90A//8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAAAAAAAOr/BwDq/wcA6v//BP8A/wT/AP//EQD//xEA/90A///dAP//3QD//wDq/wcAAAAAAAAAAAAAAAAAAAAAAAAAAADq/wcA6v8HAOr//wDq//8E/wD/BP8A//8RAP//EQD/3QD//90A//8A6v8HAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwBm//8A6v//AOr//wT/AP8E/wD//xEA//8RAP/dAP//AOr/BwDq/wcA6v8HAAAAAABm//8AZv//AGb//wBm//8AZv//AGb//wDq//8A6v//BP8A/wT/AP//EQD//xEA/wDq//8A6v//AOr//wDq//8AAAAAAAAAAADq/wcA6v8HAAD//wBm//8AZv//AOr//wDq//8E/wD/BP8A//8RAP8A6v8HAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwAA//8AAP//AGb//wBm//8A6v//AOr//wT/AP8E/wD/AOr/BwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADq/wcAAAAAAAD//wAA//8AZv//AGb//wDq//8A6v//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HBP8A/wDq/wcA6v8HAAD//wDq/wcA6v8HAOr/BwBm//8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HBP8A/wAAAAAA6v8HAOr/BwAA//8A6v8HAOr/BwAAAAAAAAAAAGb//wAAAAAAAAAAAAAAAAAAAAAAAAAABP8A/wAAAAAAAAAAAAAAAAAAAAAAAP//AOr/BwAAAAAAAAAAAAAAAADq/wcAZv//AAAAAAAAAAAAAAAABP8A/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABm//8AAAAAvv0AAN77AADu9wAA9u8AAPgfAADwDwAA8A8AAPAPAAAAAAAA8A8AAPAPAAD4HwAA9u8AAO73AADe+wAAvv0AAA==" rel="icon" type="image/x-icon" />
     <link rel="stylesheet" href="public/css/main.css">
+    <link rel="stylesheet" href="public/css/live-highlight.css">
     <script src="https://kit.fontawesome.com/f9bbf9ac4e.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
-        body{
-            background: white;
-            background: #009688;
-        }
-        @media print {
-            *{font-size: 18px;}
-            .no-print{
-                display: none;
-            }
-            .print{
-                display: block;
-            }
-        }
-        #output {
-            min-height: 100%;
-            box-sizing: border-box;
-        }
-        #output-container{
-            overflow-x: auto;
-        }
-        .fix-wrapper {
-            min-height: 100vh;
-            width: 100%;
-            display: flex;
-            BACKGROUND: linear-gradient( 
-        0deg
-        , #009688, #8bc34a, #8bc34a, #ff5722, #e91e63);
-        background: #009688;
-        }
-        
-        .btn-pad {
-            padding: 10px 25px;
-        }
-        #select-theme-dd {
-            background: black;
-            color: white;
-            border-radius: 3px;
-            border: none;
-        }
-        #language {
-            background: black;
-            color: white;
-            border-radius: 3px;
-            border: none;
-        }
-        #clear-code {
-            color: white;
-        }
-        #convert, #clear-code{
-            background: black;
-            border-radius: 3px;
-            border: none;
-            color: white;
-        }
-        .border-4px {
-            border :4px solid black;
-        }
-        #tag-line {
-            font-size: 20px;
-            font-weight: bold;
-            color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        #text-smily {
-            transform: rotate(90deg);
-            margin-left: 10px;
-        }
-        #user-code{
-            background: black;
-            color: white;
-        }
-        /* custom toggle button start */
-
-        .custom-toggle-btn {
-            height: 26px;
-            width: 50px;
-            border-radius: 50px;
-            background: black;
-            position: relative;
-            cursor: pointer;
-            border: 2px solid black;
-        }
-
-        .custom-toggle-btn input {
-            display: none;
-        }
-
-        .custom-toggle-btn>span {
-            transition: 300ms;
-            background: white;
-            height: 21px;
-            width: 21px;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 2px;
-            transform: translate(0, -50%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .custom-toggle-btn>span>i {
-            font-size: 8px;
-            color: white;
-        }
-
-        .custom-toggle-btn input:checked~span {
-            transition: 300ms;
-            -webkit-transition: .4s;
-            background: #30af10;
-            position: absolute;
-            top: 50%;
-            transform: translate(25px, -50%) rotate(360deg);
-            height: 21px;
-            width: 21px;
-            transition: 300ms;
-        }
-
-        .custom-toggle-btn input:checked~span:hover {
-            transition: 300ms;
-            box-shadow: 0px 0px 0px 8px rgba(95, 95, 95, 0.5);
-        }
-
-        .custom-toggle-btn:hover span {
-            transition: 300ms;
-            box-shadow: 0px 0px 0px 8px rgba(99, 99, 99, 0.5);
-        }
-
-        /* custom toggle button end */
-
-    </style>
 </head>
 <body>
     <div class="fix-wrapper">
         <div class="m-10 flex-col flex-1">
-            <div class="flex-row no-print space-between">
+            <div class="flex-row no-print space-between header-option">
                 <div class="flex-row sel-th-cont no-print mr-5">
                     <select id="select-theme-dd" class="btn-pad">
                         <option value="ace-dark">Ace Dark</option>
                         <option value="chroma">Chroma</option>
-                        <!-- <option value="coffee">Coffee</option> -->
+                        <option value="coffee">Coffee</option>
                         <option value="danger">Danger</option>
                         <option value="dark" selected>Dark</option>
-                        <!-- <option value="dreamweaver">Dreamweaver</option>
-                        <option value="light">Light</option> -->
+                        <option value="dreamweaver">Dreamweaver</option>
+                        <option value="light">Light</option>
                         <option value="rosy">Rosy</option>
-                        <!-- <option value="sunshine">Sunshine</option> -->
                         <option value="twilight">Twilight</option>
                     </select>
                     <div id="tag-line" class="ml-10">
                         <a style="color:black;" href="index.html">Your Code is Beautiful Show it off</a> 
-                        <span id="text-smily">:)</span>
+                        <span id="text-smily">
+                            <i class="fas fa-smile-wink"></i>
+                        </span>
                     </div>
                 </div>
                 <div class="flex-row">
@@ -178,7 +44,7 @@
                         </label>
                     </div>
                     <button id="clear-code" class="btn-pad mr-5">Clear</button>
-                    <select id="language" class="btn-pad">
+                    <select id="language" class="btn-pad mr-5">
                         <option value="c">C | C++</option>
                         <option value="html">HTML</option>
                         <option value="css">CSS</option>
@@ -189,23 +55,33 @@
                         <option value="sql">SQL</option>
                     </select>
                     <button style="display: none;" class="btn white btn-pad" id="convert">Highlight</button>
+                    <button id="full-screen-mode" class="btn-pad dark-zone text-white">
+                        <i class="fas fa-expand"></i>
+                    </button>
                 </div>
             </div>
-            <div class="flex-row" style="height: 100%;">
-                <div class="flex-row mt-10 mb-10 mr-10 flex-1 no-print" >
-                    <div class="flex-col flex-1">
-                        <div class="flex-1">
-                            <textarea id="user-code" spellcheck="false" placeholder="Type your code here..." class="border br-3 w-100 p-10 border-4px" style="resize:none;height: 100%; box-sizing: border-box;"></textarea>
-                        </div>
-                    </div>
+            <div class="flex-row flex-1 mt-10" style="height: 100%;"  id="reference-container">
+                <div class="flex-row flex-1 no-print dark-zone border-4px">
+                    <textarea id="user-code" spellcheck="false" placeholder="Type your code here..." class="border br-3 w-100 p-10" wrap="off" style="resize:none; box-sizing: border-box;"></textarea>
                 </div>
-                <div class="flex-1 chroma print " id="output-container" style="border:4px solid black;" id="output-container" style="box-sizing: border-box;">
-                    <div id="output" class="p-10"></div>
+                <div class="m-5"></div>
+                <div class=" dark-zone border-4px">
+                    <div id="output" class="p-10 chroma flex-1" style="margin: 0;"></div>
                 </div>
-        
+
             </div>
         </div>
         
+    </div>
+    <div id="loading-view">
+        <div>
+            <h1 class="mb-10">Welcome</h1>
+            <h2 class="mb-20">To Chroma Live Highlight</h2>
+            <div class="mb-20">
+                <i class="fas fa-sync fa-spin loading-icon"></i>
+            </div>
+            <h3 class="mt-10">Loading Environment...</h3>
+        </div>
     </div>
 
     <pre id="demo-code" style="display: none;">
@@ -245,130 +121,6 @@ CCBH = (
 ORDER BY CCBH DESC, H.HACKER_ID ASC;
     </pre>
     <script src="chroma/dist/chroma.js"></script>
-    <script>
-        // keyword toggle
-        var boldMode = false;
-        var keywordToggleBtn = document.getElementById('keyword-toggle')
-        const changeKeyword = (bm) => {
-            boldMode = !bm
-            Chroma.setOptions({boldMode})
-        }
-        keywordToggleBtn.addEventListener('click', () => {
-            changeKeyword(boldMode)
-        })
-
-        const changeTheme = () => {
-            let theme = document.getElementById('select-theme-dd').value
-            Chroma.setOptions({theme})
-            bold = true
-            if(keywordToggleBtn.checked)
-                bold = false
-            changeKeyword(bold)
-        }
-        document.getElementById('select-theme-dd').addEventListener('change', changeTheme)
-
-        Chroma.setOptions({theme : 'dark'})
-        let convert = document.getElementById('convert')
-        const highlight = (lang) => {
-            let userCode = document.getElementById('user-code').value
-            let output = document.getElementById('output')
-            output.innerHTML = Chroma.pretty(userCode, lang)
-        }
-        convert.addEventListener('click', () => {
-            let lang = selectedLanguage()
-            highlight(lang)
-        })
-        const selectedLanguage = () => {
-            let lang = document.getElementById('language').value
-            let savedLang = localStorage.getItem('chromaLiveHighlightLang')
-            if(!savedLang)
-                savedLang = lang
-            return savedLang
-        }
-
-        document.getElementById('user-code').addEventListener('input', () => {
-            let lang = selectedLanguage()
-            highlight(lang)
-        })
-        document.getElementById('language').addEventListener('change', () => {
-            let languageSelect = document.getElementById('language')
-            localStorage.setItem('chromaLiveHighlightLang', languageSelect.value)
-            let lang = selectedLanguage()
-            highlight(lang)
-        })
-    </script>
-
-    <script>
-        // store locally
-        document.getElementById('clear-code').addEventListener('click', () => {
-            document.getElementById('user-code').value = ''
-            localStorage.setItem('chromaLiveHighlightCode', '')  
-            localStorage.setItem('chromaLiveHighlightLang', 'sql')
-            document.getElementById('output').innerText = ''
-        })
-        window.onload = () => {
-
-            // fix textarea width
-            let textarea = document.getElementById('user-code') 
-            textarea.focus() 
-            let outputContainer = document.getElementById('output-container') 
-            console.log(outputContainer.offsetHeight, outputContainer.offsetWidth-18)
-            console.log(textarea.offsetHeight, textarea.offsetWidth)
-            textarea.style.width = (textarea.offsetWidth)+ 'px'
-            outputContainer.style.width = (textarea.offsetWidth) + 'px'
-            // textarea.style.height = (outputContainer.offsetHeight ) + 'px'
-            outputContainer.style.height = (outputContainer.offsetHeight - 8) + 'px'
-
-            let savedCode = localStorage.getItem('chromaLiveHighlightCode')
-            if(!savedCode)
-                savedCode = document.getElementById('demo-code').innerText
-            document.getElementById('user-code').value = savedCode
-            let lang = selectedLanguage()
-            let languageSelect = document.getElementById('language')
-            let options = languageSelect.getElementsByTagName('option')
-            for(i=0; i<options.length; i++) {
-                if(options[i].value == lang)
-                    options[i].selected = true
-                else options[i].selected = false
-            }
-            highlight(lang)
-        }
-        const storeCode  = () => {
-            let code = document.getElementById('user-code').value
-            if(code)
-                localStorage.setItem('chromaLiveHighlightCode', code)
-
-
-        }
-        storeCode()
-        setInterval(storeCode, 10000)
-
-
-    </script>
-
-
-
-    <script>
-        $("#user-code").keydown(function(e) {
-            if(e.keyCode === 9) {
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
-
-                var $this = $(this);
-                var value = $this.val();
-
-                $this.val(value.substring(0, start)
-                            + "\t"
-                            + value.substring(end));
-
-                this.selectionStart = this.selectionEnd = start + 1;
-
-                e.preventDefault();
-            }
-        });
-
-
-    </script>
-
+    <script src="public/js/live-highlight.js"></script>
 </body>
 </html>
