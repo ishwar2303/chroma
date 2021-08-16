@@ -121,7 +121,7 @@ window.onload = () => {
     highlight(lang)
     setTimeout(() => {
         document.getElementById('loading-view').remove()
-    }, 0)
+    }, 1000)
 }
 const storeCode  = () => {
     let code = document.getElementById('user-code').value
