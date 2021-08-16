@@ -28,50 +28,50 @@
 /* Beautify */
 
 .chroma-alpha{
-    color : #dc4242;
-    font-weight: bold;
+    color : #f63636;
+    
 }
 
 /* string */
 .chroma-bravo{
-    color : #4d9034;
-    font-weight: bold;
+    color : #5bb938;
+    
 }
 
 /* comment */
 .chroma-charlie{
     color : #757575;
-    font-weight: bold;
+    
 }
 .chroma-delta{
-    color : #c3b765;
-    font-weight: bold;
+    color : #cfc054;
+    
 }
 .chroma-echo{
-    color : #c54545; 
-    font-weight: bold;
+    color : #eb4d4d; 
+    
 }
 .chroma-lima{
-    color : #5785ad;
-    font-weight: bold;
+    color : #50a0e5;
+    
 }
 .chroma-oscar{
-    color : #64a1d6;
-    font-weight: bold;
+    color : #36baca;
+    
 }
 .chroma-romeo{
-    color : #9453af;
-    font-weight: bold;
+    color : #b778d1;
+    
 }
 .chroma-tango{
     color : #f95656;
-    font-weight: bold;
+    
 }
 .chroma-victor{
     color : #767ed6;
-    font-weight: bold;
+    
 }
 .chroma-zeus{
     color : #696969;
-    font-weight: bold;
+    
 }

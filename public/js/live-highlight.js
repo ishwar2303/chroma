@@ -78,23 +78,26 @@ window.onload = () => {
     // fix textarea width
     let textarea = document.getElementById('user-code') 
     textarea.focus() 
-    let outputContainer = document.getElementById('output') 
+    let leftBlock = document.getElementById('left-block')
+    let rightBlock = document.getElementById('right-block')
+    let slider = document.getElementById('slider')
     let refDiv = document.getElementById('reference-container')
     let height = refDiv.offsetHeight
     let width  = refDiv.offsetWidth
     if(document.body.offsetWidth > 800) {
-        textarea.style.height = height - 8 + 'px'
-        textarea.style.maxWidth = width/2 + 'px'
-        outputContainer.style.height = height - 8 + 'px'
-        outputContainer.style.width = width/2 + 'px'
+        rightBlock.style.width = width/2 + 'px'
+        blockOriginalWidth = width/2
+        leftBlock.style.height = height - 8 + 'px'
+        rightBlock.style.height = height - 8 + 'px'
     }
     else {
-        textarea.style.height = '300px'
-        outputContainer.style.height = document.body.offsetHeight - 60 + 'px'
+        leftBlock.style.height = '300px'
+        rightBlock.style.height = document.body.offsetHeight - 60 + 'px'
         refDiv.style.width = width - 10 + 'px'
+        leftBlock.style.maxWidth = width - 10 + 'px'
     }
-    outputContainer.style.display = 'block'
-    textarea.style.display = 'block'
+    rightBlock.style.display = 'block'
+    leftBlock.style.display = 'block'
     let savedCode = localStorage.getItem('chromaLiveHighlightCode')
     if(!savedCode)
         savedCode = document.getElementById('demo-code').innerText
@@ -118,7 +121,7 @@ window.onload = () => {
     highlight(lang)
     setTimeout(() => {
         document.getElementById('loading-view').remove()
-    }, 1000)
+    }, 0)
 }
 const storeCode  = () => {
     let code = document.getElementById('user-code').value
@@ -129,6 +132,12 @@ const storeCode  = () => {
 }
 storeCode()
 setInterval(storeCode, 5000)
+
+var highlightSizeSelect = document.getElementById('highlight-size')
+highlightSizeSelect.addEventListener('change', () => {
+    let fontSize = ['13', '15', '18', '20', '23']
+    document.getElementById('output').style.fontSize = fontSize[highlightSizeSelect.value-1] + 'px'
+})
 
 
 // full screen trigger
@@ -208,3 +217,65 @@ $("textarea").keypress(function(e)
 }, 0.01, this);
      }
 });
+
+
+/*
+    stretchable div
+    right-block
+    slider
+*/
+
+var slider = document.getElementById('slider')
+var rightBlock = document.getElementById('right-block')
+var editor = document.getElementById('user-code')
+var blockOriginalWidth = 0
+let blockWidth = 0
+var sliderX = 0
+
+const disableSelectOption = (e) => {
+    e.preventDefault()
+}
+
+const enableSelectOption = (e) => {
+    e.returnValue = true
+}
+
+const getSliderPosition = (e) => {
+    blockWidth = rightBlock.offsetWidth
+    if(!blockOriginalWidth) {
+        blockOriginalWidth = rightBlock.offsetWidth
+    }
+    sliderX = e.clientX
+    document.addEventListener('mousemove', getDocumentPosition)
+    editor.style.userSelect = 'none'
+    rightBlock.style.userSelect = 'none'
+    editor.disabled = true
+}
+
+const getDocumentPosition = (e) => {
+    let docX = e.clientX;
+    let change = sliderX - docX;
+
+    let newWidth = (blockWidth + change)
+    if(newWidth >= blockOriginalWidth - 300 && newWidth < document.body.offsetWidth - 300)
+        rightBlock.style.width = newWidth+ 'px'
+}
+
+const removeDocHandler = () => {
+    document.removeEventListener("mousemove", getDocumentPosition)
+    document.addEventListener('selectstart', enableSelectOption)
+    editor.style.userSelect = ''
+    editor.disabled = false
+    rightBlock.style.userSelect = ''
+}
+
+slider.addEventListener('mousedown', getSliderPosition)
+slider.addEventListener('mouseup', removeDocHandler)
+document.addEventListener('mouseup', removeDocHandler)
+
+
+
+// reset mid
+document.getElementById('recenter').addEventListener('click', () => {
+    rightBlock.style.width = blockOriginalWidth + 'px'
+})

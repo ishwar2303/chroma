@@ -6,6 +6,7 @@ body{
 #output {
     box-sizing: border-box;
     overflow: auto;
+    height: 100%;
 }
 #output-container{
     overflow-x: auto;
@@ -77,12 +78,25 @@ body{
     background: black;
     color: white;
     font-size: 15px;
-    display: none;
     font-family: monaco, courier, monospace;
+    height: 100%;
 }
 
-#reference-container {
-    position: relative;
+/* #left-block {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+#right-block {
+    position: absolute;
+    right: 0;
+} */
+#slider {
+    /* position:relative; */
+    cursor: col-resize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #loading-view {
     position: absolute;

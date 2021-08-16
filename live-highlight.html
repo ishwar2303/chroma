@@ -44,6 +44,13 @@
                         </label>
                     </div>
                     <button id="clear-code" class="btn-pad mr-5">Clear</button>
+                    <select id="highlight-size" class="dark-zone text-white btn-pad mr-5">
+                        <option value="1">Small</option>
+                        <option value="2" selected>Recommended</option>
+                        <option value="3">Large</option>
+                        <option value="4">X Large</option>
+                        <option value="5">XX Large</option>
+                    </select>
                     <select id="language" class="btn-pad mr-5">
                         <option value="c">C | C++</option>
                         <option value="html">HTML</option>
@@ -55,17 +62,20 @@
                         <option value="sql" selected>SQL</option>
                     </select>
                     <button style="display: none;" class="btn white btn-pad" id="convert">Highlight</button>
+                    <button id="recenter" class="btn-pad dark-zone text-white mr-5">Recenter</button>
                     <button id="full-screen-mode" class="btn-pad dark-zone text-white">
                         <i class="fas fa-expand"></i>
                     </button>
                 </div>
             </div>
             <div class="flex-row flex-1 mt-10" style="height: 100%;"  id="reference-container">
-                <div class="flex-row flex-1 no-print dark-zone border-4px">
+                <div id="left-block" class="flex-row flex-1 no-print dark-zone border-4px br-3">
                     <textarea id="user-code" spellcheck="false" placeholder="Type your code here..." class="border br-3 w-100 p-10" wrap="off" style="resize:none; box-sizing: border-box;"></textarea>
                 </div>
-                <div class="m-5"></div>
-                <div class=" dark-zone border-4px">
+                <div class="p-5 resizer" id="slider">
+                    <i class="fas fa-grip-lines-vertical"></i>
+                </div>
+                <div class="flex-row border-4px br-3 dark-zone" id="right-block">
                     <div id="output" class="p-10 chroma flex-1" style="margin: 0;"></div>
                 </div>
 
