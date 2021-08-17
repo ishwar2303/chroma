@@ -1,0 +1,59 @@
+
+.chroma{
+    background: #ffffff;
+    color: black;
+}
+.chroma-head{
+    background: #636363;
+    color: white;
+}
+/* Beautify */
+
+.chroma-alpha{
+    color: #9c4703;
+    
+}
+
+/* string */
+.chroma-bravo{
+    color: #257507;
+    
+}
+
+/* comment */
+.chroma-charlie{
+    color: #9e9d9d;
+    font-style: italic;
+}
+.chroma-delta{
+    color: rgb(46 46 160);
+    
+}
+.chroma-echo{
+    color : #ce2626; 
+    
+}
+.chroma-lima{
+    color: #0059a9;
+    
+}
+.chroma-oscar{
+    color: #006662;
+    
+}
+.chroma-romeo{
+    color : #912ebb;
+    
+}
+.chroma-tango{
+    color : #f95656;
+    
+}
+.chroma-victor{
+    color: #cc3a3a;
+    
+}
+.chroma-zeus{
+    color : gray;
+    
+}

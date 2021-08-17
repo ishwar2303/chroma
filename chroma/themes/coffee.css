@@ -1,0 +1,67 @@
+.chroma{
+    background: #2f1300;
+    color: white;
+}
+.chroma-head{
+    background: #5c2a08;
+    color: white;
+}
+.chroma-beautify{
+    padding: 0;
+}
+.chroma-copy{
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+}
+.chroma pre{
+    padding: 3px 10px;
+}
+.chroma-line-no{
+    border-radius: 0;
+    border-bottom-left-radius: 3px;
+    padding: 3px 8px;
+}
+.chroma-line-no span{
+    color: #e27f3b;
+}
+.chroma-beautify {
+    padding: 10px;
+}
+/* Beautify */
+.chroma-alpha{
+    color : #bb662d;
+}
+/* string */
+.chroma-bravo{
+    color: #3c9a3c;
+    font-style: italic;
+}
+/* comment */
+.chroma-charlie{
+    color : #6d6d6d;
+}
+.chroma-delta{
+    color : #7b7bad;
+}
+.chroma-echo{
+    color : #3c7d82; 
+}
+.chroma-lima{
+    color :#c15454;
+}
+.chroma-oscar{
+    color : #8d4096;
+}
+.chroma-romeo{
+    color : #bb2525;
+}
+.chroma-tango{
+    color : ;
+}
+.chroma-victor{
+    color : #bdae4d;
+}
+.chroma-zeus{
+    color : gray;
+}
