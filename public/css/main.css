@@ -5,7 +5,7 @@
 body{
     font-family: monospace;
     background: linear-gradient(107deg, #2a086a, rgb(122 8 43));
-    color: white;
+    color: #b3b3b3;
 }
 a{
     text-decoration: none;
@@ -215,7 +215,7 @@ input, select, textarea{
     color: aqua;
 }
 .white{
-    color: white;
+    color: #b3b3b3;
 }
 .success{
     color: rgb(45, 148, 45);
@@ -261,11 +261,13 @@ input:focus, textarea:focus{
     font-size: 15px;
     margin-top: 15px;
     /* display: block; */
-    color: white;
-    background: black;
+    color: rgb(206, 206, 206);
+    background: #8b1948;
     padding: 10px 20px;
     border-radius: 3px;
-    border: none;
+    /* border: none; */
+    border: 2px solid #f13784;
+}
 }
 .custom-input{
     position: relative;
@@ -336,7 +338,7 @@ input:focus, textarea:focus{
     font-weight: 400;
 }
 .download-chroma-btn{
-    color: white;
+    color: #b3b3b3;
     background: linear-gradient(
 45deg
 , rgb(0 0 0 / 90%), #021b31);
@@ -358,8 +360,9 @@ input:focus, textarea:focus{
     border-radius: 3px;
     padding: 6px 5px;
     /* background: transparent; */
-    background: black;
-    color: white;
+    background: #1b73be;
+    color: #cececf;
+    border: 2px solid #53b0ff;
 }
 
 .how{
@@ -398,11 +401,12 @@ input:focus, textarea:focus{
     margin-top: 25px;
 }
 .contribute{
-    background: #bc5cff;
+    background: #8b1948;
     padding: 10px 20px;
     border-radius: 3px;
-    margin-top: 20px;
-    color: #021c32;
+    /* border: none; */
+    border: 2px solid #f13784;
+    color: #b3b3b3;
 }
 /* custom toggle button start */
 
@@ -410,10 +414,10 @@ input:focus, textarea:focus{
     height: 25px;
     width: 50px;
     border-radius: 50px;
-    background: black;
+    background: #1b73be;
     position: relative;
     cursor: pointer;
-    border: 2px solid black;
+    border: 2px solid #53b0ff;
 }
 
 .custom-toggle-btn input {
@@ -422,7 +426,7 @@ input:focus, textarea:focus{
 
 .custom-toggle-btn>span {
     transition: 300ms;
-    background: white;
+    background: rgb(209, 209, 209);
     height: 21px;
     width: 21px;
     border-radius: 50%;
@@ -437,13 +441,13 @@ input:focus, textarea:focus{
 
 .custom-toggle-btn>span>i {
     font-size: 8px;
-    color: white;
+    color: rgb(209, 209, 209);
 }
 
 .custom-toggle-btn input:checked~span {
     transition: 300ms;
     -webkit-transition: .4s;
-    background: #bc5cff;
+    background: #510c80;
     position: absolute;
     top: 50%;
     transform: translate(25px, -50%) rotate(360deg);
@@ -470,11 +474,12 @@ input:focus, textarea:focus{
 }
 
 .toggle-container > span {
-    margin-left: 5px;
+    margin-left: 2px;
+    color: #d8d8d8;
 }
 
 .btn-hover:hover {
-    box-shadow: 0px 0px 5px 0px #bc5cff;
+    box-shadow: 0px 0px 5px 0px #8c28d2;
     background: #6918a3;
     transition: 600ms;
 }
