@@ -70,7 +70,7 @@ let kit = {
             pattern: /(\/)((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)(\/)(?!\/)([igm]{0,3})/g
         },
         {
-            class : 'storage.type.chroma-delta',
+            class : 'storage.type.chroma-romeo',
             pattern: /(var)?(\s|^)(\S+)(?=\s?=\s?function\()/g
         },
         {

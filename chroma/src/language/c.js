@@ -11,10 +11,6 @@ let kit = {
             pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
         },
         {
-            class : 'function-call.chroma-delta',
-            pattern : /[\w\d_]+(?=\s*\()/g
-        },
-        {
             class: 'meta.preprocessor.chroma-alpha',
             pattern: /\#(\w+)(?!=(&lt;|\"))/gm
         },
@@ -60,7 +56,11 @@ let kit = {
         },
         {
             class : 'entitiy.name.function.chroma-victor',
-            pattern : /(?<=(\w|\*)+)(\s|\n)+((\w+)(?= ?\())/g
+            pattern : /\b(?<=(\w|\*)+)(\s|\n)+((\w+)(?= ?\())/g
+        },
+        {
+            class : 'function-call.chroma-delta',
+            pattern : /[\w\d_]+(?=\s*\()/g
         }
     ]
     

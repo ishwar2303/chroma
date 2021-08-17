@@ -138,6 +138,11 @@ highlightSizeSelect.addEventListener('change', () => {
     let fontSize = ['13', '15', '18', '20', '23']
     document.getElementById('output').style.fontSize = fontSize[highlightSizeSelect.value-1] + 'px'
 })
+var highlightStyleSelect = document.getElementById('highlight-style')
+highlightStyleSelect.addEventListener('change', () => {
+    let fontFamily = ['cursive', 'monaco, courier, monospace', '-webkit-pictograph']
+    output.getElementsByTagName('pre')[0].getElementsByTagName('code')[0].style.fontFamily = fontFamily[highlightStyleSelect.value - 1]
+})
 
 
 // full screen trigger
