@@ -478,3 +478,15 @@ input:focus, textarea:focus{
     background: #6918a3;
     transition: 600ms;
 }
+
+@media screen and (max-width: 600px) {
+    .footer > div {
+        flex-direction: column;
+    }
+    .footer > div > div:nth-child(2) {
+        margin-top: 25px;
+    }
+    .exp-head {
+        font-size: 30px;
+    }
+}
