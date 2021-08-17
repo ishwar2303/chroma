@@ -17,32 +17,46 @@
             <div class="flex-row no-print space-between header-option">
                 <div class="flex-row sel-th-cont no-print mr-5">
                     <select id="select-theme-dd" class="btn-pad">
+                        <option value="dark" selected>Dark</option>
+                        <option value="vampire">Vampire</option>
                         <option value="ace-dark">Ace Dark</option>
                         <option value="chroma">Chroma</option>
-                        <!-- <option value="coffee">Coffee</option> -->
                         <option value="danger">Danger</option>
-                        <option value="dark" selected>Dark</option>
+                        <option value="coffee">Coffee</option>
                         <option value="dreamweaver">Dreamweaver</option>
                         <option value="light">Light</option>
-                        <!-- <option value="rosy">Rosy</option> -->
-                        <!-- <option value="twilight">Twilight</option> -->
-                        <option value="vampire">Vampire</option>  
                     </select>
-                    <div id="tag-line" class="ml-10">
-                        <a style="color:black;" href="index.html">Your Code is Beautiful Show it off</a> 
-                        <span id="text-smily">
-                            <i class="fas fa-smile-wink"></i>
-                        </span>
+                    <div id="tag-line" class="ml-10 text-white">
+                        <a href="index.html">
+                            <div class="flex-row" style="font-size: 25px;">
+                                <span style="color: rgb(46 209 249);">C</span>
+                                <span style="color: #ffad1a;">h</span>
+                                <span style="color: rgb(56 236 56);">r</span>
+                                <span style="color: #b8fb44;">o</span>
+                                <span style="color: rgb(255 68 68);">m</span>
+                                <span style="color: #ff66ff;">a</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="flex-row">
-                    <div class="flex-center mr-5">
+                    <div class="toggle-container mr-10">
                         <label class="custom-toggle-btn">
                             <input id="keyword-toggle" type="checkbox" name="gender">
                             <span>
                                 <i class="fas fa-check"></i>
                             </span>
                         </label>
+                        <span>Bold</span>
+                    </div>
+                    <div class="toggle-container mr-10">
+                        <label class="custom-toggle-btn">
+                            <input id="capital-toggle" type="checkbox" name="gender">
+                            <span>
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </label>
+                        <span>Capital</span>
                     </div>
                     <button id="clear-code" class="btn-pad mr-5">Clear</button>
                     <select id="highlight-style" class="dark-zone text-white btn-pad mr-5">

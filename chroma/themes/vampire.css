@@ -4,10 +4,12 @@
     color: white;
 }
 .chroma-head{
-    background: #021b31;
+    background: #242424;
     color: white;
 }
-
+.chroma-line-no{
+    color: #BEF264;
+}
 /* Beautify */
 
 .chroma-alpha{

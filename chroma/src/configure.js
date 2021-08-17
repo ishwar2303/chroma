@@ -22,6 +22,7 @@ const fetchTargetElements = () => {
             let result = convert(code, lang, header, heading, copy, loader, linepad)
             block.innerHTML = ''
             block.appendChild(result)
+            block.style.display = 'block'
         }
     })
 

@@ -11,6 +11,17 @@
     display: flex;
     flex-direction: row;
 }
+div[chroma] {
+    display : none;
+}
+.chroma-inline {
+    background: black;
+    color: #b7b73a;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 3px;
+    display: inline;
+}
 .chroma-flex-col{
     display: flex;
     flex-direction: column;
@@ -62,8 +73,8 @@
 
 .loading .dot {
 	position: relative;
-	width: 1.2em;
-	height: 1.2em;
+	width: 0.9em;
+	height: 0.9em;
 	margin: 1em;
 	border-radius: 50%;
 }
@@ -129,3 +140,5 @@
 		opacity: 0;
 	}
 }
+
+

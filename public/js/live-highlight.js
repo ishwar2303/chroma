@@ -1,17 +1,17 @@
 // keyword toggle
-var boldMode = false;
+var bold = false;
 var keywordToggleBtn = document.getElementById('keyword-toggle')
 const changeKeyword = () => {
 
     if(keywordToggleBtn.checked) {
         localStorage.setItem('chromaLiveHighlightBold', true)
-        boldMode = true
+        bold = true
     }
     else {
         localStorage.setItem('chromaLiveHighlightBold', '')
-        boldMode = false
+        bold = false
     }
-    Chroma.setOptions({boldMode})
+    Chroma.setOptions({bold})
 }
 keywordToggleBtn.addEventListener('click', () => {
     
@@ -224,6 +224,14 @@ $("textarea").keypress(function(e)
 });
 
 
+// capital keyword
+let capitalToggle = document.getElementById('capital-toggle')
+capitalToggle.addEventListener('click', () => {
+    if(capitalToggle.checked)
+        Chroma.setOptions({capital: true})
+    else Chroma.setOptions({capital: false})
+})
+
 /*
     stretchable div
     right-block
@@ -284,3 +292,5 @@ document.addEventListener('mouseup', removeDocHandler)
 document.getElementById('recenter').addEventListener('click', () => {
     rightBlock.style.width = blockOriginalWidth + 'px'
 })
+
+

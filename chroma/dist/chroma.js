@@ -75,6 +75,7 @@ var Chroma;
 /* unused harmony export matches */
 /* unused harmony export beautify */
 /* unused harmony export selectedTheme */
+/* unused harmony export cacheOptions */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__merge_kit__ = __webpack_require__(10);
 /* Import all supported languages */
 
@@ -159,14 +160,14 @@ const nullMatch = (start, end) => {
 */
 const replaceMatch = (code) => {
     let endPos = 0
-    let chromaBold = ' chroma-bold'
+    let chromaKeyWord= ' chroma-bold chroma-capital'
     matches.forEach((m) => {
         if(overlapMatch(m.start, endPos) && !m.embedded){
 
             if(nullMatch(endPos, m.start))
                 beautify += '<span class="' + 'plain-text">' + code.substring(endPos, m.start)  + '</span>'
 
-            beautify += '<span class="' + m.class.replace(/\./g, ' ') + chromaBold + '">' + m.value + '</span>'
+            beautify += '<span class="' + m.class.replace(/\./g, ' ') + chromaKeyWord + '">' + m.value + '</span>'
             endPos = m.end
 
         }
@@ -301,7 +302,7 @@ const chromaCopy = (btn, copyCode, message) => {
     textarea.remove()
     let bg = btn.style.background
     if(copyCode != ''){
-        btn.style.background = '#262bde'
+        btn.style.background = '#bc5cff'
         btn.style.color=  'white'
         btn.innerHTML = 'Code Copied'
     }
@@ -452,61 +453,83 @@ const convert = (code, lang, header, heading, copy, loader, linepad) => {
 
 /* Add chroma css */
 let chromaCss = false
-const addUtilityCss = (path) => {
+const addUtilityCss = () => {
     let head = document.head
     let link = document.createElement('link')
     link.rel = 'stylesheet'
-    link.href = path + 'chroma/css/chroma.css'
+    link.href = 'chroma/css/chroma.css'
     head.appendChild(link)
     chromaCss = true
 }
 /* unused harmony export addUtilityCss */
 
 
+const updateTheme = (theme) => {
+    let head = document.head
+    let link, style
+    if(selectedTheme)
+        selectedTheme.remove()
+    link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'chroma/themes/' + theme + '.css'
+    head.appendChild(link)
+    selectedTheme = link
+}
+/* unused harmony export updateTheme */
+
+
 var selectedTheme = null
+
 
 /*
 * Default options
 */
-const defaultOptions = {
+var cacheOptions = {
     theme : 'dark',
-    path : '',
-    boldMode : false
+    bold : false,
+    capital : false
 }
-/* unused harmony export defaultOptions */
 
-
+let boldStyle, capitalStyle
 /* set options 
 * @param object
 */
 const setOptions = (options) => {
-    let head = document.head
-    let link, style
-    let theme = options.theme
-    let boldMode = options.boldMode != undefined ? options.boldMode : defaultOptions.boldMode
-    let path = options.path != undefined ? options.path : defaultOptions.path
-    if(!chromaCss)
-        addUtilityCss(path)
-        
-    // add theme css file in head of dcoument
-    if(theme){
-        if(selectedTheme)
-            selectedTheme.remove()
-        link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = path + 'chroma/themes/' + theme + '.css'
-        head.appendChild(link)
-        selectedTheme = link
+    let head = document.head 
+
+    if(options.theme != cacheOptions.theme && options.theme != '' && options.theme != undefined) {
+        cacheOptions.theme = options.theme
+        updateTheme(cacheOptions.theme)
     }
 
-    if(!style) {
-        style = document.createElement('style')
-        style.innerHTML = ''
-        head.appendChild(style)
+    if(options.bold != cacheOptions.bold && options.bold != undefined) {
+        let bold = options.bold
+        if(!boldStyle) {
+            boldStyle = document.createElement('style')
+            boldStyle.innerHTML = ''
+            head.appendChild(boldStyle)
+        }
+        if(bold) 
+            boldStyle.innerHTML = '.chroma-bold{font-weight : bold;}'
+        else boldStyle.innerHTML = '.chroma-bold{font-weight : normal;}'
+        cacheOptions.bold = bold
     }
-    if(boldMode) 
-        style.innerHTML = '.chroma-bold{font-weight : bold;}'
-    else style.innerHTML = '.chroma-bold{font-weight : normal;}'
+
+    if(options.capital != cacheOptions.capital && options.capital != undefined) {
+        let capital = options.capital
+        if(!capitalStyle) {
+            capitalStyle = document.createElement('style')
+            capitalStyle.innerHTML = ''
+            head.appendChild(capitalStyle)
+        }
+        if(capital) 
+            capitalStyle.innerHTML = '.chroma-capital{text-transform : uppercase;}'
+        else capitalStyle.innerHTML = '.chroma-capital{text-transform : none;}'
+        cacheOptions.capital = capital
+    }
+
+
+    
 }
 /* unused harmony export setOptions */
 
@@ -516,12 +539,18 @@ const setOptions = (options) => {
 */
 const ChromaLocal = {
     pretty,
-    setOptions
+    setOptions,
+    cacheOptions
 }
 /* unused harmony export ChromaLocal */
 
+// chroma presentation css
+if(!chromaCss)
+    addUtilityCss()
+
+updateTheme('dark')
 Chroma = ChromaLocal
-// ChromaLocal.setOptions(defaultOptions)
+
 
 /***/ }),
 /* 1 */
@@ -554,6 +583,7 @@ const fetchTargetElements = () => {
             let result = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__chroma__["a" /* convert */])(code, lang, header, heading, copy, loader, linepad)
             block.innerHTML = ''
             block.appendChild(result)
+            block.style.display = 'block'
         }
     })
 

@@ -18,7 +18,6 @@
     padding: 3px 10px;
 }
 .chroma-line-no{
-    background: #5c2a08;
     border-radius: 0;
     border-bottom-left-radius: 3px;
     padding: 3px 8px;
@@ -26,7 +25,9 @@
 .chroma-line-no span{
     color: #e27f3b;
 }
-
+.chroma-beautify {
+    padding: 10px;
+}
 /* Beautify */
 .chroma-alpha{
     color : #bb662d;
