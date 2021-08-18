@@ -1,4 +1,3 @@
-var Chroma;
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -545,11 +544,11 @@ const ChromaLocal = {
 /* unused harmony export ChromaLocal */
 
 // chroma presentation css
-if(!chromaCss)
-    addUtilityCss()
+// if(!chromaCss)
+//     addUtilityCss()
 
 // updateTheme('dark')
-Chroma = ChromaLocal
+// Chroma = ChromaLocal
 
 
 /***/ }),
