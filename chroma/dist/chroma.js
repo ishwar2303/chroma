@@ -1,3 +1,4 @@
+var Chroma;
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -548,7 +549,7 @@ const ChromaLocal = {
 //     addUtilityCss()
 
 // updateTheme('dark')
-// Chroma = ChromaLocal
+Chroma = ChromaLocal
 
 
 /***/ }),
