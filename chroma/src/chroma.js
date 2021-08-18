@@ -429,5 +429,5 @@ export const ChromaLocal = {
 if(!chromaCss)
     addUtilityCss()
 
-updateTheme('dark')
+// updateTheme('dark')
 // Chroma = ChromaLocal
