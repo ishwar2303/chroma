@@ -2,6 +2,7 @@
 .chroma{
     background: #ffffff;
     color: black;
+    text-shadow: 0.2px 0.1px;
 }
 .chroma-head{
     background: #636363;
