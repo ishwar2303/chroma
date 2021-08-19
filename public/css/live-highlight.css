@@ -24,27 +24,6 @@ body{
 .btn-pad {
     padding: 10px 25px;
 }
-#select-theme-dd {
-    background: black;
-    color: white;
-    border-radius: 3px;
-    border: none;
-}
-#language {
-    background: black;
-    color: white;
-    border-radius: 3px;
-    border: none;
-}
-#clear-code {
-    color: white;
-}
-#convert, #clear-code{
-    background: black;
-    border-radius: 3px;
-    border: none;
-    color: white;
-}
 .dark-zone {
     background: black;
     border-radius: 3px;

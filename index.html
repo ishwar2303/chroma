@@ -75,7 +75,7 @@
                             <button class="btn download-chroma-btn" onclick="location.href='https://github.com/ishwar2303/chroma/archive/refs/heads/main.zip'">Download</button>
                         </div>
                         <div class="flex-row space-between mt-10">
-                            <a class="chroma-btn2 mr-10 btn-hover" href="live-highlight.html" target="_blank">Highlight your code now</a>
+                            <button class="chroma-btn2 btn-hover" onclick="openLiveHighlight()" >Highlight your code now</button>
                             <button id="open-prepare-box" class="chroma-btn2">Prepare Code</button>
                         </div>
                     </div>
@@ -334,6 +334,16 @@ solve()
                     </label>
                 </h2>
             </div>
+            <div id="conversion-message" style="display: none;">
+                <div class="flex-row space-between">
+                    <div>
+                        Code converted successfully<br/>Copied to clipboard
+                    </div>
+                    <div>
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            </div>
             <textarea id="code-for-prepare" class="silver-shade-bg mt-10" placeholder="Write your code here..."></textarea>
             <div class="flex-row space-between mt-10">
                 <button class="chroma-btn1" id="close-prepare-box">Close</button>
@@ -342,7 +352,16 @@ solve()
         </div>
     </div>
     <div class="overlay"></div>
+
+    
     <script>
+        openLiveHighlight = () => {
+            let a = document.createElement('a')
+            a.href = 'live-highlight.html'
+            a.target = '_blank'
+            a.click()
+        }
+
         let prepareCodePopup = document.getElementById('prepare-code-popup')
         let getCode = document.getElementById('code-for-prepare')
         let prepareCode = document.getElementById('prepare-code')
@@ -358,11 +377,31 @@ solve()
             overlay.style.display = 'block'
         })
 
+
         prepareCode.addEventListener('click', () => {
-            let code = getCode.value
+
+            let code = getCode.value.trim()
+            if(code == '')
+                return
             let converted = code.replace(/\</g, '&lt;')
             converted = converted.replace(/\>/g, '&gt;')
             getCode.value = converted
+            
+            converted = converted.trim()
+            let textarea = document.createElement('textarea')
+            let body = document.body
+            textarea.value = converted
+            document.body.appendChild(textarea)
+            textarea.select()
+            document.execCommand('copy')
+            body.removeChild(textarea)
+            textarea.remove()
+            let msg = document.getElementById('conversion-message')
+            msg.style.display = 'block'
+            getCode.value = ''
+            setTimeout(() => {
+                msg.style.display = 'none'
+            }, 5000);
         })
     </script>
     <script src="chroma/dist/chroma.js"></script>

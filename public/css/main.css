@@ -551,7 +551,16 @@ input:focus, textarea:focus{
     z-index: 9;
     display: none;
 }
-
+#conversion-message {
+    display: block;
+    padding: 10px;
+    background: rgba(0, 255, 0, 0.5);
+    border-radius: 3px;
+    font-size: 16px;
+}
+#conversion-message i {
+    font-size: 22px;
+}
 @media screen and (max-width: 600px) {
     .footer > div {
         flex-direction: column;
