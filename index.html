@@ -74,8 +74,9 @@
                             </div>
                             <button class="btn download-chroma-btn" onclick="location.href='https://github.com/ishwar2303/chroma/archive/refs/heads/main.zip'">Download</button>
                         </div>
-                        <div class="flex-row">
-                            <a class="to-live-highlight mr-10 btn-hover" href="live-highlight.html" target="_blank">Highlight your code now</a>
+                        <div class="flex-row space-between mt-10">
+                            <a class="chroma-btn2 mr-10 btn-hover" href="live-highlight.html" target="_blank">Highlight your code now</a>
+                            <button id="open-prepare-box" class="chroma-btn2">Prepare Code</button>
                         </div>
                     </div>
 
@@ -314,7 +315,56 @@ solve()
             </div>
         </div>
     </div>
+    <div id="prepare-code-popup" class="prepare-code chroma-theme-bg" style="max-width: 850px;">
+        <div>
+            <div class="mb-10">
+                <h2 class="">
+                    Convert code entities before placing it in your project
+                    <br/>
+                    <div class="mt-10"></div>
+                    <label>
+                        <code class="chroma-inline">&lt;</code>
+                        ->
+                        <code class="chroma-inline">&amp;lt;</code>
+                    </label>, 
+                    <label>
+                        <code class="chroma-inline">&gt;</code>
+                        ->
+                        <code class="chroma-inline">&amp;gt;</code>
+                    </label>
+                </h2>
+            </div>
+            <textarea id="code-for-prepare" class="silver-shade-bg mt-10" placeholder="Write your code here..."></textarea>
+            <div class="flex-row space-between mt-10">
+                <button class="chroma-btn1" id="close-prepare-box">Close</button>
+                <button class="chroma-btn2" id="prepare-code">Prepare</button>
+            </div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <script>
+        let prepareCodePopup = document.getElementById('prepare-code-popup')
+        let getCode = document.getElementById('code-for-prepare')
+        let prepareCode = document.getElementById('prepare-code')
+        let closePrepareBtn = document.getElementById('close-prepare-box')
+        let openPrepareBtn = document.getElementById('open-prepare-box')
+        let overlay = document.getElementsByClassName('overlay')[0]
+        closePrepareBtn.addEventListener('click', () => {
+            prepareCodePopup.style.display = 'none'
+            overlay.style.display = 'none'
+        })
+        openPrepareBtn.addEventListener('click', () => {
+            prepareCodePopup.style.display = 'block'
+            overlay.style.display = 'block'
+        })
 
+        prepareCode.addEventListener('click', () => {
+            let code = getCode.value
+            let converted = code.replace(/\</g, '&lt;')
+            converted = converted.replace(/\>/g, '&gt;')
+            getCode.value = converted
+        })
+    </script>
     <script src="chroma/dist/chroma.js"></script>
     <script>
         document.getElementById('select-theme').addEventListener('change', changeTheme)
