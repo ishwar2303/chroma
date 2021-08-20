@@ -123,7 +123,6 @@ export const processPattern = (code, patt, offset) => {
         offset : endPos
     }
 
-
 }
 /*
 * @param string

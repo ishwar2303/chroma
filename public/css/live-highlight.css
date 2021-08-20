@@ -105,10 +105,27 @@ body{
 
 @media print {
     *{font-size: 18px;}
+    .fix-wrapper{
+        background: none;
+        padding: 0;
+    }
+    body{
+        background: none;
+        padding: 0;
+    }
     .no-print{
         display: none;
     }
     .print{
+        display: block;
+    }
+    #slider {
+        display: none;
+    }
+    #right-block {
+        border: none;
+        width: 100%;
+        height: 100%;
         display: block;
     }
 }

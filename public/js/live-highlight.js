@@ -96,8 +96,8 @@ window.onload = () => {
         refDiv.style.width = width - 10 + 'px'
         leftBlock.style.maxWidth = width - 10 + 'px'
     }
-    rightBlock.style.display = 'block'
-    leftBlock.style.display = 'block'
+    // rightBlock.style.display = 'block'
+    // leftBlock.style.display = 'block'
     let savedCode = localStorage.getItem('chromaLiveHighlightCode')
     if(!savedCode)
         savedCode = document.getElementById('demo-code').innerText
@@ -232,6 +232,15 @@ capitalToggle.addEventListener('click', () => {
     else Chroma.setOptions({capital: false})
 })
 
+
+document.getElementById('formatter').addEventListener('click', () => {
+    let textarea = document.getElementById('user-code')
+    let code = textarea.value
+    code = formatt(code)
+    textarea.value = code
+    highlight(selectedLanguage())
+})
+
 /*
     stretchable div
     right-block
@@ -293,4 +302,24 @@ document.getElementById('recenter').addEventListener('click', () => {
     rightBlock.style.width = blockOriginalWidth + 'px'
 })
 
+
+// print
+
+const print = () => {
+    var rb = document.getElementById("right-block");
+    let tw = rb.style.width;
+    let th = rb.style.height;
+    rb.style.height = '100%';
+    rb.style.width = '100%';
+
+    window.print();
+    rb.style.height = th;
+    rb.style.width = tw;
+}
+
+document.getElementById('print').addEventListener('click', print)
+
+
+// stop right click and select
+document.addEventListener('contextmenu', event => event.preventDefault())
 

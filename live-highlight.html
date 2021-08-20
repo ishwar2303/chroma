@@ -19,7 +19,7 @@
         <div class="m-10 flex-col flex-1">
             <div class="flex-row no-print space-between header-option">
                 <div class="flex-row sel-th-cont no-print mr-5">
-                    <select id="select-theme-dd" class="chroma-btn2">
+                    <select id="select-theme-dd" class="chroma-btn2 mr-5">
                         <option value="dark" selected>Dark</option>
                         <option value="vampire">Vampire</option>
                         <option value="ace-dark">Ace Dark</option>
@@ -28,6 +28,16 @@
                         <option value="coffee">Coffee</option>
                         <option value="dreamweaver">Dreamweaver</option>
                         <option value="light">Light</option>
+                    </select>
+                    <select id="language" class="chroma-btn2 mr-5">
+                        <option value="c">C | C++</option>
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="json">JSON</option>
+                        <option value="php">PHP</option>
+                        <option value="python">Python</option>
+                        <option value="sql" selected>SQL</option>
                     </select>
                     <div id="tag-line" class="ml-10 ">
                         <a href="index.html">
@@ -74,17 +84,9 @@
                         <option value="4">X Large</option>
                         <option value="5">XX Large</option>
                     </select>
-                    <select id="language" class="chroma-btn1 mr-5">
-                        <option value="c">C | C++</option>
-                        <option value="html">HTML</option>
-                        <option value="css">CSS</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="json">JSON</option>
-                        <option value="php">PHP</option>
-                        <option value="python">Python</option>
-                        <option value="sql" selected>SQL</option>
-                    </select>
                     <button style="display: none;" class="btn white chroma-btn1" id="convert">Highlight</button>
+                    <button id="formatter" class="btn white chroma-btn1 mr-5">JSON Formatter</button>
+                    <button id="print" class="btn white chroma-btn1 mr-5">Print</button>
                     <button id="recenter" class="chroma-btn1 chroma-btn1  mr-5">Recenter</button>
                     <button id="full-screen-mode" class="chroma-btn1 chroma-btn1 ">
                         <i class="fas fa-expand"></i>
@@ -93,9 +95,9 @@
             </div>
             <div class="flex-row flex-1 mt-10" style="height: 100%;"  id="reference-container">
                 <div id="left-block" class="flex-row flex-1 no-print dark-zone border-4px br-3">
-                    <textarea id="user-code" spellcheck="false" placeholder="Type your code here..." class="border br-3 w-100 p-10" wrap="off" style="resize:none; box-sizing: border-box;"></textarea>
+                    <textarea id="user-code" oninput="formatt(this.value)" spellcheck="false" placeholder="Type your code here..." class="border w-100 p-10" wrap="off" style="resize:none; box-sizing: border-box;"></textarea>
                 </div>
-                <div class="p-5 resizer" id="slider">
+                <div class="p-5 resizer no-print" id="slider">
                     <i class="fas fa-grip-lines-vertical"></i>
                 </div>
                 <div class="flex-row border-4px br-3 dark-zone" id="right-block">
@@ -155,5 +157,7 @@ ORDER BY CCBH DESC, H.HACKER_ID ASC;
     </pre>
     <script src="chroma/dist/chroma.js"></script>
     <script src="public/js/live-highlight.js"></script>
+    <script src="public/js/formatter.js"></script>
+
 </body>
 </html>

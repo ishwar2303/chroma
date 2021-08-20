@@ -321,7 +321,12 @@ solve()
                 <h2 class="">
                     Convert code entities before placing it in your project
                     <br/>
-                    <div class="mt-10"></div>
+                    <div class="mt-10"></div> 
+                    <label>
+                        <code class="chroma-inline">&</code>
+                        ->
+                        <code class="chroma-inline">&amp;amp;</code>
+                    </label>,
                     <label>
                         <code class="chroma-inline">&lt;</code>
                         ->
@@ -361,7 +366,7 @@ solve()
             a.target = '_blank'
             a.click()
         }
-
+        
         let prepareCodePopup = document.getElementById('prepare-code-popup')
         let getCode = document.getElementById('code-for-prepare')
         let prepareCode = document.getElementById('prepare-code')
@@ -383,7 +388,8 @@ solve()
             let code = getCode.value.trim()
             if(code == '')
                 return
-            let converted = code.replace(/\</g, '&lt;')
+            let converted = code.replace(/&/g, '&amp;')
+            converted = converted.replace(/\</g, '&lt;')
             converted = converted.replace(/\>/g, '&gt;')
             getCode.value = converted
             
@@ -422,8 +428,8 @@ solve()
                 Chroma.setOptions({capital: true})
             else Chroma.setOptions({capital: false})
         })
-        // document.addEventListener('contextmenu', event => event.preventDefault());
-        // window.addEventListener('selectstart', event => event.preventDefault())
+        document.addEventListener('contextmenu', event => event.preventDefault())
+        window.addEventListener('selectstart', event => event.preventDefault())
     </script>
 </body>
 </html>
