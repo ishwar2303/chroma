@@ -2,10 +2,6 @@
 .chroma{
     background: #1b1b1b;
     color: #bfbfbf;
-    /* background-image: url('../images/chroma-bg.jpg'); */
-    background-size: cover;
-    background-repeat: no-repeat;
-    border: 0.5px solid rgb(97 94 94 / 50%);
 }
 .chroma-head{
     background: #1b1b1b;
@@ -24,6 +20,10 @@
 }
 .chroma-line-no span{
     padding: 0px 4px;
+}
+.chroma-inline{
+    background: #1b1b1b;
+    color: #f63636;
 }
 /* Beautify */
 

@@ -16,6 +16,10 @@
     color: rgb(146 135 23);
 }
 
+.chroma-inline{
+    background: #4e0606;
+    color: #d8c029;
+}
 /* Beautify */
 .chroma-alpha{
     color : #ec8038;

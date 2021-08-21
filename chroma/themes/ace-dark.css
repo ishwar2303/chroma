@@ -8,6 +8,10 @@
     color: white;
 }
 
+.chroma-inline{
+    background: #002240;
+    color: #FFEE80;
+}
 /* Beautify */
 
 .chroma-alpha{

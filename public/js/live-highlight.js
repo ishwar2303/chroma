@@ -239,8 +239,10 @@ formatterBtn.addEventListener('click', () => {
     let code = textarea.value
     code = formatt(code)
     textarea.value = code
-    highlight(selectedLanguage())
-    formatterBtn.innerHTML = 'JSON Formatter'
+    setTimeout(() => {
+        highlight(selectedLanguage())
+        formatterBtn.innerHTML = 'JSON Formatter'
+    }, 1000)
 })
 
 /*
@@ -328,5 +330,5 @@ document.getElementById('print').addEventListener('click', print)
 
 
 // stop right click
-document.addEventListener('contextmenu', event => event.preventDefault())
+// document.addEventListener('contextmenu', event => event.preventDefault())
 

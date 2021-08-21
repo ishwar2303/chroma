@@ -47,7 +47,7 @@
                                         <option value="ace-dark">Ace Dark</option>
                                         <option value="chroma">Chroma</option>
                                         <option value="danger">Danger</option>
-                                        <option value="coffee">Coffee</option>
+                                        <option value="twilight">Twilight</option>
                                         <option value="dreamweaver">Dreamweaver</option>
                                         <option value="light">Light</option>
                                     </select>
@@ -124,7 +124,7 @@
                     <div>
                         <div class="exp-head">How does it work?</div>
                         <div class="exp-p">
-                            <div class="">Chroma analyze your code based on language you choose, It process regular expression on code and wrap matches in <code class="exp-code">&lt;span>&lt;/span></code> tag.</div>
+                            <div class="">Chroma analyze your code based on language you choose, It process regular expression on code and wrap matches in <code class="chroma-inline">&lt;span>&lt;/span></code> tag.</div>
                             <div>Corresponding css classes are attached and code is ready to serve.</div>
                         </div>
                     </div>
@@ -155,12 +155,12 @@ Chroma.setOptions(options)
                         <div class="exp-p">
                             <div>
 
-                                <code class="exp-code">pretty(code, language)</code> method takes two parameter<br/>
+                                <code class="chroma-inline">pretty(code, language)</code> method takes two parameter<br/>
                                 1. code to be highlighted<br/>
                                 2. language for which code needs to be highlighted
                                 <br/>
                                 <br/>
-                                <code class="exp-code">setOptions({})</code> method takes object with key value pairs available properties are<br/>
+                                <code class="chroma-inline">setOptions({})</code> method takes object with key value pairs available properties are<br/>
                                 <pre>1. theme   DefalutValue : dark</pre>
                                 <pre>2. bold    DefalutValue : false</pre>
                                 <pre>3. capital DefaultValue : false</pre>
@@ -186,39 +186,39 @@ Chroma.setOptions(options)
                         <div class="exp-p">
                             <h3>Required</h3>
                             <div class="ptb-5">
-                                <code class="exp-code">chroma="true"</code> Chroma need this attribute to target your code
+                                <code class="chroma-inline">chroma="true"</code> Chroma need this attribute to target your code
                             </div>
                             <div>
-                                <code class="exp-code">language="css"</code> Specifies language to apply related regular expressions
+                                <code class="chroma-inline">language="css"</code> Specifies language to apply related regular expressions
                             </div>
                             <div>
-                                If you want to highlight sql than you should change <code class="exp-code">language="css"</code > to <code class="exp-code">language="sql"</code>
+                                If you want to highlight sql than you should change <code class="chroma-inline">language="css"</code > to <code class="chroma-inline">language="sql"</code>
                             </div>
                             <h3 class="mt-10">Optional</h3>
                             <div>
-                                <code class="exp-code">linepad="true"</code> Shows line number 
+                                <code class="chroma-inline">linepad="true"</code> Shows line number 
                             </div>
                             <div>
-                                <code class="exp-code">preloader="3"</code> Loading animation before revealing code, value # seconds
+                                <code class="chroma-inline">preloader="3"</code> Loading animation before revealing code, value # seconds
                             </div>
                             <div>
-                                <code class="exp-code">header="true"</code> Header attached to code with heading and copy button
+                                <code class="chroma-inline">header="true"</code> Header attached to code with heading and copy button
                             </div>
                             <div>
-                                <code class="exp-code">copy="true"</code> Set Copy button
+                                <code class="chroma-inline">copy="true"</code> Set Copy button
                             </div>
                             <div>
-                                <code class="exp-code">heading="This is a heading"</code> Shows the value in header
+                                <code class="chroma-inline">heading="This is a heading"</code> Shows the value in header
                             </div>
                             <div>
-                                By default all options are applied to remove any option set value to <code class="exp-code">"false"</code>
+                                By default all options are applied to remove any option set value to <code class="chroma-inline">"false"</code>
                             </div>
                         </div>
                         
                         <div>
                             <div class="exp-head">Example</div>
                             <div class="exp-p">
-                                <div>This code is highlighted with <code class="exp-code">header="false"</code> <code class="exp-code">language="python"</code> <code class="exp-code">linepad="false"</code></div>
+                                <div>This code is highlighted with <code class="chroma-inline">header="false"</code> <code class="chroma-inline">language="python"</code> <code class="chroma-inline">linepad="false"</code></div>
                             </div>
                             <div chroma="true" language="python" header="false" preloader="false" linepad="fasle">
 def shrink(arr):
@@ -257,13 +257,13 @@ solve()
                         <div class="exp-p">
                             <div>Chroma comes with various themes select your favourite from the list</div>
                             <div>
-                                <code class="exp-code">ace-dark</code>
-                                <code class="exp-code">dark</code>
-                                <code class="exp-code">vampire</code>
-                                <code class="exp-code">coffee</code>
-                                <code class="exp-code">danger</code>
-                                <code class="exp-code">light</code>
-                                <code class="exp-code">dreamweaver</code>
+                                <code class="chroma-inline">ace-dark</code>
+                                <code class="chroma-inline">dark</code>
+                                <code class="chroma-inline">vampire</code>
+                                <code class="chroma-inline">twilight</code>
+                                <code class="chroma-inline">danger</code>
+                                <code class="chroma-inline">light</code>
+                                <code class="chroma-inline">dreamweaver</code>
                             </div>
                         </div>
                     </div>
@@ -273,15 +273,15 @@ solve()
                         <div class="exp-p">
                             <div>See if list can cater your needs</div>
                             <div>
-                                <code class="exp-code">HTML</code>
-                                <code class="exp-code">CSS</code>
-                                <code class="exp-code">JavaScript</code>
-                                <code class="exp-code">SQL</code>
-                                <code class="exp-code">C</code>
-                                <code class="exp-code">Python</code>
-                                <code class="exp-code">Java</code>
-                                <code class="exp-code">PHP</code>
-                                <code class="exp-code">JSON</code>
+                                <code class="chroma-inline">HTML</code>
+                                <code class="chroma-inline">CSS</code>
+                                <code class="chroma-inline">JavaScript</code>
+                                <code class="chroma-inline">SQL</code>
+                                <code class="chroma-inline">C</code>
+                                <code class="chroma-inline">Python</code>
+                                <code class="chroma-inline">Java</code>
+                                <code class="chroma-inline">PHP</code>
+                                <code class="chroma-inline">JSON</code>
                             </div>
                         </div>
                     </div>

@@ -2,9 +2,9 @@
 .chroma{
     background: #002240;
     border-radius: 3px;
-    color: white;
+    color: rgb(236, 236, 236);
     font-size: 15px;
-    border: 0.5px solid rgba(0,0,0,0.5);
+    border: none;
     margin: 10px 0px;
 }
 .chroma-flex-row{
@@ -15,7 +15,7 @@ div[chroma] {
     display : none;
 }
 .chroma-inline {
-    background: black;
+    /* background: black; */
     color: #b7b73a;
     padding: 5px;
     font-size: 14px;
@@ -34,11 +34,14 @@ div[chroma] {
     padding-top: 10px;
     padding: 10px;
     align-items: center;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 .chroma-copy{
     padding: 5px 10px;
     border-radius: 3px;
     border: none;
+    background: #c9c9c9;
 }
 .chroma-beautify{
     overflow: auto;
