@@ -328,5 +328,5 @@ document.getElementById('print').addEventListener('click', print)
 
 
 // stop right click
-// document.addEventListener('contextmenu', event => event.preventDefault())
+document.addEventListener('contextmenu', event => event.preventDefault())
 
