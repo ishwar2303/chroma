@@ -8,6 +8,11 @@
     color: white;
 }
 
+.chroma-inline{
+    background: #e0e0e0;
+    color: rgb(179, 10, 103);
+}
+
 /* Beauify */
 .chroma-alpha {
     color: rgb(9 9 236);

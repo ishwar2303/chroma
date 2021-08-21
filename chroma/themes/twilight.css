@@ -1,10 +1,11 @@
 .chroma{
-    background: #2f1300;
-    color: white;
+    background: #030822;
+    color: #d5d5d5;
 }
+
 .chroma-head{
-    background: #5c2a08;
-    color: white;
+    background: #030822;
+    color: #d5d5d5;
 }
 .chroma-beautify{
     padding: 0;
@@ -30,37 +31,37 @@
 }
 /* Beautify */
 .chroma-alpha{
-    color : #bb662d;
+    color : #f9934e;
 }
 /* string */
 .chroma-bravo{
-    color: #3c9a3c;
-    font-style: italic;
+    color: #3dcc3d;
 }
 /* comment */
 .chroma-charlie{
-    color : #6d6d6d;
+    color: #515a86;
+    font-style: italic;
 }
 .chroma-delta{
-    color : #7b7bad;
+    color : #9b9bf1;
 }
 .chroma-echo{
-    color : #3c7d82; 
+    color : #37c7d2; 
 }
 .chroma-lima{
-    color :#c15454;
+    color :#fd7777;
 }
 .chroma-oscar{
-    color : #8d4096;
+    color : #db6de8;
 }
 .chroma-romeo{
-    color : #bb2525;
+    color : #61c1ce;
 }
 .chroma-tango{
     color : ;
 }
 .chroma-victor{
-    color : #bdae4d;
+    color : #e0cf5f;
 }
 .chroma-zeus{
     color : gray;

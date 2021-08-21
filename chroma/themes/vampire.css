@@ -1,13 +1,16 @@
-
 .chroma{
-    background: #27272A;
+    background: #252525;
     color: white;
 }
 .chroma-head{
-    background: #242424;
+    background: #252525;
     color: white;
 }
 .chroma-line-no{
+    color: #BEF264;
+}
+.chroma-inline{
+    background: #252525;
     color: #BEF264;
 }
 /* Beautify */

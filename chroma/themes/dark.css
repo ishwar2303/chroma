@@ -10,6 +10,12 @@
 .chroma-line-no{
     color: #b7b73a;
 }
+
+.chroma-inline{
+    background: #080808;
+    color: #b7b73a;
+}
+
 /* Beautify */
 .chroma-alpha{
     color : #e9651b;
