@@ -1,0 +1,56 @@
+.chroma{
+    background: rgb(255 255 255);
+    color: rgb(0, 0, 0);
+    text-shadow: 0.2px 0.1px;
+}
+.chroma-head{
+    background: rgb(85 85 85);
+    color: white;
+}
+
+/* Beauify */
+.chroma-alpha {
+    color: rgb(9 9 236);
+}
+
+.chroma-bravo {
+    color: rgb(170, 85, 0)
+}
+
+/* for comment */
+.chroma-charlie{
+    color: rgb(7 126 7);   
+    font-style: italic;
+}
+
+.chroma-delta {
+    color: rgb(108, 71, 194);   
+}
+
+.chroma-echo {
+    color: #11664A;
+}
+
+.chroma-lima {
+    color: #2F2FFF;
+}
+
+.chroma-oscar {
+    color: #2F2FFF;
+}
+.chroma-romeo{
+    color: rgb(0, 0, 0);
+    
+}
+.chroma-tango{
+    color: #3300AA;
+    
+}
+.chroma-victor{
+    color : rgb(179 3 199);
+    
+}
+.chroma-zeus{
+    color : rgb(133 3 149);
+    
+}
