@@ -239,8 +239,10 @@ formatterBtn.addEventListener('click', () => {
     let code = textarea.value
     code = formatt(code)
     textarea.value = code
-    highlight(selectedLanguage())
-    formatterBtn.innerHTML = 'JSON Formatter'
+    setTimeout(() => {
+        highlight(selectedLanguage())
+        formatterBtn.innerHTML = 'JSON Formatter'
+    }, 1000)
 })
 
 /*
