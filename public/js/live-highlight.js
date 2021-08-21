@@ -232,13 +232,15 @@ capitalToggle.addEventListener('click', () => {
     else Chroma.setOptions({capital: false})
 })
 
-
-document.getElementById('formatter').addEventListener('click', () => {
+let formatterBtn = document.getElementById('formatter')
+formatterBtn.addEventListener('click', () => {
+    formatterBtn.innerHTML = 'Processing&nbsp; <i class="fas fa-sync fa-spin ml-10"></i>'
     let textarea = document.getElementById('user-code')
     let code = textarea.value
     code = formatt(code)
     textarea.value = code
     highlight(selectedLanguage())
+    formatterBtn.innerHTML = 'JSON Formatter'
 })
 
 /*
@@ -307,6 +309,9 @@ document.getElementById('recenter').addEventListener('click', () => {
 
 const print = () => {
     var rb = document.getElementById("right-block");
+    var lb = document.getElementById("left-block")
+    lb.style.display = 'none'
+    slider.style.display = 'none'
     let tw = rb.style.width;
     let th = rb.style.height;
     rb.style.height = '100%';
@@ -315,11 +320,13 @@ const print = () => {
     window.print();
     rb.style.height = th;
     rb.style.width = tw;
+    lb.style.display = 'block'
+    slider.style.display = 'flex'
 }
 
 document.getElementById('print').addEventListener('click', print)
 
 
-// stop right click and select
-document.addEventListener('contextmenu', event => event.preventDefault())
+// stop right click
+// document.addEventListener('contextmenu', event => event.preventDefault())
 

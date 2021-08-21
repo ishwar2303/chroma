@@ -1,3 +1,16 @@
+var strRegxMatch = []
+var reString = /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
+var reRegex = /(\/)((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)(\/)(?!\/)([igm]{0,3})/g
+
+const prepare = (code) => {
+    code = code.replace(/\n/g, '');
+    code = code.replace(/([\s]+(?=(\}|\])))/gm, '')
+    code = code.replace(/((?!=(\{|\[))[\s]+)/gm, '')
+    code = code.replace(/("")/g, '" "');
+    code = code.replace(/('')/g, "' '");
+    return code
+}
+
 const indent = (n) => {
     pad = '';
     let i = 0;
@@ -7,9 +20,7 @@ const indent = (n) => {
     return "\n" + pad;
 }
 
-var stringMatch = []
-var re = /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
-const getStringIndices = (code, offset) => {
+const getStringIndices = (code, re, offset) => {
     
     if(offset === void 0)
         offset = 0
@@ -19,7 +30,7 @@ const getStringIndices = (code, offset) => {
         return false
     let startPos = match.index + offset
     let endPos = startPos + match[0].length
-    stringMatch.push({
+    strRegxMatch.push({
         startPos,
         endPos
     })
@@ -30,21 +41,26 @@ const getStringIndices = (code, offset) => {
 }
 
 const formatt = (code) => {
-    stringMatch = []
+    strRegxMatch = []
     var stack = [];
     var output = '';
     let i;
-    code = code.replace(/\n/g, '');
-    let res = getStringIndices(code, 0)
+    code = prepare(code)
+    let res = getStringIndices(code, reString, 0)
     while(res) {
-        res = getStringIndices(res.remaining, res.offset)
+        res = getStringIndices(res.remaining, reString, res.offset)
     }
+    res = getStringIndices(code, reRegex, 0)
+    while(res) {
+        res = getStringIndices(res.remaining, reRegex, res.offset)
+    }
+
     for(i=0; i<code.length; i++) {
         stringBracket = false
 
         if(code[i] == '{' || code[i] == '}' || code[i] == '[' || code[i] == ']' || code[i] == ',') {
-            for(j=0; j<stringMatch.length; j++) {
-                if(i >= stringMatch[j].startPos && i< stringMatch[j].endPos) {
+            for(j=0; j<strRegxMatch.length; j++) {
+                if(i >= strRegxMatch[j].startPos && i< strRegxMatch[j].endPos) {
                     stringBracket = true;
                     break;
                 }
@@ -70,5 +86,7 @@ const formatt = (code) => {
         }
         else output += code[i];
     }
+    output = output.replace(/'\s'/g, "''");
+    output = output.replace(/"\s"/g, '""');
     return output;
 }
