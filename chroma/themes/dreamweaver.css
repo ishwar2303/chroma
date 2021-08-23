@@ -9,6 +9,7 @@
     color: white;
 }
 .chroma-line-no {
+    background: #e0e0e0;
     color: #353535;
 }
 .chroma-inline{

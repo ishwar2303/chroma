@@ -194,10 +194,9 @@ const chromaCopy = (btn, copyCode, message) => {
     document.execCommand('copy')
     body.removeChild(textarea)
     textarea.remove()
-    let bg = btn.style.background
     if(copyCode != ''){
-        btn.style.background = '#bc5cff'
-        btn.style.color=  'white'
+        btn.classList.remove('chroma-copy-btn1')
+        btn.classList.add('chroma-copy-btn2')
         btn.innerHTML = 'Code Copied'
     }
     else{
@@ -205,8 +204,8 @@ const chromaCopy = (btn, copyCode, message) => {
     }   
     btn.disabled = true
     setTimeout(() => {
-        btn.style.background = bg
-        btn.style.color = 'black'
+        btn.classList.add('chroma-copy-btn1')
+        btn.classList.remove('chroma-copy-btn2')
         btn.innerHTML = 'Copy'
         btn.disabled = false
 
@@ -247,7 +246,7 @@ export const preloader = () => {
 * @param boolean
 * @param integer
 */ 
-export const presentation = (code, prettyCode, lineset, linepad, header, headingValue, lang, copy, loaderValue) => {
+export const presentation = (code, prettyCode, lineset, linepad, header, headingValue, lang, copy, loaderValue, height) => {
     let delay = 2000
     if(!isNaN(loaderValue))
         delay = loaderValue*1000
@@ -256,33 +255,56 @@ export const presentation = (code, prettyCode, lineset, linepad, header, heading
     let main = document.createElement('div')
     main.className = 'chroma'
     main.style.fontFamily = 'monaco, courier, monospace'
+    
     let chromaHeader, heading, btn
+    
+    let result = document.createElement('div')
+    result.className = 'chroma-beautify'
+
+    btn = document.createElement('button')
+    btn.innerHTML = 'Copy'
+    btn.className = 'chroma-copy-btn1'
     if(header === 'true'){
         chromaHeader = document.createElement('div')
         chromaHeader.className = 'chroma-head chroma-sb'
         heading = document.createElement('div')
         heading.innerHTML = headingValue
-        btn = document.createElement('button')
-        if(copy === 'true'){
-            heading.style.marginRight = '10px'
-            btn.innerHTML = 'Copy'
-            btn.className = 'chroma-copy'
-            btn.addEventListener('click', () => {
-                chromaCopy(btn, resetEntities(code), 'Code copied successfully')
-            })
-        }
+        heading.style.marginRight = '10px'
         chromaHeader.appendChild(heading)
         if(copy === 'true')
             chromaHeader.appendChild(btn)
     }
-    let result = document.createElement('div')
-    result.className = 'chroma-beautify'
+    else {
+        if(copy === 'true') {
+            let div = document.createElement('div')
+            div.className = 'chroma-copy-hover-container'
+            div.appendChild(btn)
+            btn.classList.add("chroma-copy-hover")
+            result.appendChild(div)
+            result.addEventListener('mouseover', () => {
+                btn.style.display = 'flex'
+            })
+            result.addEventListener('mouseout', () => {
+                btn.style.display = 'none'
+            })
+        }
+    }
+    
+    if(copy === 'true'){
+        btn.addEventListener('click', () => {
+            chromaCopy(btn, resetEntities(code), 'Code copied successfully')
+        })
+    }
+    if(height != 'false')
+        result.style.maxHeight = height
     header ? result.className += ' chroma-no-header' : ''
     let sub = document.createElement('div')
     sub.className = 'chroma-flex-row'
 
-    if(linepad === 'true')
+    if(linepad === 'true') {
         sub.appendChild(lineset)
+        result.style.paddingLeft = '0px';
+    }
     let codeBlock = document.createElement('div')
     codeBlock.innerHTML = prettyCode
     if(loaderValue != 'false'){
@@ -316,7 +338,7 @@ export const presentation = (code, prettyCode, lineset, linepad, header, heading
 * @param string preloader=""
 * @param html dob object
 * */
-export const convert = (code, lang, header, heading, copy, loader, linepad) => {
+export const convert = (code, lang, header, heading, copy, loader, linepad, height) => {
     code = code.trim()
     // highlighted code
     let prettyCode = ChromaLocal.pretty(code, lang)
@@ -333,7 +355,7 @@ export const convert = (code, lang, header, heading, copy, loader, linepad) => {
     let lineSet = prepareCodeLines(separatecodeLines(code).length)
 
     // final html output
-    let result = presentation(code, prettyCode, lineSet, linepad, header, heading, lang, copy, loader)
+    let result = presentation(code, prettyCode, lineSet, linepad, header, heading, lang, copy, loader, height)
 
     return result
 }
@@ -424,9 +446,5 @@ export const ChromaLocal = {
     setOptions,
     cacheOptions
 }
-// chroma presentation css
-// if(!chromaCss)
-//     addUtilityCss()
 
-// updateTheme('dark')
 // Chroma = ChromaLocal

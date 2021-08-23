@@ -11,7 +11,7 @@ a{
     text-decoration: none;
 }
 ul{
-    list-style: none;
+    /* list-style: none; */
 }
 input:focus, textarea:focus, select:focus, button:focus{
     outline: none;
@@ -303,7 +303,6 @@ input:focus, textarea:focus{
     cursor: pointer;
 }
 
-
 .Chroma div{
     font-size: 70px;
     color: #021c32;
@@ -316,8 +315,14 @@ input:focus, textarea:focus{
     font-weight: bolder;
     color: #53b0ff;
 }
-.exp-p div{
+.exp-p div {
     list-style: decimal;
+    font-size: 18px;
+    padding: 3px 0px;
+    line-height: 1.6;
+}
+.exp-p ul{
+    margin-left: 10px;
     font-size: 18px;
     padding: 3px 0px;
     line-height: 1.6;

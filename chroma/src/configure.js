@@ -6,7 +6,6 @@ const fetchTargetElements = () => {
     let blocks = document.querySelectorAll('[chroma="true"]')
     blocks.forEach(block => {
         let code = block.innerHTML
-        let height = block.offsetHeight
         // get all attributes of chroma element
         let attributes = block.attributes
         let header = attributes.header != undefined ? attributes.header.nodeValue : 'true'
@@ -15,11 +14,12 @@ const fetchTargetElements = () => {
         let lang = attributes.language != undefined ? attributes.language.nodeValue : false
         let loader = attributes.preloader != undefined ? attributes.preloader.nodeValue : '2'
         let linepad = attributes.linepad != undefined ? attributes.linepad.nodeValue : 'true'
+        let height = attributes.height != undefined ? attributes.height.nodeValue : 'false'
         lang = lang.toLowerCase()
 
         if(lang){
             // send code for conversion
-            let result = convert(code, lang, header, heading, copy, loader, linepad)
+            let result = convert(code, lang, header, heading, copy, loader, linepad, height)
             block.innerHTML = ''
             block.appendChild(result)
             block.style.display = 'block'

@@ -1,7 +1,7 @@
 
 .chroma{
     background: #002240;
-    border-radius: 3px;
+    border-radius: 12px;
     color: rgb(236, 236, 236);
     font-size: 15px;
     border: none;
@@ -17,10 +17,11 @@ div[chroma] {
 .chroma-inline {
     /* background: black; */
     color: #b7b73a;
-    padding: 5px;
+    padding: 5px 10px;
     font-size: 14px;
-    border-radius: 3px;
+    border-radius: 5px;
     display: inline;
+    line-height: 2;
 }
 .chroma-flex-col{
     display: flex;
@@ -34,36 +35,62 @@ div[chroma] {
     padding-top: 10px;
     padding: 10px;
     align-items: center;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
-.chroma-copy{
-    padding: 5px 10px;
+.chroma-head button {
+    align-self: flex-start;
+    padding: 6px 10px;
     border-radius: 3px;
-    border: none;
-    background: #c9c9c9;
+}
+.chroma-copy-btn2 {
+    background: #8b1948;
+    border: 2px solid #f13784;
+    color: #b3b3b3;
+}
+.chroma-copy-btn1 {
+    background: #1b73be;
+    color: #cececf;
+    border: 2px solid #53b0ff;
+}
+.chroma-copy-hover-container {
+    display: flex;
+    justify-content: flex-end;
+    height: 0;
+}
+.chroma-copy-hover {
+    padding: 10px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    z-index: 1; 
+    margin-top: -3px;
 }
 .chroma-beautify{
     overflow: auto;
-    max-height: 500px;
-    padding: 10px;
+    padding: 15px 10px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
+    position: relative;
 }
 .chroma-no-header{
-    border-radius: 3px;
+    border-radius: 7px;
 }
 .chroma-sb{
     display: flex;
     justify-content: space-between;
 }
 .chroma pre{
-    padding-left: 10px;
     padding-right: 10px;
 }
 .chroma-line-no{
     display: flex;
     flex-direction: column;
+    position: sticky;
+    left: 0;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .chroma-line-no span{
     display: flex;

@@ -1,5 +1,5 @@
 .chroma{
-    background: rgb(241 241 241);
+    background: rgb(225 245 255);
     color: rgb(0 0 0);
     text-shadow: 0.2px 0.1px;
 }
@@ -7,9 +7,12 @@
     background: rgb(85 85 85);
     color: white;
 }
-
+.chroma-line-no{
+    background: rgb(225 245 255);
+    color: rgb(179, 10, 103);
+}
 .chroma-inline{
-    background: #e0e0e0;
+    background: rgb(225 245 255);
     color: rgb(179, 10, 103);
 }
 

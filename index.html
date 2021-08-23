@@ -5,19 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chroma</title>
-    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3QD//wAAAAAAAAAAAAAAAAAAAAAAAAAA/xEA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT/AP8AAAAAAAAAAAAAAADdAP//AAAAAAAAAAAAAAAAAAAAAP8RAP8A6v8HAAAAAAAAAAAAAAAAAAAAAAT/AP8AAAAAAAAAAAAAAAAAAAAAAOr/B90A//8AAAAAAOr/BwDq/wf/EQD/AOr/BwDq/wcAAAAAAOr/BwT/AP8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAA6v8H3QD//wDq/wcA6v8H/xEA/wDq/wcA6v8HAOr/BwT/AP8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwAAAAAE/wD//xEA//8RAP/dAP//3QD//90A//8AAAAAAOr/BwAAAAAAAAAAAAAAAAAAAAAAAAAAAOr/BwDq/wcA6v//BP8A/wT/AP//EQD//xEA/90A///dAP//3QD//wDq/wcAAAAAAAAAAAAAAAAAAAAAAAAAAADq/wcA6v8HAOr//wDq//8E/wD/BP8A//8RAP//EQD/3QD//90A//8A6v8HAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwBm//8A6v//AOr//wT/AP8E/wD//xEA//8RAP/dAP//AOr/BwDq/wcA6v8HAAAAAABm//8AZv//AGb//wBm//8AZv//AGb//wDq//8A6v//BP8A/wT/AP//EQD//xEA/wDq//8A6v//AOr//wDq//8AAAAAAAAAAADq/wcA6v8HAAD//wBm//8AZv//AOr//wDq//8E/wD/BP8A//8RAP8A6v8HAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HAOr/BwAA//8AAP//AGb//wBm//8A6v//AOr//wT/AP8E/wD/AOr/BwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADq/wcAAAAAAAD//wAA//8AZv//AGb//wDq//8A6v//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HBP8A/wDq/wcA6v8HAAD//wDq/wcA6v8HAOr/BwBm//8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6v8HBP8A/wAAAAAA6v8HAOr/BwAA//8A6v8HAOr/BwAAAAAAAAAAAGb//wAAAAAAAAAAAAAAAAAAAAAAAAAABP8A/wAAAAAAAAAAAAAAAAAAAAAAAP//AOr/BwAAAAAAAAAAAAAAAADq/wcAZv//AAAAAAAAAAAAAAAABP8A/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABm//8AAAAAvv0AAN77AADu9wAA9u8AAPgfAADwDwAA8A8AAPAPAAAAAAAA8A8AAPAPAAD4HwAA9u8AAO73AADe+wAAvv0AAA==" rel="icon" type="image/x-icon" />  
     <link rel="stylesheet" href="public/css/main.css">
     <script src="https://kit.fontawesome.com/196c90f518.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="chroma/css/chroma.css">
     <link rel="stylesheet" href="chroma/themes/dark.css">
-    <script>
-        const changeTheme = () => {
-            let theme = document.getElementById('select-theme').value
-            console.log(theme)
-            Chroma.setOptions({theme})
-        }
-    </script>
 </head>
 <body>
     <div class="wrapper p-10-20">
@@ -42,12 +34,12 @@
                             <div class="flex-row">
                                 <div class="toggle-container">
                                     <select id="select-theme" class="mr-10">
-                                        <option value="dark" selected>Dark</option>
+                                        <option value="dark">Dark</option>
                                         <option value="vampire">Vampire</option>
                                         <option value="ace-dark">Ace Dark</option>
                                         <option value="chroma">Chroma</option>
                                         <option value="danger">Danger</option>
-                                        <option value="twilight">Twilight</option>
+                                        <option value="twilight" selected>Twilight</option>
                                         <option value="dreamweaver">Dreamweaver</option>
                                         <option value="light">Light</option>
                                         <option value="bald">Bald</option>
@@ -134,7 +126,7 @@
                     <div class="exp-head"></div>
 
                     <div>
-                        <div class="exp-head">How to use it in your script</div>
+                        <div class="exp-head">How to use it in your script?</div>
                         <div></div>
                         <div chroma="true" language="javascript" preloader="false" copy="true" heading="JavaScript">
 /*
@@ -156,16 +148,12 @@ Chroma.setOptions(options)
                         </div>
                         <div class="exp-p">
                             <div>
-
                                 <code class="chroma-inline">pretty(code, language)</code> method takes two parameter<br/>
                                 1. code to be highlighted<br/>
                                 2. language for which code needs to be highlighted
                                 <br/>
                                 <br/>
                                 <code class="chroma-inline">setOptions({})</code> method takes object with key value pairs available properties are<br/>
-                                <pre>1. theme   DefalutValue : dark</pre>
-                                <pre>2. bold    DefalutValue : false</pre>
-                                <pre>3. capital DefaultValue : false</pre>
                             </div>
                         </div>
                     </div>
@@ -174,7 +162,7 @@ Chroma.setOptions(options)
                     </div>
                     <div>
                         <h3 class="exp-head">For Inline Code</h3>
-                        <div chroma="true" header="false" language="html" linepad="false">
+                        <div chroma="true" language="html" header="false" linepad="false">
 &lt;code class="chroma-inline"&gt;beautiful&lt;/code&gt;
                         </div>
                         <div class="exp-p">
@@ -187,34 +175,42 @@ Chroma.setOptions(options)
 
                         <div class="exp-p">
                             <h3>Required</h3>
-                            <div class="ptb-5">
-                                <code class="chroma-inline">chroma="true"</code> Chroma need this attribute to target your code
-                            </div>
-                            <div>
-                                <code class="chroma-inline">language="css"</code> Specifies language to apply related regular expressions
-                            </div>
-                            <div>
-                                If you want to highlight sql than you should change <code class="chroma-inline">language="css"</code > to <code class="chroma-inline">language="sql"</code>
-                            </div>
+                            <ul>
+                                <li class="ptb-5">
+                                    <code class="chroma-inline">chroma="true"</code> Chroma need this attribute to target your code
+                                </li>
+                                <li>
+                                    <code class="chroma-inline">language="css"</code> Specifies language to apply related regular expressions
+                                </li>
+                                <li>
+                                    If you want to highlight sql than you should change <code class="chroma-inline">language="css"</code > to <code class="chroma-inline">language="sql"</code>
+                                </li>
+                            </ul>
                             <h3 class="mt-10">Optional</h3>
-                            <div>
-                                <code class="chroma-inline">linepad="true"</code> Shows line number 
-                            </div>
-                            <div>
-                                <code class="chroma-inline">preloader="3"</code> Loading animation before revealing code, value # seconds
-                            </div>
-                            <div>
-                                <code class="chroma-inline">header="true"</code> Header attached to code with heading and copy button
-                            </div>
-                            <div>
-                                <code class="chroma-inline">copy="true"</code> Set Copy button
-                            </div>
-                            <div>
-                                <code class="chroma-inline">heading="This is a heading"</code> Shows the value in header
-                            </div>
-                            <div>
-                                By default all options are applied to remove any option set value to <code class="chroma-inline">"false"</code>
-                            </div>
+                            <ul>
+                                <li>
+                                    Use <code class="chroma-inline">linepad="true"</code> to Show line number 
+                                </li>
+                                <li>
+                                    For loading animation set <code class="chroma-inline">preloader="3"</code> value is in number of seconds
+                                </li>
+                                <li>
+                                    To set header use <code class="chroma-inline">header="true"</code>
+                                </li>
+                                <li>
+                                    Set copy button to header <code class="chroma-inline">copy="true"</code> 
+                                </li>
+                                <li>
+                                    If code is very large use <code class="chroma-inline">height="300px"</code> doing so will set the max height of code block to <code class="chroma-inline">300px</code> and scroll is set<br/>
+                                    Height value can be according to your preference don't forget to write <code class="chroma-inline">px</code> with number
+                                </li>
+                                <li>
+                                    To give heading in the header use <code class="chroma-inline">heading="This is a heading"</code>
+                                </li>
+                                <li>
+                                    By default all options are applied to remove any option set value to <code class="chroma-inline">"false"</code>
+                                </li>
+                            </ul> 
                         </div>
                         
                         <div>
@@ -222,7 +218,7 @@ Chroma.setOptions(options)
                             <div class="exp-p">
                                 <div>This code is highlighted with <code class="chroma-inline">header="false"</code> <code class="chroma-inline">language="python"</code> <code class="chroma-inline">linepad="false"</code></div>
                             </div>
-                            <div chroma="true" language="python" header="false" preloader="false" linepad="fasle">
+                            <div chroma="true" language="python" header="false" linepad="fasle">
 def shrink(arr):
     update = []
     while True:
@@ -361,7 +357,6 @@ solve()
         </div>
     </div>
     <div class="overlay"></div>
-
     
     <script>
         openLiveHighlight = () => {
@@ -415,10 +410,16 @@ solve()
         })
     </script>
     <script src="chroma/dist/chroma.js"></script>
+    
     <script>
+        const changeTheme = () => {
+            let theme = document.getElementById('select-theme').value
+            console.log(theme)
+            Chroma.setOptions({theme})
+        }
         document.getElementById('select-theme').addEventListener('change', changeTheme)
 
-        // Chroma.setOptions({theme : 'dark'})
+        Chroma.setOptions({theme : 'twilight'})
 
         let boldToggle = document.getElementById('bold-toggle')
         let capitalToggle = document.getElementById('capital-toggle')
@@ -432,7 +433,7 @@ solve()
                 Chroma.setOptions({capital: true})
             else Chroma.setOptions({capital: false})
         })
-        document.addEventListener('contextmenu', event => event.preventDefault())
+        // document.addEventListener('contextmenu', event => event.preventDefault())
         window.addEventListener('selectstart', event => event.preventDefault())
     </script>
 </body>

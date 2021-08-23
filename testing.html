@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+    <link rel="stylesheet" href="chroma/css/chroma.css">
+    <link rel="stylesheet" href="chroma/themes/twilight.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div chroma="true" language="c" preloader="0" header="false">
+#include &lt;bits/stdc++.h&gt;
+
+/*
+namespace is used to stop naming conflict
+it defines the score where variables, functions, classes are declared
+it removes ambiguity when different task occur with same name
+*/
+using namespace std;
+
+namespace printSomething {
+	void print(string str) {
+		cout &lt;&lt; str;
+	}
+
+}
+
+int main() {
+	printSomething::print("Hello World!");
+	return 0;
+}
+        </div>
+    </div>
+
+    
+    <div class="wrapper">
+        <div chroma="true" language="c" preloader="0" header="false" copy="true">
+#include &lt;bits/stdc++.h&gt;
+
+/*
+namespace is used to stop naming conflict
+it defines the score where variables, functions, classes are declared
+it removes ambiguity when different task occur with same name
+*/
+        </div>
+    </div>
+    <script src="chroma/dist/chroma.js"></script>
+</body>
+</html>

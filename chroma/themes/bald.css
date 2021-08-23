@@ -1,25 +1,36 @@
 .chroma{
-    background: rgb(255 255 255);
+    background: rgb(255 229 204);
     color: rgb(0, 0, 0);
-    text-shadow: 0.2px 0.1px;
+    text-shadow: 0.2px 0.2px;
 }
 .chroma-head{
-    background: rgb(85 85 85);
+    background: rgb(170 97 24);
     color: white;
 }
-
+.chroma-line-no {
+    background: rgb(255 229 204);
+    color: rgb(170, 85, 0)
+}
+.chroma-inline{
+    color: rgb(170, 85, 0)
+}
 /* Beauify */
 .chroma-alpha {
     color: rgb(9 9 236);
+    color: rgb(0, 0, 0);
 }
 
+.chroma-inline {
+    background: rgb(170, 85, 0);
+    color: white;
+}
 .chroma-bravo {
     color: rgb(170, 85, 0)
 }
 
 /* for comment */
 .chroma-charlie{
-    color: rgb(7 126 7);   
+    color: rgb(56 154 56);   
     font-style: italic;
 }
 

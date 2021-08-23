@@ -1,5 +1,5 @@
 .chroma{
-    background: linear-gradient(45deg, black, rgb(120 0 0));
+    background: rgb(72 7 7);
     color: white;
 }
 .chroma-head{
@@ -7,7 +7,10 @@
     color: white;
 }
 .chroma-beautify{
-    background: linear-gradient(45deg, black, rgb(120 0 0));
+    background: rgb(72 7 7);
+}
+.chroma-line-no {
+    background: rgb(72 7 7);
 }
 .chroma-line-no span:nth-child(odd){
     color: rgb(159 187 30);
@@ -17,7 +20,7 @@
 }
 
 .chroma-inline{
-    background: #4e0606;
+    background: rgb(72 7 7);
     color: #d8c029;
 }
 /* Beautify */

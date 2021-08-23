@@ -7,27 +7,22 @@
     background: #030822;
     color: #d5d5d5;
 }
-.chroma-beautify{
-    padding: 0;
-}
 .chroma-copy{
     padding: 5px 10px;
     border-radius: 3px;
     border: none;
 }
-.chroma pre{
-    padding: 3px 10px;
-}
 .chroma-line-no{
     border-radius: 0;
     border-bottom-left-radius: 3px;
-    padding: 3px 8px;
+    background: #030822;
+}
+.chroma-inline {
+    background: #030822;
+    color: #e27f3b;
 }
 .chroma-line-no span{
     color: #e27f3b;
-}
-.chroma-beautify {
-    padding: 10px;
 }
 /* Beautify */
 .chroma-alpha{
