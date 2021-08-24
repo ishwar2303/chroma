@@ -30,7 +30,7 @@ let kit = {
         },
         {
             class: 'doctype.chroma-oscar',
-            pattern: /(?<=&lt;)(!DOCTYPE)(?=\s+)/g
+            pattern: /(?<=&lt;)(!DOCTYPE)(?=\s+)/ig
         },
         {
             class: 'doctype.name.chroma-alpha',

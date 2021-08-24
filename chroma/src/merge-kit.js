@@ -6,6 +6,7 @@ import json_kit from './language/json'
 import php_kit from './language/php'
 import sql_kit from './language/sql'
 import python_kit from './language/python'
+import java_kit from './language/java'
 let languages = {
     c : c_kit,
     css : css_kit,
@@ -14,7 +15,8 @@ let languages = {
     json : json_kit,
     php : php_kit,
     sql : sql_kit,
-    python : python_kit
+    python : python_kit,
+    java : java_kit
 }
 
 export default languages

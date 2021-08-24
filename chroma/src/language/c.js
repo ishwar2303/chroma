@@ -32,7 +32,7 @@ let kit = {
         },
         {
             class: 'keyword.declaration.chroma-delta',
-            pattern: /\b(void|int|float|double|char|long|short|signed|unsigned|class|this)\b/g
+            pattern: /\b(void|int|float|double|char|long|short|signed|unsigned|class|template|this)\b/g
         },
         {
             class: 'keyword.control.chroma-delta',

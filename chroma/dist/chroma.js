@@ -76,7 +76,7 @@ var Chroma;
 /* unused harmony export beautify */
 /* unused harmony export selectedTheme */
 /* unused harmony export cacheOptions */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__merge_kit__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__merge_kit__ = __webpack_require__(11);
 /* Import all supported languages */
 
 
@@ -647,7 +647,7 @@ let kit = {
         },
         {
             class: 'keyword.declaration.chroma-delta',
-            pattern: /\b(void|int|float|double|char|long|short|signed|unsigned|class|this)\b/g
+            pattern: /\b(void|int|float|double|char|long|short|signed|unsigned|class|template|this)\b/g
         },
         {
             class: 'keyword.control.chroma-delta',
@@ -788,7 +788,7 @@ let kit = {
         },
         {
             class: 'doctype.chroma-oscar',
-            pattern: /(?<=&lt;)(!DOCTYPE)(?=\s+)/g
+            pattern: /(?<=&lt;)(!DOCTYPE)(?=\s+)/ig
         },
         {
             class: 'doctype.name.chroma-alpha',
@@ -818,6 +818,83 @@ module.exports = kit
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+let kit = {
+    lang : 'java',
+    conversion : [
+        {
+            class: 'keyword.operator.chroma-romeo',
+            pattern: /\+|\!|\-|&(gt|lt|amp);|\||\*|=/g
+        },
+        {
+            class: 'constant.numeric.chroma-echo',
+            pattern: /\b\d+\b/g
+        },
+        {
+            class : 'comment.chroma-charlie',
+            pattern : /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
+        },
+        {
+            class : 'keyword.conditional.chroma-lima',
+            pattern: /\b(if|else|for|do|while)\b/g
+        },
+        {
+            class : 'string.chroma-bravo',
+            pattern : /((?<![\\])['"])((?:.(?!(?<![\\])\1))*.?)\1/g
+        },
+        {
+            class : 'entitiy.class.function.chroma-victor',
+            pattern : /\b(?<=(\w|\*)+)(\s|\n)+((\w+)(?= ?\())/g
+        },
+        {
+            class : 'function-call.chroma-delta',
+            pattern : /[\w\d_]+(?=\s*\()/g
+        },
+        {
+          class: "constant.chroma-echo",
+          pattern: /\b(false|null|true|[A-Z_]+)\b/g
+        },
+        {
+          class: 'keyword.chroma-echo',
+          pattern: /(import|package)\s(.+)/g
+        },
+        {
+          class: "keyword.chroma-delta",
+          pattern: /\b(abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|try|void|volatile|while)\b/g
+        },
+        {
+          class: "char.chroma-victor",
+          pattern: /(')(.|\\.|\\u[\dA-Fa-f]{4})\1/g
+        },
+        {
+          class: "integer.chroma-echo",
+          pattern: /\b(0x[\da-f]+|\d+)L?\b/g
+        },
+        {
+          class: "support.annotation.chroma-romeo",
+          pattern: /@\w+/g
+        },
+        {
+          class: 'entity.function.chroma-delta',
+          pattern: /([^@\.\s]+)\(/g
+        },
+        {
+          class: "entity.class.chroma-zeus",
+          pattern: /\b([A-Z]\w*)\b/g
+        },
+        {
+          class: "operator.chroma-oscar",
+          pattern: /(\+{1,2}|-{1,2}|~|!|\*|\/|%|(?:&lt;){1,2}|(?:&gt;){1,3}|instanceof|(?:&amp;){1,2}|\^|\|{1,2}|\?|:|(?:=|!|\+|-|\*|\/|%|\^|\||(?:&lt;){1,2}|(?:&gt;){1,3})?=)/g
+        }
+    ]
+    
+}
+
+module.exports = kit
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports) {
 
 let kit = {
@@ -942,7 +1019,7 @@ let kit = {
 module.exports = kit
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 let kit = {
@@ -978,7 +1055,7 @@ let kit = {
 module.exports = kit
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1073,7 +1150,7 @@ let kit = {
 /* harmony default export */ __webpack_exports__["a"] = (kit);
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 
@@ -1155,7 +1232,7 @@ let kit = {
 module.exports = kit
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 let kit = {
@@ -1192,7 +1269,7 @@ let kit = {
 module.exports = kit
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1202,15 +1279,18 @@ module.exports = kit
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__language_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__language_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_html__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__language_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__language_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_javascript__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_javascript__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__language_javascript___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__language_javascript__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_json__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_json__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__language_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__language_json__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__language_php__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__language_sql__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__language_php__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__language_sql__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__language_sql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__language_sql__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__language_python__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__language_python__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__language_python___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__language_python__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__language_java__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__language_java___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__language_java__);
+
 
 
 
@@ -1227,7 +1307,8 @@ let languages = {
     json : __WEBPACK_IMPORTED_MODULE_4__language_json___default.a,
     php : __WEBPACK_IMPORTED_MODULE_5__language_php__["a" /* default */],
     sql : __WEBPACK_IMPORTED_MODULE_6__language_sql___default.a,
-    python : __WEBPACK_IMPORTED_MODULE_7__language_python___default.a
+    python : __WEBPACK_IMPORTED_MODULE_7__language_python___default.a,
+    java : __WEBPACK_IMPORTED_MODULE_8__language_java___default.a
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (languages);

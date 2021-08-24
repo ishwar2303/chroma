@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chroma</title>
+    <link rel="icon" href="favicon.ico" sizes="16x16" type="image/png">
     <link rel="stylesheet" href="public/css/main.css">
     <script src="https://kit.fontawesome.com/196c90f518.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -17,7 +18,7 @@
             <div class="flex-col flex-1 w-100" style="max-width: 850px;">
                 <div class="flex-col flex-1" >
                     <h1 class="Chroma">
-                        <div>
+                        <div style="text-shadow: 2.5px 3.5px;">
                             <span style="color: rgb(46 209 249);">C</span>
                             <span style="color: #ffad1a;">h</span>
                             <span style="color: rgb(56 236 56);">r</span>
@@ -43,7 +44,6 @@
                                         <option value="dreamweaver">Dreamweaver</option>
                                         <option value="light">Light</option>
                                         <option value="bald">Bald</option>
-
                                     </select>
                                     <span>Theme</span>
                                 </div>
@@ -173,8 +173,8 @@ Chroma.setOptions(options)
                     <div >
                         <h3 class="exp-head mb-10">Understanding Chroma attributes</h3>
 
-                        <div class="exp-p">
-                            <h3>Required</h3>
+                        <div class="exp-p border-pad-radius">
+                            <h3 class="heading-underline">Required</h3>
                             <ul>
                                 <li class="ptb-5">
                                     <code class="chroma-inline">chroma="true"</code> Chroma need this attribute to target your code
@@ -186,7 +186,7 @@ Chroma.setOptions(options)
                                     If you want to highlight sql than you should change <code class="chroma-inline">language="css"</code > to <code class="chroma-inline">language="sql"</code>
                                 </li>
                             </ul>
-                            <h3 class="mt-10">Optional</h3>
+                            <h3 class="mt-10 heading-underline">Optional</h3>
                             <ul>
                                 <li>
                                     Use <code class="chroma-inline">linepad="true"</code> to Show line number 

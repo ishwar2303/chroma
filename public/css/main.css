@@ -491,7 +491,16 @@ input:focus, textarea:focus{
     background: #6918a3;
     transition: 600ms;
 }
-
+.border-pad-radius {
+    border: 1px solid rgb(251 135 58);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 7px 0px rgb(251 135 58);
+}
+.heading-underline {
+    border-bottom: 1px solid rgb(251 135 58);
+    margin-bottom: 12px;
+}
 .prepare-code {
     position: absolute;
     top: 17%;
