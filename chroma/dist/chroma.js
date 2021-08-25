@@ -568,6 +568,7 @@ const ChromaLocal = {
 
 Chroma = ChromaLocal
 
+
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -879,7 +880,7 @@ let kit = {
           pattern: /([^@\.\s]+)\(/g
         },
         {
-          class: "entity.class.chroma-zeus",
+          class: "entity.class.chroma-delta",
           pattern: /\b([A-Z]\w*)\b/g
         },
         {

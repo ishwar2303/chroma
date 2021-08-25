@@ -58,7 +58,7 @@ let kit = {
           pattern: /([^@\.\s]+)\(/g
         },
         {
-          class: "entity.class.chroma-zeus",
+          class: "entity.class.chroma-delta",
           pattern: /\b([A-Z]\w*)\b/g
         },
         {
