@@ -72,7 +72,7 @@ const formatt = (code) => {
                 if(code[i] == '{' || code[i] == '[') {
                     stack.push(code[i]); 
                 }
-                else if((stack[stack.length-1] == '{' && code[i] == '}') && (stack[stack.length-1] == '[' && code[i] == ']')) {
+                else if((stack[stack.length-1] == '{' && code[i] == '}') || (stack[stack.length-1] == '[' && code[i] == ']')) {
                     stack.pop();
                 }
                 else if((stack[stack.length-1] == '{' && code[i] != '}') || (stack[stack.length-1] == '[' && code[i] != ']')){ // unblanced parenthesis
