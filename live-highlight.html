@@ -163,5 +163,19 @@ ORDER BY CCBH DESC, H.HACKER_ID ASC;
     <script src="public/js/live-highlight.js"></script>
     <script src="public/js/formatter.js"></script>
 
+
+    <script>
+        let userCode = document.getElementById('user-code')
+        let outputCode   = document.getElementById('output')
+        const synchronizeScroll = (scrollHeight) => {
+            console.log(scrollHeight)
+            outputCode.scrollTop = scrollHeight
+            userCode.scrollTop = scrollHeight
+        }
+
+        userCode.addEventListener('scroll', () => {synchronizeScroll(userCode.scrollTop)})
+        outputCode.addEventListener('scroll', () => { synchronizeScroll(outputCode.scrollTop)})
+    </script>
+
 </body>
 </html>
