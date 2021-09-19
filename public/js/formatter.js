@@ -75,7 +75,7 @@ const formatt = (code) => {
                 else if((stack[stack.length-1] == '{' && code[i] == '}') || (stack[stack.length-1] == '[' && code[i] == ']')) {
                     stack.pop();
                 }
-                else if((stack[stack.length-1] != '{' && code[i] == '}') || (stack[stack.length-1] != '[' && code[i] == ']')){ // unblanced parenthesis
+                else if((stack[stack.length-1] != '{' && code[i] == '}') || (stack[stack.length-1] != '[' && code[i] == ']') || (stack.length == 0 && (code[i] == '}' || code[i] == ']'))){ // unblanced parenthesis
                     alert('Unbalanced parenthesis');
                     return code;
                 }
