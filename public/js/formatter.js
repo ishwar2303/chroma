@@ -75,7 +75,7 @@ const formatt = (code) => {
                 else if((stack[stack.length-1] == '{' && code[i] == '}') && (stack[stack.length-1] == '[' && code[i] == ']')) {
                     stack.pop();
                 }
-                else { // unblanced parenthesis
+                else if((stack[stack.length-1] == '{' && code[i] != '}') && (stack[stack.length-1] == '[' && code[i] != ']')){ // unblanced parenthesis
                     alert('Unbalanced parenthesis');
                     return code;
                 }
