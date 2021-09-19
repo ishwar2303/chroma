@@ -41,7 +41,8 @@ const getStringIndices = (code, re, offset) => {
 }
 
 const formatt = (code) => {
-    strRegxMatch = []
+    var rawCode = code;
+    strRegxMatch = [];
     var stack = [];
     var output = '';
     let i;
@@ -77,7 +78,7 @@ const formatt = (code) => {
                 }
                 else if((stack[stack.length-1] != '{' && code[i] == '}') || (stack[stack.length-1] != '[' && code[i] == ']') || (stack.length == 0 && (code[i] == '}' || code[i] == ']'))){ // unblanced parenthesis
                     alert('Unbalanced parenthesis');
-                    return code;
+                    return rawCode;
                 }
                 
                 if(code[i] == '{' || code[i] == '[' || code[i] == ',')
