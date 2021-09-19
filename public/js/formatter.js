@@ -77,7 +77,7 @@ const formatt = (code) => {
                 }
                 else { // unblanced parenthesis
                     alert('Unbalanced parenthesis');
-                    return;
+                    return code;
                 }
                 
                 if(code[i] == '{' || code[i] == '[' || code[i] == ',')
